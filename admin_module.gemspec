@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = AdminModule::VERSION
   spec.authors       = ["Jeff McAffee"]
   spec.email         = ["jeff@ktechsystems.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Command line interface for Admin Module}
+  spec.summary       = %q{Admin Module CLI}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "cucumber", "~> 1.3.9"
+
+  spec.add_runtime_dependency "page-object"
 end
