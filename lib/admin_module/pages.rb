@@ -49,8 +49,14 @@ private
     user_data_dir = File.absolute_path(File.join(__FILE__, '../../../test/chrome-data'))
     switches = %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --no-first-run]
     switches << "--user-data-dir=#{user_data_dir}"
+
+    # Create a client so we can adjust the timeout period.
+    client = Selenium::WebDriver::Remote::Http::Default.new
+    client.timeout = 180 # seconds. Default is 60.
+
     browser = Watir::Browser.new :chrome,
-      :switches => switches #,
+      :switches => switches,
+      :http_client => client
       #:desired_capabilities => caps
   end
 
