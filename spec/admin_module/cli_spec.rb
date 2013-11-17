@@ -4,6 +4,10 @@ describe AdminModule::CLI do
 
   let(:cli) { AdminModule::CLI.new }
 
+  after(:each) do
+    cli.quit
+  end
+
   describe "#environment=" do
 
     context "sets the environment to use" do

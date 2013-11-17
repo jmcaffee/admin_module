@@ -112,4 +112,10 @@ class AdminModule::CLI
     gdl_name
   end
 
+  ##
+  # Close the browser
+
+  def quit
+    @browser.close unless @browser.nil?
+  end
 end
