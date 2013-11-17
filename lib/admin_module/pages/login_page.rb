@@ -26,6 +26,11 @@ class LoginPage
   button(:login, :id => "ctl00_cntPlh_btnLogin" )
 
   def login_as(username, password)
+    if !self.username? && current_url == AdminModule.configuration.base_url + '/AdminMain.aspx'
+      # We're still logged in.
+      return
+    end
+
     self.username = username
     # For some unknown reason, we must click on a password mask input before
     # we can access the password field itself.
