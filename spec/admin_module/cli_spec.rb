@@ -361,46 +361,6 @@ describe AdminModule::CLI do
 
   end # describe "#modify_lock"
 
-  describe "#write_lock_to_file" do
-    context "with filename" do
-      context "lock name specified" do
-
-        let(:target_file)   { 'tmp/spec/admin_module/locks.yml' }
-        let(:lock_name)     { 'TestLock' }
-
-        let(:test_lock)     do
-                              { name: lock_name,
-                                description: 'This is a test lock',
-                                is_program_lock: false,
-                                parameters: [ 'Monthly Gross Income' ],
-                                dts: [ '2nd Lien Payoff' ]
-                              }
-                            end
-
-
-        before(:each) do
-          FileUtils.rm_rf target_file
-          cli.modify_lock(test_lock)
-        end
-
-        it "writes to file" do
-          cli.write_lock_to_file(lock_name, target_file)
-          expect(File.exist?(target_file)).to be_true
-        end
-
-        it "is in YML format" do
-          cli.write_lock_to_file(lock_name, target_file)
-          lock = {}
-          File.open(target_file, 'r') do |f|
-            lock = YAML.load f
-          end
-          expect(lock).to eq test_lock
-        end
-      end # context
-    end # context
-
-  end # describe "#write_lock_to_file"
-
   describe "#export_locks" do
     context "with filename" do
 

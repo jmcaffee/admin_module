@@ -12,6 +12,8 @@ require 'admin_module/pages/login_page'
 require 'admin_module/pages/guidelines_page'
 require 'admin_module/pages/guideline_page'
 require 'admin_module/pages/guideline_version_page'
+require 'admin_module/pages/lock_definitions_page'
+require 'admin_module/pages/lock_definition_page'
 
 module AdminModule::Pages
 
@@ -56,7 +58,9 @@ private
 
     browser = Watir::Browser.new :chrome,
       :switches => switches,
-      :http_client => client
+      :http_client => client,
+      :silent => true,
+      :service_log_path => user_data_dir + '/chromedriver.out'
       #:desired_capabilities => caps
   end
 

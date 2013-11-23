@@ -31,10 +31,15 @@ class LoginPage
       return
     end
 
+    raise ArgumentError.new("Missing username for login.\nHave you set the HSBC_envname_USER environment variable?") if username.nil?
+
     self.username = username
     # For some unknown reason, we must click on a password mask input before
     # we can access the password field itself.
     password_mask_element.click
+
+    raise ArgumentError.new("Missing password for login.\nHave you set the HSBC_envname_PASSWORD environment variable?") if password.nil?
+
     self.password = password
     login
   end

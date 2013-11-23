@@ -33,8 +33,9 @@ module AdminModule
 
       @aliases      = {}
 
-      @page_urls   = { 'GuidelinesPage' => "/admin/decision/guidelines.aspx",
-                       'GuidelinePage'  => "/admin/decision/guideline.aspx", #?gdl=34
+      @page_urls   = { 'GuidelinesPage'       => "/admin/decision/guidelines.aspx",
+                       'GuidelinePage'        => "/admin/decision/guideline.aspx", #?gdl=34
+                       'LockDefinitionsPage'  => "/admin/security/ViewDefinitions.aspx?act=2&type=2",
                     }
     end
 
