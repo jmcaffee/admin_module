@@ -47,13 +47,14 @@ private
     # use the user-data-dir switch and point to a dir where chrome can put the
     # data indicating it (EULA) has already been accepted.
 
-    # Store chrome profile at hsbc/test/chrome-data.
-    #user_data_dir = File.absolute_path(File.join(__FILE__, '../../../test/chrome-data'))
+    # Store chrome profile at test/chrome-data.
+    # user_data_dir must be expanded to a full (absolute) path. A relative path
+    # results in chromedriver failing to start.
     user_data_dir = File.expand_path('test/chrome-data')
+    #puts "*** user_data_dir location: #{user_data_dir}"
+
     switches = %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --no-first-run]
     switches << "--user-data-dir=#{user_data_dir}"
-
-    puts "*** user_data_dir location: #{user_data_dir}"
 
     # Create a client so we can adjust the timeout period.
     client = Selenium::WebDriver::Remote::Http::Default.new
