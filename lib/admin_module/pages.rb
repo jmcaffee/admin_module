@@ -48,7 +48,8 @@ private
     # data indicating it (EULA) has already been accepted.
 
     # Store chrome profile at hsbc/test/chrome-data.
-    user_data_dir = File.absolute_path(File.join(__FILE__, '../../../test/chrome-data'))
+    #user_data_dir = File.absolute_path(File.join(__FILE__, '../../../test/chrome-data'))
+    user_data_dir = 'test/chrome-data'))
     switches = %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --no-first-run]
     switches << "--user-data-dir=#{user_data_dir}"
 
