@@ -29,3 +29,16 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+
+
+def write_lock_data_file filename, data
+  File.open(filename, 'w') { |f| f << YAML.dump(data) }
+end
+
+def read_lock_data_file filename
+  data = {}
+  File.open(filename, 'r') do |f|
+    data = YAML.load(f)
+  end
+  data
+end
