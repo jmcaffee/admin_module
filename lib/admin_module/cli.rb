@@ -23,6 +23,9 @@ class AdminModule::CLI
 
   def environment=(env)
     @env = env
+    AdminModule.configure do |config|
+      config.default_environment = env
+    end
   end
 
   ##
