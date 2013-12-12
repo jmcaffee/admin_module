@@ -65,7 +65,6 @@ private
     browser = Watir::Browser.new :chrome,
       :switches => switches,
       :http_client => client,
-      :silent => true,
       :service_log_path => user_data_dir + '/chromedriver.out'
       #:desired_capabilities => caps
   end
