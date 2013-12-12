@@ -22,6 +22,10 @@ module AdminModule
     attr_accessor :browser_timeout
 
     def initialize
+      reset
+    end
+
+    def reset
       @default_environment = :dev
 
       @credentials = { dev: [ ENV['HSBC_DEV_USER'], ENV['HSBC_DEV_PASSWORD'] ],
