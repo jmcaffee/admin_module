@@ -58,7 +58,9 @@ private
 
     # Create a client so we can adjust the timeout period.
     client = Selenium::WebDriver::Remote::Http::Default.new
-    client.timeout = 180 # seconds. Default is 60.
+
+    # Set the browser timeout. Default is 60 seconds.
+    client.timeout = AdminModule.configuration.browser_timeout
 
     browser = Watir::Browser.new :chrome,
       :switches => switches,

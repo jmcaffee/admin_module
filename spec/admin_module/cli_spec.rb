@@ -122,6 +122,7 @@ describe AdminModule::CLI do
 
       AdminModule.configure do |config|
         config.aliases = { 'patch-test' => 'Z-TEMP' }
+        config.browser_timeout = 359
       end
 
 

@@ -28,6 +28,9 @@ class GuidelineVersionPage
   button(:save,
          id: 'ctl00_cntPlh_cmdSave')
 
+  div(:version_errors,
+        id: 'vsmErrors')
+
   def upload(source_file, comments = nil)
     # The file field (visible as a button) has a negative margin.
     # We can't do anything with it (it's not 'visible') as it is,
@@ -62,7 +65,12 @@ EOS
     @browser.execute_script(repos_script)
   end
 
-end
+  def capture_errors
+    @errors = []
+
+    err = version_errors
+  end
+end # class GuidelineVersionPage
 
 end # module Pages
 

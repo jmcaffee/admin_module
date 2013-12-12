@@ -18,6 +18,9 @@ module AdminModule
     attr_accessor :aliases
     attr_accessor :page_urls
 
+    # Browser timeout in seconds. Default: 360 (6 mins).
+    attr_accessor :browser_timeout
+
     def initialize
       @default_environment = :dev
 
@@ -37,6 +40,8 @@ module AdminModule
                        'GuidelinePage'        => "/admin/decision/guideline.aspx", #?gdl=34
                        'LockDefinitionsPage'  => "/admin/security/ViewDefinitions.aspx?act=2&type=2",
                     }
+
+      @browser_timeout = 360
     end
 
     def base_url
