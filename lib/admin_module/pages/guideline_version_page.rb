@@ -13,6 +13,8 @@ module AdminModule::Pages
 class GuidelineVersionPage
   include PageObject
 
+  attr_reader :errors
+
   #page_url(:get_dynamic_url)
 
   def get_dynamic_url
@@ -29,6 +31,9 @@ class GuidelineVersionPage
          id: 'ctl00_cntPlh_cmdSave')
 
   div(:version_errors,
+        id: 'ctl00_cntPlh_ctlErrors_vsmErrors')
+
+  div(:add_version_page_errors,
         id: 'vsmErrors')
 
   def upload(source_file, comments = nil)
@@ -46,10 +51,24 @@ class GuidelineVersionPage
     end
     self.version_notes = comments
 
+    reset_errors
+
     self.save
+
+    capture_errors
+    verify_latest_version comments
 
     # Return the url of the version guideline page.
     current_url
+
+  rescue Timeout::Error => e
+      add_error 'Timeout occurred. Try adjusting the browser_timeout configuration option.'
+
+  rescue
+      add_error 'Unknown error occurred.'
+
+  ensure
+    raise_if_errors
   end
 
   def reposition_file_input
@@ -65,10 +84,39 @@ EOS
     @browser.execute_script(repos_script)
   end
 
-  def capture_errors
+  def reset_errors
     @errors = []
+  end
 
-    err = version_errors
+  def has_errors?
+    @errors.size > 0
+  end
+
+  def add_error err_msg
+    @errors << err_msg
+  end
+
+  def capture_errors
+    add_error(version_errors) unless (!version_errors? || version_errors.empty?)
+    add_error(add_version_page_errors) unless (!add_version_page_errors? || add_version_page_errors.empty?)
+  end
+
+  def raise_if_errors
+    if has_errors?
+      error = ''
+      @errors.each { |err| error << err + "\n" }
+      raise error
+    end
+  end
+
+  def verify_latest_version comments
+    if !versions_table?
+      add_error("Version upload not completed. Did a timeout occur?") unless has_errors?
+      return
+    end
+
+    row_data = versions_table.split("\n")
+    add_error("Version upload not completed. Comment not found.") unless row_data[1].include?(comments)
   end
 end # class GuidelineVersionPage
 
