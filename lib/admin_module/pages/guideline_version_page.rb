@@ -36,6 +36,9 @@ class GuidelineVersionPage
   div(:add_version_page_errors,
         id: 'vsmErrors')
 
+  table(:versions_table,
+        id: 'dgrVersions')
+
   def upload(source_file, comments = nil)
     # The file field (visible as a button) has a negative margin.
     # We can't do anything with it (it's not 'visible') as it is,
@@ -64,8 +67,8 @@ class GuidelineVersionPage
   rescue Timeout::Error => e
       add_error 'Timeout occurred. Try adjusting the browser_timeout configuration option.'
 
-  rescue
-      add_error 'Unknown error occurred.'
+  rescue Exception => e
+      add_error e.message
 
   ensure
     raise_if_errors
