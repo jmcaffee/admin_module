@@ -43,6 +43,7 @@ module AdminModule
       @page_urls   = { 'GuidelinesPage'       => "/admin/decision/guidelines.aspx",
                        'GuidelinePage'        => "/admin/decision/guideline.aspx", #?gdl=34
                        'LockDefinitionsPage'  => "/admin/security/ViewDefinitions.aspx?act=2&type=2",
+                       'WorkflowDetailsPage'  => "/admin/security/workflows.aspx",
                     }
 
       @browser_timeout = 360

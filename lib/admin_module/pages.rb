@@ -14,6 +14,8 @@ require 'admin_module/pages/guideline_page'
 require 'admin_module/pages/guideline_version_page'
 require 'admin_module/pages/lock_definitions_page'
 require 'admin_module/pages/lock_definition_page'
+require 'admin_module/pages/workflow_details_page'
+require 'admin_module/pages/workflow_detail_page'
 
 module AdminModule::Pages
 
