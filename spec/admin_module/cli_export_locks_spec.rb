@@ -36,7 +36,7 @@ describe AdminModule::CLI do
       it "will return lock configuration data" do
         expect( cli.get_lock('IncomeLock') ).to eq expected_income_lock
       end
-    end # context "invalid lock name"
+    end # context "valid lock name"
   end # describe "#get_lock"
 
   describe "#export_locks" do
@@ -51,11 +51,7 @@ describe AdminModule::CLI do
 
       it "writes multiple locks to a file" do
         cli.export_locks(target_file)
-        locks = read_lock_data_file(target_file)
-        #{}
-        #File.open(target_file, 'r') do |f|
-        #  locks = YAML.load f
-        #end
+        locks = read_yaml_data_file(target_file)
         expect(locks.size).to eq 12
       end
     end # context

@@ -1,0 +1,518 @@
+---
+001 New File:
+  :name: 001 New File
+  :transition_to:
+  - 005 Application and Eligibility
+  - 010 Customer Input
+  - 020 Pending Docs
+  - 022 Docs Verification
+  - 023 Docs Received
+  - 025 UW Review and Pre-screen
+  - 028 Pending Property Value
+  - 030 Trial Period Decision
+  - 035 In Trial
+  - 040 Trial Complete
+  - 045 Pending Mod
+  - 050 Mod Resend
+  - 052 Escrow Disbursement
+  - 055 Pending Activation
+  - 057 Pending Re-age/Escrow Set-up
+  - 060 Reconsideration Exceptions/Overrides
+  - 065 Approved Consideration
+  - 090 Mod Activation
+  - 095 Exclude Application
+  - 096 Withdrawn
+  - 097 Declined Appeal Eligible
+  - 099 Declined Not Appeal Eligible
+005 Application and Eligibility:
+  :name: 005 Application and Eligibility
+  :transition_to:
+  - 001 New File
+  - 010 Customer Input
+  - 020 Pending Docs
+  - 022 Docs Verification
+  - 023 Docs Received
+  - 025 UW Review and Pre-screen
+  - 028 Pending Property Value
+  - 030 Trial Period Decision
+  - 035 In Trial
+  - 040 Trial Complete
+  - 045 Pending Mod
+  - 050 Mod Resend
+  - 052 Escrow Disbursement
+  - 055 Pending Activation
+  - 057 Pending Re-age/Escrow Set-up
+  - 060 Reconsideration Exceptions/Overrides
+  - 065 Approved Consideration
+  - 090 Mod Activation
+  - 093 Incomplete Application
+  - 095 Exclude Application
+  - 096 Withdrawn
+  - 097 Declined Appeal Eligible
+  - 098 Appeal Declined
+  - 099 Declined Not Appeal Eligible
+  - 105 Second Review-Hard Decline
+  - 120 Second Review-Pending Docs
+  - 125 Second Review-UW Review and Pre-screen
+  - 130 Second Review-Trial Period Decision
+  - 135 Second Review-In Trial
+  - 145 Second Review-Pending Mod
+  - 205 Appeal Hard Decline
+  - 210 Appeal Customer Input
+  - 220 Appeal Pending Docs
+  - 222 Appeal Docs Verification
+  - 223 Appeal Docs Received
+  - 225 Appeal-UW Review and Pre-screen
+  - 226 Appeal Preliminary NPV
+  - 227 Appeal Pending Appraisal Request
+  - 228 Appeal Pending Property Val
+  - 230 Appeal Trial Period Decision
+  - 305 Appeal 2nd Review-Hard Decline
+  - 320 Appeal 2nd Review-Pending Docs
+  - 325 Appeal 2nd Review-UW Review and Pre-screen
+  - 326 Appeal 2nd Review-Preliminary NPV
+  - 327 Appeal 2nd Review-Pending Appraisal Request
+  - 328 Appeal 2nd Review-Pending Property Val
+  - 330 Appeal 2nd Review-Trial Period Decision
+010 Customer Input:
+  :name: 010 Customer Input
+  :transition_to:
+  - 001 New File
+  - 020 Pending Docs
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 099 Declined Not Appeal Eligible
+  - 105 Second Review-Hard Decline
+020 Pending Docs:
+  :name: 020 Pending Docs
+  :transition_to:
+  - 001 New File
+  - 022 Docs Verification
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 120 Second Review-Pending Docs
+022 Docs Verification:
+  :name: 022 Docs Verification
+  :transition_to:
+  - 001 New File
+  - 020 Pending Docs
+  - 023 Docs Received
+  - 025 UW Review and Pre-screen
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 120 Second Review-Pending Docs
+023 Docs Received:
+  :name: 023 Docs Received
+  :transition_to:
+  - 001 New File
+  - 025 UW Review and Pre-screen
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 120 Second Review-Pending Docs
+025 UW Review and Pre-screen:
+  :name: 025 UW Review and Pre-screen
+  :transition_to:
+  - 001 New File
+  - 020 Pending Docs
+  - 028 Pending Property Value
+  - 030 Trial Period Decision
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 125 Second Review-UW Review and Pre-screen
+028 Pending Property Value:
+  :name: 028 Pending Property Value
+  :transition_to:
+  - 001 New File
+  - 030 Trial Period Decision
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 125 Second Review-UW Review and Pre-screen
+030 Trial Period Decision:
+  :name: 030 Trial Period Decision
+  :transition_to:
+  - 001 New File
+  - 025 UW Review and Pre-screen
+  - 035 In Trial
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 130 Second Review-Trial Period Decision
+035 In Trial:
+  :name: 035 In Trial
+  :transition_to:
+  - 001 New File
+  - 025 UW Review and Pre-screen
+  - 030 Trial Period Decision
+  - 040 Trial Complete
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 099 Declined Not Appeal Eligible
+  - 135 Second Review-In Trial
+  - 226 Appeal Preliminary NPV
+  - 230 Appeal Trial Period Decision
+040 Trial Complete:
+  :name: 040 Trial Complete
+  :transition_to:
+  - 001 New File
+  - 025 UW Review and Pre-screen
+  - 045 Pending Mod
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 135 Second Review-In Trial
+045 Pending Mod:
+  :name: 045 Pending Mod
+  :transition_to:
+  - 001 New File
+  - 025 UW Review and Pre-screen
+  - 050 Mod Resend
+  - 052 Escrow Disbursement
+  - 055 Pending Activation
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 145 Second Review-Pending Mod
+050 Mod Resend:
+  :name: 050 Mod Resend
+  :transition_to:
+  - 001 New File
+  - 052 Escrow Disbursement
+  - 055 Pending Activation
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 099 Declined Not Appeal Eligible
+  - 145 Second Review-Pending Mod
+052 Escrow Disbursement:
+  :name: 052 Escrow Disbursement
+  :transition_to:
+  - 001 New File
+  - 055 Pending Activation
+  - 096 Withdrawn
+  - 145 Second Review-Pending Mod
+055 Pending Activation:
+  :name: 055 Pending Activation
+  :transition_to:
+  - 001 New File
+  - 057 Pending Re-age/Escrow Set-up
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 145 Second Review-Pending Mod
+057 Pending Re-age/Escrow Set-up:
+  :name: 057 Pending Re-age/Escrow Set-up
+  :transition_to:
+  - 001 New File
+  - 090 Mod Activation
+  - 096 Withdrawn
+  - 145 Second Review-Pending Mod
+060 Reconsideration Exceptions/Overrides:
+  :name: 060 Reconsideration Exceptions/Overrides
+  :transition_to:
+  - 001 New File
+  - 065 Approved Consideration
+  - 095 Exclude Application
+  - 096 Withdrawn
+  - 097 Declined Appeal Eligible
+  - 098 Appeal Declined
+  - 099 Declined Not Appeal Eligible
+065 Approved Consideration:
+  :name: 065 Approved Consideration
+  :transition_to:
+  - 001 New File
+  - 005 Application and Eligibility
+  - 010 Customer Input
+  - 020 Pending Docs
+  - 022 Docs Verification
+  - 023 Docs Received
+  - 025 UW Review and Pre-screen
+  - 028 Pending Property Value
+  - 030 Trial Period Decision
+  - 035 In Trial
+  - 040 Trial Complete
+  - 045 Pending Mod
+  - 050 Mod Resend
+  - 052 Escrow Disbursement
+  - 055 Pending Activation
+  - 057 Pending Re-age/Escrow Set-up
+  - 105 Second Review-Hard Decline
+  - 120 Second Review-Pending Docs
+  - 125 Second Review-UW Review and Pre-screen
+  - 130 Second Review-Trial Period Decision
+  - 135 Second Review-In Trial
+  - 145 Second Review-Pending Mod
+  - 205 Appeal Hard Decline
+  - 210 Appeal Customer Input
+  - 220 Appeal Pending Docs
+  - 222 Appeal Docs Verification
+  - 223 Appeal Docs Received
+  - 225 Appeal-UW Review and Pre-screen
+  - 226 Appeal Preliminary NPV
+  - 227 Appeal Pending Appraisal Request
+  - 228 Appeal Pending Property Val
+  - 230 Appeal Trial Period Decision
+  - 305 Appeal 2nd Review-Hard Decline
+  - 320 Appeal 2nd Review-Pending Docs
+  - 325 Appeal 2nd Review-UW Review and Pre-screen
+  - 326 Appeal 2nd Review-Preliminary NPV
+  - 327 Appeal 2nd Review-Pending Appraisal Request
+  - 328 Appeal 2nd Review-Pending Property Val
+  - 330 Appeal 2nd Review-Trial Period Decision
+090 Mod Activation:
+  :name: 090 Mod Activation
+  :transition_to:
+  - 001 New File
+  - 095 Exclude Application
+  - 096 Withdrawn
+093 Incomplete Application:
+  :name: 093 Incomplete Application
+  :transition_to:
+  - 001 New File
+  - 022 Docs Verification
+  - 060 Reconsideration Exceptions/Overrides
+095 Exclude Application:
+  :name: 095 Exclude Application
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+096 Withdrawn:
+  :name: 096 Withdrawn
+  :transition_to:
+  - 001 New File
+  - 030 Trial Period Decision
+  - 052 Escrow Disbursement
+  - 057 Pending Re-age/Escrow Set-up
+  - 060 Reconsideration Exceptions/Overrides
+  - 099 Declined Not Appeal Eligible
+  - 205 Appeal Hard Decline
+  - 210 Appeal Customer Input
+  - 220 Appeal Pending Docs
+  - 222 Appeal Docs Verification
+  - 223 Appeal Docs Received
+  - 225 Appeal-UW Review and Pre-screen
+  - 226 Appeal Preliminary NPV
+  - 227 Appeal Pending Appraisal Request
+  - 228 Appeal Pending Property Val
+  - 230 Appeal Trial Period Decision
+097 Declined Appeal Eligible:
+  :name: 097 Declined Appeal Eligible
+  :transition_to:
+  - 001 New File
+  - 005 Application and Eligibility
+  - 010 Customer Input
+  - 020 Pending Docs
+  - 025 UW Review and Pre-screen
+  - 030 Trial Period Decision
+  - 035 In Trial
+  - 040 Trial Complete
+  - 045 Pending Mod
+  - 050 Mod Resend
+  - 055 Pending Activation
+  - 060 Reconsideration Exceptions/Overrides
+  - 065 Approved Consideration
+  - 090 Mod Activation
+  - 095 Exclude Application
+  - 096 Withdrawn
+  - 098 Appeal Declined
+  - 099 Declined Not Appeal Eligible
+  - 205 Appeal Hard Decline
+  - 210 Appeal Customer Input
+  - 226 Appeal Preliminary NPV
+098 Appeal Declined:
+  :name: 098 Appeal Declined
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+099 Declined Not Appeal Eligible:
+  :name: 099 Declined Not Appeal Eligible
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+105 Second Review-Hard Decline:
+  :name: 105 Second Review-Hard Decline
+  :transition_to:
+  - 001 New File
+  - 010 Customer Input
+  - 060 Reconsideration Exceptions/Overrides
+  - 097 Declined Appeal Eligible
+  - 099 Declined Not Appeal Eligible
+120 Second Review-Pending Docs:
+  :name: 120 Second Review-Pending Docs
+  :transition_to:
+  - 001 New File
+  - 022 Docs Verification
+  - 060 Reconsideration Exceptions/Overrides
+  - 093 Incomplete Application
+  - 096 Withdrawn
+  - 097 Declined Appeal Eligible
+  - 099 Declined Not Appeal Eligible
+125 Second Review-UW Review and Pre-screen:
+  :name: 125 Second Review-UW Review and Pre-screen
+  :transition_to:
+  - 001 New File
+  - 028 Pending Property Value
+  - 030 Trial Period Decision
+  - 060 Reconsideration Exceptions/Overrides
+  - 097 Declined Appeal Eligible
+  - 099 Declined Not Appeal Eligible
+130 Second Review-Trial Period Decision:
+  :name: 130 Second Review-Trial Period Decision
+  :transition_to:
+  - 001 New File
+  - 035 In Trial
+  - 060 Reconsideration Exceptions/Overrides
+  - 097 Declined Appeal Eligible
+135 Second Review-In Trial:
+  :name: 135 Second Review-In Trial
+  :transition_to:
+  - 001 New File
+  - 040 Trial Complete
+  - 060 Reconsideration Exceptions/Overrides
+  - 099 Declined Not Appeal Eligible
+145 Second Review-Pending Mod:
+  :name: 145 Second Review-Pending Mod
+  :transition_to:
+  - 001 New File
+  - 052 Escrow Disbursement
+  - 055 Pending Activation
+  - 060 Reconsideration Exceptions/Overrides
+  - 099 Declined Not Appeal Eligible
+205 Appeal Hard Decline:
+  :name: 205 Appeal Hard Decline
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 210 Appeal Customer Input
+  - 305 Appeal 2nd Review-Hard Decline
+210 Appeal Customer Input:
+  :name: 210 Appeal Customer Input
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 220 Appeal Pending Docs
+  - 225 Appeal-UW Review and Pre-screen
+  - 305 Appeal 2nd Review-Hard Decline
+220 Appeal Pending Docs:
+  :name: 220 Appeal Pending Docs
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 222 Appeal Docs Verification
+  - 225 Appeal-UW Review and Pre-screen
+  - 320 Appeal 2nd Review-Pending Docs
+222 Appeal Docs Verification:
+  :name: 222 Appeal Docs Verification
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 220 Appeal Pending Docs
+  - 223 Appeal Docs Received
+  - 225 Appeal-UW Review and Pre-screen
+  - 320 Appeal 2nd Review-Pending Docs
+223 Appeal Docs Received:
+  :name: 223 Appeal Docs Received
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 225 Appeal-UW Review and Pre-screen
+  - 320 Appeal 2nd Review-Pending Docs
+225 Appeal-UW Review and Pre-screen:
+  :name: 225 Appeal-UW Review and Pre-screen
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 220 Appeal Pending Docs
+  - 226 Appeal Preliminary NPV
+  - 228 Appeal Pending Property Val
+  - 230 Appeal Trial Period Decision
+  - 325 Appeal 2nd Review-UW Review and Pre-screen
+226 Appeal Preliminary NPV:
+  :name: 226 Appeal Preliminary NPV
+  :transition_to:
+  - 001 New File
+  - 035 In Trial
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 227 Appeal Pending Appraisal Request
+  - 230 Appeal Trial Period Decision
+  - 326 Appeal 2nd Review-Preliminary NPV
+227 Appeal Pending Appraisal Request:
+  :name: 227 Appeal Pending Appraisal Request
+  :transition_to:
+  - 001 New File
+  - 035 In Trial
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 228 Appeal Pending Property Val
+  - 327 Appeal 2nd Review-Pending Appraisal Request
+228 Appeal Pending Property Val:
+  :name: 228 Appeal Pending Property Val
+  :transition_to:
+  - 001 New File
+  - 035 In Trial
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 230 Appeal Trial Period Decision
+  - 328 Appeal 2nd Review-Pending Property Val
+230 Appeal Trial Period Decision:
+  :name: 230 Appeal Trial Period Decision
+  :transition_to:
+  - 001 New File
+  - 035 In Trial
+  - 060 Reconsideration Exceptions/Overrides
+  - 096 Withdrawn
+  - 330 Appeal 2nd Review-Trial Period Decision
+305 Appeal 2nd Review-Hard Decline:
+  :name: 305 Appeal 2nd Review-Hard Decline
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 098 Appeal Declined
+  - 210 Appeal Customer Input
+320 Appeal 2nd Review-Pending Docs:
+  :name: 320 Appeal 2nd Review-Pending Docs
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 098 Appeal Declined
+  - 222 Appeal Docs Verification
+325 Appeal 2nd Review-UW Review and Pre-screen:
+  :name: 325 Appeal 2nd Review-UW Review and Pre-screen
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 098 Appeal Declined
+  - 228 Appeal Pending Property Val
+  - 230 Appeal Trial Period Decision
+326 Appeal 2nd Review-Preliminary NPV:
+  :name: 326 Appeal 2nd Review-Preliminary NPV
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 098 Appeal Declined
+  - 227 Appeal Pending Appraisal Request
+  - 230 Appeal Trial Period Decision
+327 Appeal 2nd Review-Pending Appraisal Request:
+  :name: 327 Appeal 2nd Review-Pending Appraisal Request
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 098 Appeal Declined
+  - 228 Appeal Pending Property Val
+328 Appeal 2nd Review-Pending Property Val:
+  :name: 328 Appeal 2nd Review-Pending Property Val
+  :transition_to:
+  - 001 New File
+  - 060 Reconsideration Exceptions/Overrides
+  - 098 Appeal Declined
+  - 230 Appeal Trial Period Decision
+330 Appeal 2nd Review-Trial Period Decision:
+  :name: 330 Appeal 2nd Review-Trial Period Decision
+  :transition_to:
+  - 001 New File
+  - 035 In Trial
+  - 060 Reconsideration Exceptions/Overrides
+  - 098 Appeal Declined

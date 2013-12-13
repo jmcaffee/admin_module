@@ -31,11 +31,11 @@ RSpec.configure do |config|
 end
 
 
-def write_lock_data_file filename, data
+def write_yaml_data_file filename, data
   File.open(filename, 'w') { |f| f << YAML.dump(data) }
 end
 
-def read_lock_data_file filename
+def read_yaml_data_file filename
   data = {}
   File.open(filename, 'r') do |f|
     data = YAML.load(f)
