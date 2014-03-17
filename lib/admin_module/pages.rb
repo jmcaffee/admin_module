@@ -18,6 +18,8 @@ require 'admin_module/pages/workflow_details_page'
 require 'admin_module/pages/workflow_detail_page'
 require 'admin_module/pages/rules_page'
 require 'admin_module/pages/rule_page'
+require 'admin_module/pages/rulesets_page'
+require 'admin_module/pages/ruleset_page'
 
 module AdminModule::Pages
 

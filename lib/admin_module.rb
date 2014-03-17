@@ -46,6 +46,8 @@ module AdminModule
                        'WorkflowDetailsPage'  => "/admin/security/workflows.aspx",
                        'RulesPage'            => "/admin/decision/rules.aspx",
                        'RulePage'             => "/admin/decision/rule.aspx",
+                       'RulesetsPage'         => "/admin/decision/rulesets.aspx",
+                       'RulesetPage'          => "/admin/decision/ruleset.aspx",
                     }
 
       @browser_timeout = 360

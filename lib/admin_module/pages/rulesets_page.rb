@@ -1,6 +1,6 @@
 ##############################################################################
-# File::    rules_page.rb
-# Purpose:: Rules page for AdminModule
+# File::    rulesets_page.rb
+# Purpose:: Rulesets page for AdminModule
 # 
 # Author::    Jeff McAffee 2014-03-17
 # Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
@@ -11,33 +11,33 @@ require 'nokogiri'
 
 module AdminModule::Pages
 
-class RulesPage
+class RulesetsPage
   include PageObject
 
   page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    AdminModule.configuration.url(RulesPage)
+    AdminModule.configuration.url(RulesetsPage)
   end
 
-  select_list(:rules,
-              id: 'ctl00_cntPlh_ctlRules_lstItems')
+  select_list(:rulesets,
+              id: 'ctl00_cntPlh_ctlRulesets_lstItems')
 
   button(:modify,
-         id: 'ctl00_cntPlh_ctlRules_btnModify')
+         id: 'ctl00_cntPlh_ctlRulesets_btnModify')
 
-  def get_rules
-    rule_list = []
-    Nokogiri::HTML(@browser.html).css("select#ctl00_cntPlh_ctlRules_lstItems>option").each do |elem|
-      rule_list << elem.text
+  def get_rulesets
+    ruleset_list = []
+    Nokogiri::HTML(@browser.html).css("select#ctl00_cntPlh_ctlRulesets_lstItems>option").each do |elem|
+      ruleset_list << elem.text
     end
 
-    rule_list
+    ruleset_list
   end
 
-  def open_rule(rule_name)
-    #rules_options # List of option text
-    rules_element.select rule_name
+  def open_ruleset(ruleset_name)
+    #rulesets_options # List of option text
+    rulesets_element.select ruleset_name
     self.modify
 
     clear_browser_alert
