@@ -44,6 +44,8 @@ module AdminModule
                        'GuidelinePage'        => "/admin/decision/guideline.aspx", #?gdl=34
                        'LockDefinitionsPage'  => "/admin/security/ViewDefinitions.aspx?act=2&type=2",
                        'WorkflowDetailsPage'  => "/admin/security/workflows.aspx",
+                       'RulesPage'            => "/admin/decision/rules.aspx",
+                       'RulePage'             => "/admin/decision/rule.aspx",
                     }
 
       @browser_timeout = 360

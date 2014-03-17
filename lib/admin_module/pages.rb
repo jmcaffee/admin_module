@@ -16,6 +16,8 @@ require 'admin_module/pages/lock_definitions_page'
 require 'admin_module/pages/lock_definition_page'
 require 'admin_module/pages/workflow_details_page'
 require 'admin_module/pages/workflow_detail_page'
+require 'admin_module/pages/rules_page'
+require 'admin_module/pages/rule_page'
 
 module AdminModule::Pages
 
