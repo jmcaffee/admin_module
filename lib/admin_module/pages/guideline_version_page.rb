@@ -39,6 +39,10 @@ class GuidelineVersionPage
   table(:versions_table,
         id: 'dgrVersions')
 
+  def errors
+    @errors ||= []
+  end
+
   def upload(source_file, comments = nil)
     # The file field (visible as a button) has a negative margin.
     # We can't do anything with it (it's not 'visible') as it is,
@@ -88,15 +92,15 @@ EOS
   end
 
   def reset_errors
-    @errors = []
+    errors = []
   end
 
   def has_errors?
-    @errors.size > 0
+    errors.size > 0
   end
 
   def add_error err_msg
-    @errors << err_msg
+    errors << err_msg
   end
 
   def capture_errors
@@ -107,7 +111,7 @@ EOS
   def raise_if_errors
     if has_errors?
       error = ''
-      @errors.each { |err| error << err + "\n" }
+      errors.each { |err| error << err + "\n" }
       raise error
     end
   end

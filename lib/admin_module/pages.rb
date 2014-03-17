@@ -10,6 +10,7 @@
 require 'watir-webdriver'
 require 'admin_module/pages/login_page'
 require 'admin_module/pages/guidelines_page'
+require 'admin_module/pages/guidelines_version_all_page'
 require 'admin_module/pages/guideline_page'
 require 'admin_module/pages/guideline_version_page'
 require 'admin_module/pages/lock_definitions_page'

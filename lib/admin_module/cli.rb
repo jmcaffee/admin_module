@@ -440,4 +440,16 @@ class AdminModule::CLI
     ruleset_page.set_name(new_name)
     ruleset_page.save
   end
+
+  ###
+  # Version all guidelines
+
+  def version_all gdl_names, comments = nil
+    login
+
+    version_all_page_url = GuidelinesPage.new(browser, base_url).version_all
+    page = GuidelinesVersionAllPage.new(browser, version_all_page_url)
+
+    page.version gdl_names, comments
+  end
 end
