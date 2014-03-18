@@ -58,7 +58,7 @@ describe AdminModule::CLI do
       it "deploys to default environment" do
         expect { cli.deploy_files(test_source_files, 'Multi-upload test') }.not_to raise_exception
       end
-    end # context "with invalid source file"
+    end # context "with valid source file"
   end
 
 end # describe AdminModule

@@ -122,8 +122,13 @@ EOS
       return
     end
 
-    row_data = versions_table.split("\n")
-    add_error("Version upload not completed. Comment not found.") unless row_data[1].include?(comments)
+    doc = Nokogiri::HTML(@browser.html)
+    # The specific version notes TD element:
+    #version_notes_row_1 = doc.css("#dgrVersions > tbody > tr:nth-child(2) > td:nth-child(13)")
+
+    # The entire 1st version row (TR) element:
+    version_row = doc.css("#dgrVersions > tbody > tr:nth-child(2)")
+    add_error("Version upload not completed. Comment not found.") unless version_row.to_s.include?(comments)
   end
 end # class GuidelineVersionPage
 
