@@ -42,3 +42,9 @@ def read_yaml_data_file filename
   end
   data
 end
+
+def data_dir path = nil
+  return 'spec/data' unless path
+  return File.join('spec/data', path)
+end
+
