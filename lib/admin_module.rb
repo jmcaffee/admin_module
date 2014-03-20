@@ -49,6 +49,8 @@ module AdminModule
                        'RulePage'                 => "/admin/decision/rule.aspx",
                        'RulesetsPage'             => "/admin/decision/rulesets.aspx",
                        'RulesetPage'              => "/admin/decision/ruleset.aspx",
+                       'ParametersPage'           => "/admin/decision/parameters.aspx",
+                       'ParameterPage'            => "/admin/decision/parameter.aspx",
                     }
 
       @browser_timeout = 360

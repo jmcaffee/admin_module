@@ -10,5 +10,6 @@
 module AdminModule::Rake
 end
 
-require_relative 'rake/deploy'
+require_relative 'rake/deploy_task'
+require_relative 'rake/parameter_task'
 
