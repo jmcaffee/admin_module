@@ -37,7 +37,7 @@ class LoginPage
 
     raise ArgumentError.new("Missing password for login.\nHave you set the HSBC_envname_PASSWORD environment variable?") if password.nil?
 
-    allow_passwork_entry
+    allow_password_entry
 
     self.password = password
     login
