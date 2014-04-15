@@ -34,16 +34,32 @@ class LoginPage
     raise ArgumentError.new("Missing username for login.\nHave you set the HSBC_envname_USER environment variable?") if username.nil?
 
     self.username = username
-    # For some unknown reason, we must click on a password mask input before
-    # we can access the password field itself.
-    password_mask_element.click
 
     raise ArgumentError.new("Missing password for login.\nHave you set the HSBC_envname_PASSWORD environment variable?") if password.nil?
+
+    allow_passwork_entry
 
     self.password = password
     login
   end
 
+  def allow_password_entry
+    # We used to have to click on the password mask before the page would let us enter the password itself:
+    #
+    # # For some unknown reason, we must click on a password mask input before
+    # # we can access the password field itself.
+    #   password_mask_element.click
+    #
+    # Now, we have to use javascript to hide the mask and display the password field.
+    hide_mask_script = <<EOS
+pwdmasks = document.getElementsByClassName('passwordmask');
+pwdmasks[0].style.display = 'none';
+pwds = document.getElementsByClassName('password');
+pwds[0].style.display = 'block';
+EOS
+
+    @browser.execute_script(hide_mask_script)
+  end
 
 end
 
