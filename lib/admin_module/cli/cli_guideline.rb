@@ -1,7 +1,7 @@
 ##############################################################################
 # File::    cli.rb
 # Purpose:: filedescription
-# 
+#
 # Author::    Jeff McAffee 11/15/2013
 # Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
 # Website::   http://ktechsystems.com
@@ -37,6 +37,8 @@ class AdminModule::CLI
     source_file = Array(source_file)[0]
     raise IOError.new("Missing source file [#{source_file}]") unless File.exists? source_file
     source_file = File.expand_path(source_file)
+
+    gdl_name_or_alias = File.basename(source_file, '.xml') if gdl_name_or_alias.nil?
 
     login
 
