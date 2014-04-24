@@ -20,7 +20,32 @@ describe AdminModule::CLI do
                                           '022 Docs Verification',
                                           '060 Reconsideration Exceptions/Overrides',
                                           '096 Withdrawn',
-                                          '120 Second Review-Pending Docs' ]
+                                          '120 Second Review-Pending Docs' ],
+                          events: {
+                                          "ForwardApplication PreEvent"   =>"",
+                                          "ForwardApplication PostEvent"  =>"WF-ForwardApp-Post",
+                                          "OrderCredit PreEvent"          =>"",
+                                          "OrderCredit PostEvent"         =>"",
+                                          "OrderAvm PreEvent"             =>"",
+                                          "OrderAvm PostEvent"            =>"",
+                                          "RerunProduct PreEvent"         =>"",
+                                          "RerunProduct PostEvent"        =>"",
+                                          "BatchUpload PreEvent"          =>"",
+                                          "BatchUpload PostEvent"         =>"",
+                                          "ProductSelection PreEvent"     =>"",
+                                          "ProductSelection PostEvent"    =>"WF-ProdSel-Post",
+                                          "Decision Loan Pre Event"       =>"",
+                                          "Decision Loan Post Event"      =>"",
+                                          "ReDecision Loan Pre Event"     =>"",
+                                          "ReDecision Loan Post Event"    =>"",
+                                          "Lock Pre Event"                =>"",
+                                          "Lock Post Event"               =>"",
+                                          "Save Task Pre Event"           =>"",
+                                          "Save Task Post Event"          =>"",
+                                          "Export HSSN Pre Event"         =>"",
+                                          "Data Clearing Pre Event"       =>"",
+                                          "Data Clearing Post Event"      =>""
+                          }
                         }
                       end
 
@@ -42,7 +67,32 @@ describe AdminModule::CLI do
                         { name: 'Test Stage Two',
                           transition_to: [
                                           '001 New File',
-                                          '005 Application and Eligibility' ]
+                                          '005 Application and Eligibility' ],
+                          events: {
+                                          "ForwardApplication PreEvent"   =>"",
+                                          "ForwardApplication PostEvent"  =>"WF-ForwardApp-Post",
+                                          "OrderCredit PreEvent"          =>"",
+                                          "OrderCredit PostEvent"         =>"",
+                                          "OrderAvm PreEvent"             =>"",
+                                          "OrderAvm PostEvent"            =>"",
+                                          "RerunProduct PreEvent"         =>"",
+                                          "RerunProduct PostEvent"        =>"",
+                                          "BatchUpload PreEvent"          =>"",
+                                          "BatchUpload PostEvent"         =>"",
+                                          "ProductSelection PreEvent"     =>"",
+                                          "ProductSelection PostEvent"    =>"WF-ProdSel-Post",
+                                          "Decision Loan Pre Event"       =>"",
+                                          "Decision Loan Post Event"      =>"",
+                                          "ReDecision Loan Pre Event"     =>"",
+                                          "ReDecision Loan Post Event"    =>"",
+                                          "Lock Pre Event"                =>"",
+                                          "Lock Post Event"               =>"",
+                                          "Save Task Pre Event"           =>"",
+                                          "Save Task Post Event"          =>"",
+                                          "Export HSSN Pre Event"         =>"",
+                                          "Data Clearing Pre Event"       =>"",
+                                          "Data Clearing Post Event"      =>""
+                          }
                         }
                       end
 
@@ -58,7 +108,11 @@ describe AdminModule::CLI do
                           transition_to: [
                                           'Z Test Stage 1',
                                           'Z Test Stage 2',
-                                          'Z Test Stage 3' ]
+                                          'Z Test Stage 3' ],
+                          events: {
+                                          'ForwardApplication PreEvent' => "",
+                                          'ForwardApplication PostEvent' => "WF-ForwardApp-Post"
+                                          }
                         }
                       end
 

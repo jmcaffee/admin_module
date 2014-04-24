@@ -7,6 +7,7 @@
 # Website::   http://ktechsystems.com
 ##############################################################################
 require 'page-object'
+require 'nokogiri'
 
 module AdminModule::Pages
 
@@ -83,13 +84,68 @@ class WorkflowDetailPage
     self.transition_to_states_tab
     stage_data[:transition_to] = self.selected_states_options
 
+    self.workflow_events_tab
+    stage_data[:events] = capture_events
+
     stage_data
+  end
+
+
+    class WorkflowEvent
+      attr_reader :guideline
+      attr_reader :event
+      attr_reader :id
+
+      def initialize(cells)
+        @event = cells[0].text.strip
+        @guideline = get_selected_option(cells[1].css('select'))
+        @id = cells[1].css('select').attribute('id').value
+      end
+
+      def get_selected_option elem
+        elem.children.each do |c|
+          if c.attributes.has_key? 'selected'
+            return c.text
+          end
+        end
+      end
+    end
+
+
+  def workflow_events
+    events = []
+
+    Nokogiri::HTML(@browser.html).css("table#ctl00_cntPlh_DatagridEvents").each do |tbl|
+    #require 'pry'; binding.pry
+
+      rows = tbl.css('tr')
+      rows.each do |r|
+        next if r.attribute('class').value == 'GridHeader'
+        cells = r.css('td')
+
+        events << WorkflowEvent.new(cells)
+      end # ech row
+    end # nokogiri
+
+    events
+  end
+
+  def capture_events
+    captured_events = {}
+
+    workflow_events.each do |ev|
+      captured_events[ev.event] = ev.guideline
+    end
+
+    captured_events
   end
 
   def set_stage_data data
     set_stage_name data[:name] if data.key?(:name)
 
     set_transitions data[:transition_to] if data.key?(:transition_to)
+
+    set_events data[:events] if data.key?(:events)
 
     self.save_button
   end
@@ -107,6 +163,32 @@ class WorkflowDetailPage
     trans.each do |t|
       available_states_element.select(t)
       self.add_state_button
+    end
+  end
+
+  def set_events events
+    self.workflow_events_tab
+
+    current_events = {}
+    workflow_events.each do |ev|
+      current_events[ev.event] = ev
+    end
+
+    events.each do |event, gdl|
+      current_event = current_events[event]
+
+      unless current_event.nil?
+        id = current_event.id
+        current_gdl = current_event.guideline
+
+        if gdl != current_gdl
+          sel = select_list_elements(id: id)[0]
+
+          unless sel.nil?
+            sel.select gdl
+          end
+        end
+      end
     end
   end
 end # class WorkflowDetailPage
