@@ -37,4 +37,17 @@ class AdminModule::CLI
     rule_page.set_name(new_name)
     rule_page.save
   end
+
+  ###
+  # Delete an existing rule
+
+  def delete_rule rule_name
+    raise ArgumentError, "rule name cannot be blank" if (rule_name.nil? || rule_name.empty?)
+
+    login
+
+    rule_page_url = RulesPage.new(browser, base_url).delete_rule(rule_name)
+  rescue Watir::Exception::NoValueFoundException => e
+      raise ArgumentError, 'Rule does not exist (#{rule_name})'
+  end
 end

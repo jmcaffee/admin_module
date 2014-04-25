@@ -26,6 +26,9 @@ class RulesPage
   button(:modify,
          id: 'ctl00_cntPlh_ctlRules_btnModify')
 
+  button(:delete,
+         id: 'ctl00_cntPlh_ctlRules_btnDelete')
+
   def get_rules
     rule_list = []
     Nokogiri::HTML(@browser.html).css("select#ctl00_cntPlh_ctlRules_lstItems>option").each do |elem|
@@ -39,6 +42,17 @@ class RulesPage
     #rules_options # List of option text
     rules_element.select rule_name
     self.modify
+
+    clear_browser_alert
+
+    # Return the url of the landing page.
+    current_url
+  end
+
+  def delete_rule(rule_name)
+    #rules_options # List of option text
+    rules_element.select rule_name
+    self.delete
 
     clear_browser_alert
 
