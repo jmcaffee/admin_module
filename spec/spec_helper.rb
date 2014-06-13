@@ -48,3 +48,36 @@ def data_dir path = nil
   return File.join('spec/data', path)
 end
 
+##
+# Command Line Interface object
+#
+def cli
+  return $real_cli unless $real_cli.nil?
+  AdminModule.configure do |config|
+    config.credentials = { :dev => ['admin', 'Password1*'] }
+  end
+  $real_cli = AdminModule::CLI.new
+end
+
+def quit_cli
+  cli.quit
+  $real_cli = nil
+end
+
+
+##
+# Create a stage given a stage data hash object
+#
+def create_stage_for_test stage_data
+  cli.create_stage(stage_data)
+rescue
+end
+
+##
+# Delete a stage given a stage data hash object
+#
+def delete_stage_for_test stage_data
+  cli.delete_stage stage_data
+rescue
+end
+

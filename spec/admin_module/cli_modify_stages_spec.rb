@@ -2,16 +2,9 @@ require 'spec_helper'
 
 describe AdminModule::CLI do
 
-  let(:cli) do
-              AdminModule.configure do |config|
-                config.credentials = { :dev => ['admin', 'Password1*'] }
-              end
-              AdminModule::CLI.new
-            end
-
-      after(:each) do
-        cli.quit
-      end
+  after(:each) do
+    quit_cli
+  end
 
   let(:test_stage)   do
                         { name: 'Test Stage',
@@ -24,20 +17,6 @@ describe AdminModule::CLI do
                         }
                       end
 
-  let(:create_test_stage) do
-    begin
-        cli.create_stage(test_stage)
-    rescue
-    end
-  end
-
-  let(:delete_test_stage) do
-    begin
-        cli.delete_stage(test_stage)
-    rescue
-    end
-  end
-
   let(:test_stage_2)   do
                         { name: 'Test Stage Two',
                           transition_to: [
@@ -45,13 +24,6 @@ describe AdminModule::CLI do
                                           '005 Application and Eligibility' ]
                         }
                       end
-
-  let(:delete_test_stage_2) do
-    begin
-        cli.delete_stage(test_stage_2)
-    rescue
-    end
-  end
 
 
   describe "#modify_stage" do
@@ -73,17 +45,20 @@ describe AdminModule::CLI do
       context "stage name specified" do
 
         it "stage is modified" do
-          create_test_stage
+          delete_stage_for_test test_stage
+          delete_stage_for_test test_stage_2
+          create_stage_for_test test_stage
 
+          stage_name = test_stage[:name]
           tmp_test = test_stage_2
           tmp_test[:name] = nil
 
-          cli.modify_stage(test_stage_2, test_stage[:name])
-          tmp_test[:name] = test_stage[:name]
-          expect(cli.get_stage(test_stage[:name])).to eq tmp_test
+          cli.modify_stage(tmp_test, stage_name)
+          actual = cli.get_stage stage_name
 
-          delete_test_stage
-          delete_test_stage_2
+          # Name is left as is, transitions change.
+          expect(actual[:name]).to eq stage_name
+          expect(actual[:transition_to]).to eq tmp_test[:transition_to]
         end
       end # context
     end # context
@@ -92,13 +67,15 @@ describe AdminModule::CLI do
     context "stage data has different name" do
 
       it "stage is renamed" do
-          create_test_stage
+          delete_stage_for_test test_stage
+          delete_stage_for_test test_stage_2
+          create_stage_for_test test_stage
 
-          cli.modify_stage(test_stage_2, test_stage[:name])
-          expect(cli.get_stage(test_stage_2[:name])).to eq test_stage_2
+          cli.modify_stage test_stage_2, test_stage[:name]
+          actual = cli.get_stage test_stage_2[:name]
 
-          delete_test_stage
-          delete_test_stage_2
+          expect(actual[:name]).to eq test_stage_2[:name]
+          expect(actual[:transition_to]).to eq test_stage_2[:transition_to]
       end
     end # context "stage data has different name"
 
