@@ -8,6 +8,7 @@
 ##############################################################################
 
 require 'watir-webdriver'
+require 'ktutils/os'
 require 'admin_module/pages/login_page'
 require 'admin_module/pages/guidelines_page'
 require 'admin_module/pages/guidelines_version_all_page'
@@ -46,9 +47,21 @@ module AdminModule::Pages
 
 private
 
+  def chromium_exe
+    if Ktutils::OS.windows?
+      # Downloaded from http://chromium.woolyss.com/
+      # Package: Chromium Package (32-bit)
+      # Version: 37.0.2011.0 (272392)
+      chromium_exe = File.absolute_path(File.join(__FILE__, '../../../bin/chrome-win32/chrome.exe'))
+    else
+      chromium_exe = `which chromium-browser`.chomp
+    end
+  end
+
   def configure_browser
     # Specify chrome browser capabilities.
     caps = Selenium::WebDriver::Remote::Capabilities.chrome
+    caps['chromeOptions'] = {'binary' => chromium_exe }
     #caps['chromeOptions'] = {'binary' => '/opt/bin/test/chrome-27.0.1453.94.exe' }
     # See http://peter.sh/experiments/chromium-command-line-switches/ for a list of available switches.
     # See https://sites.google.com/a/chromium.org/chromedriver/capabilities for details on setting ChromeDriver caps.
@@ -62,6 +75,11 @@ private
     # results in chromedriver failing to start.
     user_data_dir = File.expand_path('test/chrome-data')
     #puts "*** user_data_dir location: #{user_data_dir}"
+
+    # Create the data dir if it doesn't exist (or chromedriver fails to start).
+    unless File.exists?(user_data_dir) and File.directory?(user_data_dir)
+      FileUtils.makedirs user_data_dir
+    end
 
     # ignore-certificate-errors:  Ignores certificate-related errors.
     # disable-popup-blocking:     Disable pop-up blocking.
@@ -80,8 +98,7 @@ private
     browser = Watir::Browser.new :chrome,
       :switches => switches,
       :http_client => client,
-      :service_log_path => user_data_dir + '/chromedriver.out'
-      #:desired_capabilities => caps
+      :service_log_path => user_data_dir + '/chromedriver.out',
+      :desired_capabilities => caps
   end
-
 end
