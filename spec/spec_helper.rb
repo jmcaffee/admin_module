@@ -30,11 +30,19 @@ RSpec.configure do |config|
   config.order = 'random'
 end
 
+require 'support/stage_factory'
+include Factory
 
+##
+# Write a data structure to a yml file
+#
 def write_yaml_data_file filename, data
   File.open(filename, 'w') { |f| f << YAML.dump(data) }
 end
 
+##
+# Read a data from a yml file
+#
 def read_yaml_data_file filename
   data = {}
   File.open(filename, 'r') do |f|

@@ -7,23 +7,28 @@ describe AdminModule::CLI do
   end
 
   let(:test_stage)   do
-                        { name: 'Test Stage',
-                          transition_to: [
-                                          '001 New File',
-                                          '022 Docs Verification',
-                                          '060 Reconsideration Exceptions/Overrides',
-                                          '096 Withdrawn',
-                                          '120 Second Review-Pending Docs' ]
-                        }
-                      end
+    factory = StageFactory.new
+    factory.name('Test Stage')
+      .set_transitions([
+                          '001 New File',
+                          '022 Docs Verification',
+                          '060 Reconsideration Exceptions/Overrides',
+                          '096 Withdrawn',
+                          '120 Second Review-Pending Docs' ])
+
+    factory.data
+  end
 
   let(:test_stage_2)   do
-                        { name: 'Test Stage Two',
-                          transition_to: [
-                                          '001 New File',
-                                          '005 Application and Eligibility' ]
-                        }
-                      end
+    factory = StageFactory.new
+    factory.name('Test Stage Two')
+      .set_transitions([
+                        '001 New File',
+                        '005 Application and Eligibility' ]
+                      )
+
+    factory.data
+  end
 
 
   describe "#modify_stage" do
@@ -31,10 +36,10 @@ describe AdminModule::CLI do
     context "stage data missing name parameter" do
 
       let(:missing_name)  do
-                            missing_name = test_stage
-                            missing_name[:name] = nil
-                            missing_name
-                          end
+        missing_name = test_stage
+        missing_name[:name] = nil
+        missing_name
+      end
 
 
       it "will raise exception" do

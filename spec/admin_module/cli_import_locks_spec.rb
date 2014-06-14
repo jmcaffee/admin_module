@@ -2,16 +2,11 @@ require 'spec_helper'
 
 describe AdminModule::CLI do
 
-  let(:cli) do
-              AdminModule.configure do |config|
-                config.credentials = { :dev => ['admin', 'Password1*'] }
-              end
-              AdminModule::CLI.new
-            end
-
-      after(:each) do
-        cli.quit
-      end
+  ##
+  # Quit the browser after each test.
+  after(:each) do
+    quit_cli
+  end
 
 
   describe "#create_lock" do
@@ -119,7 +114,7 @@ describe AdminModule::CLI do
                             end
 
       let(:src_file_path)   { 'tmp/spec/admin_module/locks.yml' }
-      let(:src_file)        { write_lock_data_file(src_file_path, src_data); src_file_path }
+      let(:src_file)        { write_yaml_data_file(src_file_path, src_data); src_file_path }
 
       let(:bad_src_data)    do
                               { "TestLock" =>
@@ -133,7 +128,7 @@ describe AdminModule::CLI do
                             end
 
       let(:bad_src_file_path) { 'tmp/spec/admin_module/locks_bad.yml' }
-      let(:bad_src_file)      { write_lock_data_file(bad_src_file_path, bad_src_data); bad_src_file_path }
+      let(:bad_src_file)      { write_yaml_data_file(bad_src_file_path, bad_src_data); bad_src_file_path }
 
 
       it "configures locks sourced from a file" do

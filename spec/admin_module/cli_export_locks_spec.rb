@@ -23,18 +23,21 @@ describe AdminModule::CLI do
 
     context "valid lock name" do
 
-      let(:expected_income_lock)  do
-                                    { name: 'IncomeLock',
+      let(:expected_dod_lock)  do
+                                    { name: 'DODLock',
                                       description: '',
                                       is_program_lock: false,
-                                      parameters: [ 'Monthly Gross Income' ],
-                                      dts: []
+                                      parameters: [],
+                                      dts: [
+                                        'Delinquency Status',
+                                        'Has Escrow Account'
+                                        ]
                                     }
                                   end
 
 
       it "will return lock configuration data" do
-        expect( cli.get_lock('IncomeLock') ).to eq expected_income_lock
+        expect( cli.get_lock('DODLock') ).to eq expected_dod_lock
       end
     end # context "valid lock name"
   end # describe "#get_lock"
@@ -52,7 +55,7 @@ describe AdminModule::CLI do
       it "writes multiple locks to a file" do
         cli.export_locks(target_file)
         locks = read_yaml_data_file(target_file)
-        expect(locks.size).to eq 12
+        expect(locks.size).to eq 20
       end
     end # context
   end # describe "#export_locks"

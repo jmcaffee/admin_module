@@ -2,16 +2,10 @@ require 'spec_helper'
 
 describe AdminModule::CLI do
 
-  let(:cli) do
-              AdminModule.configure do |config|
-                config.credentials = { :dev => ['admin', 'Password1*'] }
-              end
-              AdminModule::CLI.new
-            end
-
-      after(:each) do
-        cli.quit
-      end
+  # Quit the browser after each test.
+  after(:each) do
+    quit_cli
+  end
 
   describe "#get_stage" do
     context "invalid stage name" do
@@ -24,19 +18,26 @@ describe AdminModule::CLI do
     context "valid stage name" do
 
       let(:expected_stage)  do
-                              { name: '020 Pending Docs',
-                                transition_to: [
-                                                '001 New File',
-                                                '022 Docs Verification',
-                                                '060 Reconsideration Exceptions/Overrides',
-                                                '096 Withdrawn',
-                                                '120 Second Review-Pending Docs' ]
-                              }
-                            end
+        factory = StageFactory.new
+        factory.name('020 Pending Docs').
+          set_transitions([
+                            '001 New File',
+                            '022 Docs Verification',
+                            '060 Reconsideration Exceptions/Overrides',
+                            '096 Withdrawn',
+                            '120 Second Review-Pending Docs'
+                          ]
+          )
+        factory.data
+      end
 
 
       it "will return stage configuration data" do
-        expect( cli.get_stage('020 Pending Docs') ).to eq expected_stage
+        stage_name = expected_stage[:name]
+        actual = cli.get_stage stage_name
+
+        expect(actual[:name]).to eq stage_name
+        expect(actual[:transition_to]).to eq expected_stage[:transition_to]
       end
     end # context "valid stage name"
   end # describe "#get_stage"
@@ -54,7 +55,7 @@ describe AdminModule::CLI do
       it "writes multiple stages to a file" do
         cli.export_stages(target_file)
         stages = read_yaml_data_file(target_file)
-        expect(stages.size).to eq 48
+        expect(stages.size).to eq 49
       end
     end # context
   end # describe "#export_stages"
