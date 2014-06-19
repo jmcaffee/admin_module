@@ -26,9 +26,6 @@ class LoginPage
   button(:login, :id => "ctl00_cntPlh_btnLogin" )
 
   def login_as(username, password)
-    puts "Logging in with credentials USERNAME=#{username} PASSWORD=#{password}"
-    require 'pry'; binding.pry
-
     if !self.username? && current_url == AdminModule.configuration.base_url + '/AdminMain.aspx'
       # We're still logged in.
       return
@@ -36,13 +33,13 @@ class LoginPage
 
     raise ArgumentError.new("Missing username for login.\nHave you set the HSBC_envname_USER environment variable?") if username.nil?
 
-    self.username = username
-
     raise ArgumentError.new("Missing password for login.\nHave you set the HSBC_envname_PASSWORD environment variable?") if password.nil?
 
-    unless current_url.include? get_dynamic_url
+    unless current_url.downcase.include? get_dynamic_url.downcase
       navigate_to get_dynamic_url
     end
+
+    self.username = username
 
     allow_password_entry
 
