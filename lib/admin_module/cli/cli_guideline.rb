@@ -34,6 +34,8 @@ class AdminModule::CLI
   # +comments+ to be added to Version Notes area. Defaults to 'auto upload'
 
   def deploy source_file, gdl_name_or_alias, comments = nil
+    require 'pry'; binding.pry
+
     source_file = Array(source_file)[0]
     raise IOError.new("Missing source file [#{source_file}]") unless File.exists? source_file
     source_file = File.expand_path(source_file)

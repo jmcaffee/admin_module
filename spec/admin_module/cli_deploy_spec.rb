@@ -2,16 +2,9 @@ require 'spec_helper'
 
 describe AdminModule::CLI do
 
-  let(:cli) do
-              AdminModule.configure do |config|
-                config.credentials = { :dev => ['admin', 'Password1*'] }
-              end
-              AdminModule::CLI.new
-            end
-
-      after(:each) do
-        cli.quit
-      end
+  after(:each) do
+    quit_cli
+  end
 
   describe "#deploy" do
     context "with invalid source file" do
@@ -32,7 +25,7 @@ describe AdminModule::CLI do
       it "deploys to default environment" do
         expect { cli.deploy(test_source_file, 'Z-TEMP') }.not_to raise_exception
       end
-    end # context "with invalid source file"
+    end # context "with valid source file"
   end
 
 
