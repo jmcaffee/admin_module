@@ -7,9 +7,56 @@ task :console do
   require 'admin_module'
   ARGV.clear
 
-  puts 'To create a CLI object, run:'
-  puts 'cli = AdminModule::CLI.new'
+  AdminModule.configure do |config|
+    config.credentials = { :dev => ['admin', 'Password1*'] }
+  end
 
+  def console_help
+    puts <<CONSOLE_HELP
+ CONSOLE HELP
+-------------
+
+'cli' returns an initialized CLI object
+
+    The default environment is :dev.
+    To interact with a different environment, add credentials
+    and activate the new environment:
+
+    Ex:
+      add_credentials ENV, USERNAME, PASSWORD
+      cli.environment = :ENV
+      cli.login
+
+    or, call 'activate_env ENV, USERNAME, PASSWORD'
+
+
+Avaliable commands/methods:
+
+  cli
+  add_credentials ENV, USERNAME, PASSWORD
+  activate_env ENV, USERNAME, PASSWORD
+  console_help
+
+CONSOLE_HELP
+  end
+
+  def cli
+    @cli ||= AdminModule::CLI.new
+    @cli
+  end
+
+  def add_credentials env, username, pwd
+    AdminModule.configure do |config|
+      config.credentials[env.to_sym] = [username, pwd]
+    end
+  end
+
+  def activate_env env, username, pwd
+    add_credentials env, username, pwd
+    cli.environment = env.to_sym
+  end
+
+  console_help
   Pry.start
 end
 
