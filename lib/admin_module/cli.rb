@@ -74,10 +74,19 @@ class AdminModule::CLI
     @login_page
   end
 
+  def logout
+    @login_page.logout
+    @login_page = nil
+  end
+
   ##
   # Close the browser
 
   def quit
-    @browser.close unless @browser.nil?
+    unless @browser.nil?
+      logout
+      @browser.close
+      @browser = nil
+    end
   end
 end
