@@ -47,6 +47,10 @@ class LoginPage
     login
   end
 
+  def logout
+    navigate_to get_dynamic_url + '/user/logout.aspx'
+  end
+
   def allow_password_entry
     # We used to have to click on the password mask before the page would let us enter the password itself:
     #
