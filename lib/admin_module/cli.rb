@@ -1,12 +1,45 @@
 ##############################################################################
 # File::    cli.rb
-# Purpose:: filedescription
+# Purpose:: Admin Module command line interface
 # 
-# Author::    Jeff McAffee 11/15/2013
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
+# Author::    Jeff McAffee 06/28/2014
+# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
 # Website::   http://ktechsystems.com
 ##############################################################################
 
+require 'thor'
+require 'admin_module/cli/gdl'
+require 'admin_module/cli/config'
+
+
+module AdminModule
+  class CLI < Thor
+
+    def self.start(*)
+      super
+    rescue Exception => e
+      raise e
+    end
+
+    def initialize(*args)
+      super
+    end
+
+    desc "gdl [COMMAND]", "run a guideline command"
+    subcommand "gdl", AdminModule::Gdl
+
+    desc "config [COMMAND]", "modify configuration values"
+    subcommand "config", AdminModule::Config
+
+    #def guideline
+    #  require 'admin_module/cli/guideline_command'
+    #  GuidelineCommand.new(options.dup).run
+    #end
+    #alias_method :gdl, :guideline
+  end # CLI
+end # AdminModule
+
+=begin
 require 'admin_module/pages'
 require_relative 'cli/cli_parameter'
 require_relative 'cli/cli_rule'
@@ -90,3 +123,5 @@ class AdminModule::CLI
     end
   end
 end
+=end
+
