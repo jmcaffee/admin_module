@@ -11,10 +11,46 @@ module AdminModule
     yield(configuration) if block_given?
   end
 
+  def self.save_configuration(path = nil)
+    unless path.nil?
+      File.write(path.expand_path, YAML.dump(configuration))
+      return
+    end
+
+    path = find_config_path
+    if path.nil?
+      path = Pathname.pwd + '.admin_module'
+    end
+
+    File.write(path.expand_path, YAML.dump(configuration))
+  end
+
+  def self.load_configuration(path = nil)
+    unless path.nil?
+      path = Pathname(path)
+      fail("File not found: #{path.to_s}") unless path.exist?
+      File.open(path, 'r') do |f|
+        self.configuration = YAML.load(f)
+      end
+      return
+    end
+
+    path = find_config_path
+    fail("File not found: #{path.to_s}") unless path.exist?
+    File.open(path, 'r') do |f|
+      self.configuration = YAML.load(f)
+    end
+  end
+
+  def self.find_config_path
+    path = Pathname(Pathname.pwd).ascend{|d| h=d+'.admin_module'; break h if h.file?}
+  end
+
   class Configuration
     attr_accessor :default_environment
     attr_accessor :credentials
     attr_accessor :base_urls
+    attr_accessor :xmlmaps
     attr_accessor :aliases
     attr_accessor :page_urls
 
@@ -37,6 +73,8 @@ module AdminModule
                       dev2: "http://207.38.119.211/fap2Dev2/Admin",
                        sit: "http://207.38.119.211/fap2SIT/Admin",
                        uat: "http://207.38.119.211/fap2UAT/Admin" }
+
+      @xmlmaps      = {}
 
       @aliases      = {}
 
@@ -67,3 +105,6 @@ module AdminModule
     end
   end
 end
+
+AdminModule.configure
+
