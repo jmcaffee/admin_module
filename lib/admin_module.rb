@@ -1,5 +1,9 @@
 require "admin_module/version"
+require 'admin_module/config_helper'
 require "admin_module/cli"
+require 'admin_module/page_factory'
+require 'admin_module/pages'
+require 'admin_module/guideline'
 
 module AdminModule
   class << self
@@ -102,6 +106,16 @@ module AdminModule
       suffix = @page_urls[page_class.to_s.split('::').last]
       raise "Unkown page [#{page_class.to_s}]" if suffix.nil?
       base_url + suffix
+    end
+
+    def xmlmap xmlfile
+      gdlname = xmlmaps[File.basename(xmlfile, '.xml')]
+      fail("No guideline has been mapped for #{File.basename(xmlfile)}") if gdlname.nil?
+      gdlname
+    end
+
+    def user_credentials env
+      @credentials[env.to_sym]
     end
   end
 end

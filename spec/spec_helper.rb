@@ -36,6 +36,15 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  config.mock_with :rspec do |mocks|
+    # This option should be set when all dependencies are being loaded
+    # before a spec run, as is the case in a typical spec helper. It will
+    # cause any verifying double instantiation for a class that does not
+    # exist to raise, protecting against incorrectly spelt names.
+    mocks.verify_doubled_constant_names = true
+    mocks.verify_partial_doubles = true
+  end
 end
 
 require 'support/stage_factory'
@@ -125,5 +134,44 @@ def capture_output
   fake_stdout.read
 ensure
   $stdout = actual_stdout
+end
+
+def mock_watir_browser
+  watir_browser = instance_double('Watir::Browser')
+  allow(watir_browser).to receive(:is_a?).with(anything()).and_return(false)
+  allow(watir_browser).to receive(:is_a?).with(Watir::Browser).and_return(true)
+  allow(watir_browser).to receive(:goto).with(anything()).and_return(true)
+  allow(watir_browser).to receive(:text_field).with(anything()).and_return(nil)
+  watir_browser
+end
+
+def mock_login_page
+  login_page = object_double(AdminModule::Pages::LoginPage.new(mock_watir_browser))
+  #allow(login_page).to receive(:login_as)#.with(anything()).and_return(nil)
+  login_page
+end
+
+def mock_guidelines_page
+  gdls_page = object_double(AdminModule::Pages::GuidelinesPage.new(mock_watir_browser))
+end
+
+def mock_page_factory(meth, obj)
+  page_factory = instance_double('AdminModule::PageFactory')
+  allow(page_factory).to receive(meth).and_return(obj)
+  page_factory
+end
+
+class MockPageFactory
+
+  attr_writer :login_page
+  attr_writer :guidelines_page
+
+  def login_page
+    @login_page
+  end
+
+  def guidelines_page
+    @guidelines_page
+  end
 end
 
