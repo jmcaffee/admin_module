@@ -28,6 +28,18 @@ module AdminModule
     option :file, :banner => "<file_xml>", :aliases => :f
     option :target, :banner => "<target_gdl>", :aliases => :t
     def deploy(srcdir, comments = nil)
+      ConfigHelper.env = options[:environment] unless options[:environment].nil?
+
+      user, pass = credentials
+      if user.empty? || pass.empty?
+        say "aborting deploy", :red
+        return
+      end
+
+      ConfigHelper.page_factory.login_page.login_as user, pass
+      gdl = Guideline.new ConfigHelper.page_factory
+      gdl.deploy(srcdir, comments)
+      ConfigHelper.page_factory.login_page.logout
     end
 
     desc "version <comments>",
@@ -46,6 +58,16 @@ module AdminModule
     def version(comments = nil)
     end
 
+  private
+
+    def credentials
+      user, pass = ConfigHelper.credentials
+      if user.nil? || pass.nil?
+        user = ask "username for #{ConfigHelper.env} environment:"
+        pass = ask "password:"
+      end
+      [user, pass]
+    end
 =begin
   ##
   # Deploy an array of source files to the current environment.

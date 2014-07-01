@@ -80,7 +80,7 @@ module AdminModule
       end
 
       desc "credentials <envname>", "display configured credentials for an environment"
-      long_desc = <<-LD
+      long_desc <<-LD
         Display configured credentials for an environment.
 
         If an environment name is not provided, credentials for all
@@ -135,7 +135,7 @@ module AdminModule
 
 
     desc "timeout <seconds>", "show or set the browser timeout period"
-    long_desc = <<-LD
+    long_desc <<-LD
       Show or set the browser timeout period.
       Default value is 360.
 
@@ -155,7 +155,7 @@ module AdminModule
 
 
     desc "defenv <envname>", "show or set the default environment"
-    long_desc = <<-LD
+    long_desc <<-LD
       Show or set the default environment.
 
       If <envname> is not provided, display the current setting.
