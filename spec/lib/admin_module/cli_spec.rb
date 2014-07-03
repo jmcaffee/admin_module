@@ -17,6 +17,7 @@ describe 'admin_module executable' do
     expect( output ).to include "config [COMMAND]"
   end
 
+=begin
   it "returns non-zero exit status when passed unrecognized options" do
     pending
     #admin_module '--invalid_argument', :exitstatus => true
@@ -29,4 +30,5 @@ describe 'admin_module executable' do
     admin_module 'unrecognized-task'#, :exitstatus => true
     expect(exitstatus).to_not be_zero
   end
+=end
 end
