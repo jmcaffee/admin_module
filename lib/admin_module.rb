@@ -13,36 +13,42 @@ module AdminModule
   def self.configure
     self.configuration ||= Configuration.new
     yield(configuration) if block_given?
+    unless block_given?
+      load_configuration
+    end
+  rescue
+    # NOP. Do nothing if the config file isn't found.
   end
 
   def self.save_configuration(path = nil)
-    unless path.nil?
-      File.write(path.expand_path, YAML.dump(configuration))
-      return
+    # If no path provided, see if we can find one in the dir tree.
+    if path.nil?
+      path = find_config_path
     end
 
-    path = find_config_path
+    # Still no path? Use the current working dir.
     if path.nil?
       path = Pathname.pwd + '.admin_module'
     end
 
-    File.write(path.expand_path, YAML.dump(configuration))
+    path = Pathname(path).expand_path
+    File.write(path, YAML.dump(configuration))
+
+    path
   end
 
   def self.load_configuration(path = nil)
-    unless path.nil?
-      path = Pathname(path)
-      fail("File not found: #{path.to_s}") unless path.exist?
-      File.open(path, 'r') do |f|
-        self.configuration = YAML.load(f)
-      end
-      return
+    # If no path provided, see if we can find one in the dir tree.
+    if path.nil?
+      path = find_config_path
     end
 
-    path = find_config_path
+    fail("Unable to find a configuration file named .admin_module in the current directory tree") if path.nil?
     fail("File not found: #{path.to_s}") unless path.exist?
+
     File.open(path, 'r') do |f|
       self.configuration = YAML.load(f)
+      puts "configuration loaded from #{path}"
     end
   end
 
@@ -52,6 +58,7 @@ module AdminModule
 
   class Configuration
     attr_accessor :default_environment
+    attr_accessor :default_comment
     attr_accessor :credentials
     attr_accessor :base_urls
     attr_accessor :xmlmaps
@@ -67,6 +74,8 @@ module AdminModule
 
     def reset
       @default_environment = :dev
+
+      @default_comment = 'no comment'
 
       @credentials = { dev: [ ENV['HSBC_DEV_USER'], ENV['HSBC_DEV_PASSWORD'] ],
                       dev2: [ ENV['HSBC_DEV2_USER'], ENV['HSBC_DEV2_PASSWORD'] ],

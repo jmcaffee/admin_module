@@ -27,7 +27,6 @@ require 'admin_module'
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 
@@ -77,7 +76,7 @@ def output_dir path = nil
   tmp = Pathname.new('tmp/spec')
   tmp = tmp + path unless path.nil?
   tmp.mkpath
-  tmp
+  tmp.expand_path
 end
 
 def clean_output_dir path = nil
@@ -85,7 +84,7 @@ def clean_output_dir path = nil
   tmp = tmp + path unless path.nil?
   tmp.rmtree if tmp.exist?
   tmp.mkpath
-  tmp
+  tmp.expand_path
 end
 
 ##

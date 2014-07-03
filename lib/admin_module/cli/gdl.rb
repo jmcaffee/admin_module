@@ -19,7 +19,7 @@ module AdminModule
     long_desc <<-LD
       Deploy all XML files in  <srcdir> with version <comments>.
 
-      With -e <env>, sets the environment to deploy to.
+      With -e <env>, sets the environment to work with.
 
       With -f <file_xml>, only deploy a single file.
 
@@ -38,7 +38,14 @@ module AdminModule
 
       ConfigHelper.page_factory.login_page.login_as user, pass
       gdl = Guideline.new ConfigHelper.page_factory
-      gdl.deploy(srcdir, comments)
+
+      if options[:file]
+        srcfile = Pathname(srcdir) + options[:file]
+        gdl.deploy_file(srcfile, comments)
+      else
+        gdl.deploy(srcdir, comments)
+      end
+
       ConfigHelper.page_factory.login_page.logout
     end
 
@@ -50,12 +57,31 @@ module AdminModule
       By default, all configured guidelines are versioned.
       Use -t option to version a specific guideline.
 
-      With -e <env>, sets the environment to deploy to.
+      With -e <env>, sets the environment to work with.
 
       With -t <gdlname>, versions a specific guideline.
     LD
     option :target, :banner => "<target_gdl>", :aliases => :t
     def version(comments = nil)
+      ConfigHelper.env = options[:environment] unless options[:environment].nil?
+
+      user, pass = credentials
+      if user.empty? || pass.empty?
+        say "aborting deploy", :red
+        return
+      end
+
+      gdls = [options[:target]] unless options[:target].nil?
+      gdls = AdminModule.configuration.xmlmaps.values.uniq if options[:target].nil?
+      if gdls.empty?
+        say "aborting version. no guidelines configured", :red
+        return
+      end
+
+      ConfigHelper.page_factory.login_page.login_as user, pass
+      gdl = Guideline.new ConfigHelper.page_factory
+      gdl.version(gdls, comments)
+      ConfigHelper.page_factory.login_page.logout
     end
 
   private

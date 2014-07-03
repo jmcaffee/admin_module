@@ -22,7 +22,7 @@ module AdminModule
       @page_factory = page_factory
     end
 
-    def deploy srcdir, comments
+    def deploy srcdir, comments = nil
       files = Pathname(srcdir).each_child.select { |f| f.file? && f.extname == '.xml' }
 
       files.each do |file|
@@ -30,13 +30,19 @@ module AdminModule
       end
     end
 
-    def deploy_file xmlfile, comments
+    def deploy_file xmlfile, comments = nil
       gdlname = mapped_guideline(xmlfile)
 
       page = guidelines_page
         .open_guideline(gdlname)
         .add_version
-        .upload(xmlfile, comments)
+        .upload(xmlfile, comments_or_default(comments))
+    end
+
+    def version gdls, comments = nil
+      page = guidelines_page
+        .version_all
+        .version(gdls, comments_or_default(comments))
     end
 
   private
@@ -46,7 +52,12 @@ module AdminModule
     end
 
     def mapped_guideline xmlfile
-      AdminModule.configuration.xmlmap xmlfile
+      AdminModule.configuration.xmlmap Pathname(xmlfile).basename('.xml').to_s
+    end
+
+    def comments_or_default comments
+      return AdminModule.configuration.default_comment if comments.nil? || comments.empty?
+      comments
     end
   end # class Guideline
 end # module
