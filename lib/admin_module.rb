@@ -5,6 +5,12 @@ require 'admin_module/page_factory'
 require 'admin_module/pages'
 require 'admin_module/guideline'
 
+if ENV['DEBUG'].nil?
+  $debug = false
+else
+  $debug = true
+end
+
 module AdminModule
   class << self
     attr_accessor :configuration
@@ -48,7 +54,7 @@ module AdminModule
 
     File.open(path, 'r') do |f|
       self.configuration = YAML.load(f)
-      puts "configuration loaded from #{path}"
+      puts "configuration loaded from #{path}" if $debug
     end
   end
 

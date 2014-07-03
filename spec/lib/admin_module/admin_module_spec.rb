@@ -2,6 +2,14 @@ require 'spec_helper'
 
 describe AdminModule do
 
+  before do
+    # Reset config to a known state.
+    AdminModule.configuration.reset
+    # Delete any config file that may have been created.
+    file = Pathname.pwd + '.admin_module'
+    file.delete if file.exist?
+  end
+
   let(:config) do
     AdminModule.configure
     AdminModule.configuration
