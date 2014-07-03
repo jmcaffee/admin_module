@@ -6,7 +6,11 @@ require 'admin_module'
 describe 'config command' do
 
   before do
+    # Reset config to a known state.
     AdminModule.configuration.reset
+    # Delete any config file that may have been created.
+    file = Pathname.pwd + '.admin_module'
+    file.delete if file.exist?
   end
 
   let(:cli) { AdminModule::CLI }
@@ -21,6 +25,48 @@ describe 'config command' do
     expect( output ).to include "config show [CATEGORY]"
     expect( output ).to include "config del [CATEGORY]"
     expect( output ).to include "config timeout <seconds>"
+    expect( output ).to include "config defcomment '<comment>'"
+    expect( output ).to include "config defenv <envname>"
+  end
+
+  context 'config write' do
+
+    context "no filename/path provided" do
+      it "writes a configuration file to the current working directory" do
+        working_dir = clean_output_dir('config')
+
+        output = ""
+        FileUtils.cd working_dir do
+          output = capture_output do
+            cli.start %w(config write)
+          end
+        end
+
+        output_file = Pathname(working_dir) + '.admin_module'
+
+        expect( output ).to include "configuration written to #{output_file.to_s}"
+        expect( output_file.exist? ).to eq true
+      end
+    end
+
+    context "filename/path provided" do
+      it "writes a configuration file to the specified directory" do
+        working_dir = clean_output_dir('config')
+        final_dir = clean_output_dir('config/nested/dir')
+
+        output = ""
+        FileUtils.cd working_dir do
+          output = capture_output do
+            cli.start %W(config write #{final_dir.to_s})
+          end
+        end
+
+        output_file = Pathname(final_dir) + '.admin_module'
+
+        expect( output_file.exist? ).to eq true
+        expect( output ).to include "configuration written to #{output_file.to_s}"
+      end
+    end
   end
 
   context 'config timeout' do
@@ -74,6 +120,24 @@ describe 'config command' do
       end
 
       expect( output ).to include "argument error: environment 'nope' has not been configured"
+    end
+  end
+
+  context 'config defcomment' do
+
+    it "returns the current default comment when no argument provided" do
+      output = capture_output do
+        cli.start %w(config defcomment)
+      end
+
+      expect( output ).to include 'default comment: no comment'
+    end
+
+    it "sets the default comment when an argument is provided" do
+      cmt = "new default comment"
+      cli.start %W(config defcomment #{cmt})
+
+      expect( AdminModule.configuration.default_comment ).to eq 'new default comment'
     end
   end
 

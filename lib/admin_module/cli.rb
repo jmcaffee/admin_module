@@ -44,7 +44,6 @@ require 'admin_module/pages'
 require_relative 'cli/cli_parameter'
 require_relative 'cli/cli_rule'
 require_relative 'cli/cli_ruleset'
-require_relative 'cli/cli_guideline'
 require_relative 'cli/cli_lock'
 require_relative 'cli/cli_stage'
 

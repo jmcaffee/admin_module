@@ -15,39 +15,59 @@ module AdminModule
 
       desc "env <envname> <url>", "add a environment url"
       def env(envname, url)
-        if AdminModule.configuration.base_urls.key? envname.to_sym
-          say "environment '#{envname}' already exists"
-          return
-        end
+        with_loaded_config do
+          if AdminModule.configuration.base_urls.key? envname.to_sym
+            say "environment '#{envname}' already exists"
+            return
+          end
 
-        AdminModule.configuration.base_urls[envname.to_sym] = url
+          AdminModule.configuration.base_urls[envname.to_sym] = url
+        end
       end
 
       desc "xmlmap <xmlfile> <gdlname>", "map an xml file name to a guideline"
       def xmlmap(xmlfile, gdlname)
-        xmlfile = File.basename(xmlfile, '.xml')
-        if AdminModule.configuration.xmlmaps.key? xmlfile
-          say "a mapping already exists for '#{xmlfile}'"
-          say "delete and re-add the mapping to change it"
-          return
-        end
+        with_loaded_config do
+          xmlfile = File.basename(xmlfile, '.xml')
+          if AdminModule.configuration.xmlmaps.key? xmlfile
+            say "a mapping already exists for '#{xmlfile}'"
+            say "delete and re-add the mapping to change it"
+            return
+          end
 
-        AdminModule.configuration.xmlmaps[xmlfile] = gdlname
+          AdminModule.configuration.xmlmaps[xmlfile] = gdlname
+        end
       end
 
       desc "credentials <envname> <username> <pass>", "add login credentials for an environment"
       def credentials(envname, username, pass)
-        unless AdminModule.configuration.base_urls.key? envname.to_sym
-          say "environment '#{envname}' doesn't exist"
-          say "create environment before adding credentials"
-          return
+        with_loaded_config do
+          unless AdminModule.configuration.base_urls.key? envname.to_sym
+            say "environment '#{envname}' doesn't exist"
+            say "create environment before adding credentials"
+            return
+          end
+
+          if AdminModule.configuration.credentials.key? envname.to_sym
+            say "credentials already exist for environment '#{envname}'"
+            return
+          end
+          AdminModule.configuration.credentials[envname.to_sym] = [username, pass]
+        end
+      end
+
+    private
+
+      def with_loaded_config &block
+        fail "expecting block" unless block_given?
+
+        unless AdminModule.find_config_path.nil?
+          AdminModule.load_configuration
         end
 
-        if AdminModule.configuration.credentials.key? envname.to_sym
-          say "credentials already exist for environment '#{envname}'"
-          return
-        end
-        AdminModule.configuration.credentials[envname.to_sym] = [username, pass]
+        yield
+
+        AdminModule.save_configuration
       end
     end
 
@@ -59,24 +79,28 @@ module AdminModule
 
       desc "envs", "display configured environments"
       def envs
-        say "Environments:"
+        with_loaded_config do
+          say "Environments:"
 
-        output = []
-        AdminModule.configuration.base_urls.each do |env, url|
-          output << [env, url]
+          output = []
+          AdminModule.configuration.base_urls.each do |env, url|
+            output << [env, url]
+          end
+          print_table output, indent: 8
         end
-        print_table output, indent: 8
       end
 
       desc "xmlmaps", "display configured xmlmaps"
       def xmlmaps
-        say "xmlmaps:"
+        with_loaded_config do
+          say "xmlmaps:"
 
-        output = []
-        AdminModule.configuration.xmlmaps.each do |file, gdl|
-          output << [file, gdl]
+          output = []
+          AdminModule.configuration.xmlmaps.each do |file, gdl|
+            output << [file, gdl]
+          end
+          print_table output, indent: 8
         end
-        print_table output, indent: 8
       end
 
       desc "credentials <envname>", "display configured credentials for an environment"
@@ -87,15 +111,29 @@ module AdminModule
         environments will be displayed.
       LD
       def credentials(envname=nil)
-        say "credentials:"
+        with_loaded_config do
+          say "credentials:"
 
-        output = []
-        AdminModule.configuration.credentials.each do |env, cred|
-          if envname.nil? || env == envname.to_sym
-            output << [env, cred.first, cred.last]
+          output = []
+          AdminModule.configuration.credentials.each do |env, cred|
+            if envname.nil? || env == envname.to_sym
+              output << [env, cred.first, cred.last]
+            end
           end
+          print_table output, indent: 8
         end
-        print_table output, indent: 8
+      end
+
+    private
+
+      def with_loaded_config &block
+        fail "expecting block" unless block_given?
+
+        unless AdminModule.find_config_path.nil?
+          AdminModule.load_configuration
+        end
+
+        yield
       end
     end
 
@@ -132,6 +170,32 @@ module AdminModule
 
     desc "del [CATEGORY]", "delete a configuration value for [CATEGORY]"
     subcommand "del", Del
+
+
+    desc "write <filedir>", "write a configuration file"
+    long_desc <<-LD
+      Write a configuration file to disk.
+
+      If <filedir> is provided, config file will be written to the
+      given directory.
+
+      If <filedir> is not given, admin_module will search up the
+      directory tree attempting to find a configuration file, if
+      found, it will be used, otherwise the configuration file will be
+      written to the current working directory.
+
+      If you do not yet have a configuration file, this should be
+      written before any other modifications so the config changes
+      have someplace to be written to.
+    LD
+    def write(filedir = nil)
+      if ! filedir.nil?
+        filedir = Pathname(filedir) + '.admin_module' unless filedir.to_s.end_with?('/.admin_module')
+      end
+
+      outpath = AdminModule.save_configuration filedir
+      say "configuration written to #{outpath.to_s}", :green
+    end
 
 
     desc "timeout <seconds>", "show or set the browser timeout period"
@@ -174,6 +238,25 @@ module AdminModule
       end
 
       say "argument error: environment '#{envname}' has not been configured"
+    end
+
+
+    desc "defcomment '<comment>'", "show or set the default comment"
+    long_desc <<-LD
+      Show or set the default comment.
+
+      The default comment will be applied to deployments and versions when
+      no comment is provided.
+
+      A good example of a default comment would be your initials.
+    LD
+    def defcomment(comment=nil)
+      if comment.nil?
+        say "default comment: #{AdminModule.configuration.default_comment}"
+        return
+      end
+
+      AdminModule.configuration.default_comment = comment
     end
   end # Config
 end # AdminModule

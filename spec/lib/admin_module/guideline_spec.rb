@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe AdminModule::Guideline do
 
-  context "#deploy" do
+  context "api" do
 
     let(:guidelines_page_stub) do
       obj = double('guidelines_page')
-      obj.stub(:upload).and_return(obj)
-      obj.stub(:add_version).and_return(obj)
+      allow(obj).to receive(:upload).and_return(obj)
+      allow(obj).to receive(:add_version).and_return(obj)
       obj
     end
 
@@ -18,22 +18,147 @@ describe AdminModule::Guideline do
       obj
     end
 
-    it "deploys guidelines" do
-      srcdir = data_dir('build')
+    let(:default_comment) { 'no comment' }
 
-      AdminModule.configure do |config|
-        config.xmlmaps['test1'] = 'ZTemp'
-        config.xmlmaps['test2'] = 'ZTemp'
+    context "#deploy" do
+      context "with comment" do
+        it "deploys guidelines" do
+          srcdir = data_dir('build')
+          comment = 'this is a comment'
+
+          AdminModule.configure do |config|
+            config.xmlmaps['test1'] = 'Z-TEMP'
+            config.xmlmaps['test2'] = 'Z-TEMP'
+          end
+
+          expect(page_factory.guidelines_page)
+            .to receive(:open_guideline)
+            .with('Z-TEMP')
+            .and_return(page_factory.guidelines_page)
+            .twice
+
+          expect(page_factory.guidelines_page)
+            .to receive(:add_version)
+            .twice
+
+          expect(page_factory.guidelines_page)
+            .to receive(:upload)
+            .with(anything, comment)
+            .twice
+
+          gdl = AdminModule::Guideline.new(page_factory)
+          gdl.deploy(srcdir, comment)
+        end
       end
 
-      expect(page_factory.guidelines_page)
-        .to receive(:open_guideline)
-        .with('ZTemp')
-        .and_return(page_factory.guidelines_page)
-        .twice
+      context "with no comment" do
+        it "deploys guidelines with default comment" do
+          srcdir = data_dir('build')
 
-      gdl = AdminModule::Guideline.new(:testenv, page_factory)
-      gdl.deploy(srcdir, 'this is a comment')
+          AdminModule.configure do |config|
+            config.xmlmaps['test1'] = 'Z-TEMP'
+            config.xmlmaps['test2'] = 'Z-TEMP'
+          end
+
+          expect(page_factory.guidelines_page)
+            .to receive(:open_guideline)
+            .with('Z-TEMP')
+            .and_return(page_factory.guidelines_page)
+            .twice
+
+          expect(page_factory.guidelines_page)
+            .to receive(:add_version)
+            .twice
+
+          expect(page_factory.guidelines_page)
+            .to receive(:upload)
+            .with(anything, default_comment)
+            .twice
+
+          gdl = AdminModule::Guideline.new(page_factory)
+          gdl.deploy(srcdir)
+        end
+      end
+
+      context "with xml file specified" do
+        it "deploys the guideline" do
+          srcdir = data_dir('build')
+
+          AdminModule.configure do |config|
+            config.xmlmaps['test1'] = 'Z-TEMP'
+            config.xmlmaps['test2'] = 'Z-TEMP'
+          end
+
+          expect(page_factory.guidelines_page)
+            .to receive(:open_guideline)
+            .with('Z-TEMP')
+            .and_return(page_factory.guidelines_page)
+
+          expect(page_factory.guidelines_page)
+            .to receive(:add_version)
+            .and_return(page_factory.guidelines_page)
+
+          file_to_upload = Pathname(srcdir) + 'test1.xml'
+
+          expect(page_factory.guidelines_page)
+            .to receive(:upload)
+            .with(file_to_upload, default_comment)
+
+          gdl = AdminModule::Guideline.new(page_factory)
+          gdl.deploy_file(file_to_upload)
+        end
+      end
+    end
+
+    context "#version" do
+      context "with comment" do
+        it "versions guidelines" do
+          comment = 'this is a comment'
+          gdls = []
+
+          AdminModule.configure do |config|
+            config.xmlmaps['test1'] = 'Z-TEMP1'
+            config.xmlmaps['test2'] = 'Z-TEMP2'
+
+            gdls = config.xmlmaps.values
+          end
+
+          expect(page_factory.guidelines_page)
+            .to receive(:version_all)
+            .and_return(page_factory.guidelines_page)
+
+          expect(page_factory.guidelines_page)
+            .to receive(:version)
+            .with(gdls, comment)
+
+          gdl = AdminModule::Guideline.new(page_factory)
+          gdl.version(gdls, comment)
+        end
+      end
+
+      context "with no comment" do
+        it "versions guidelines with default comment" do
+          gdls = []
+
+          AdminModule.configure do |config|
+            config.xmlmaps['test1'] = 'Z-TEMP1'
+            config.xmlmaps['test2'] = 'Z-TEMP2'
+
+            gdls = config.xmlmaps.values
+          end
+
+          expect(page_factory.guidelines_page)
+            .to receive(:version_all)
+            .and_return(page_factory.guidelines_page)
+
+          expect(page_factory.guidelines_page)
+            .to receive(:version)
+            .with(gdls, default_comment)
+
+          gdl = AdminModule::Guideline.new(page_factory)
+          gdl.version(gdls)
+        end
+      end
     end
   end
 end
