@@ -129,6 +129,7 @@ EOS
     # The entire 1st version row (TR) element:
     version_row = doc.css("#dgrVersions > tbody > tr:nth-child(2)")
 
+    # We have to account for HTML encodings when comparing comments.
     unless version_row.to_s.include?(CGI.escapeHTML(comments))
       add_error("Version upload not completed. Comment not found.")
     end
