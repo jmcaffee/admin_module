@@ -7,9 +7,6 @@
 # Website::   http://ktechsystems.com
 ##############################################################################
 
-#require 'admin_module/pages'
-
-
 module AdminModule
   class Gdl < Thor
     class_option :environment, :banner => "dev", :aliases => :e
@@ -71,9 +68,10 @@ module AdminModule
   private
 
     def credentials
-      user, pass = ConfigHelper.credentials
+      config = AdminModule.configuration
+      user, pass = config.user_credentials
       if user.nil? || pass.nil?
-        user = ask "username for #{ConfigHelper.env} environment:"
+        user = ask "username for #{config.current_env} environment:"
         pass = ask "password:"
       end
       [user, pass]
