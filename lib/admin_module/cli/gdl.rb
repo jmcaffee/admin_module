@@ -82,7 +82,7 @@ module AdminModule
     def client
       return @client unless @client.nil?
 
-      @client = AdminModule::Client.new
+      @client = AdminModule.client
       @client.env = options[:environment] unless options[:environment].nil?
 
       user, pass = credentials
