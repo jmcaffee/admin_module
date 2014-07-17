@@ -28,16 +28,7 @@ module AdminModule
     option :file, :banner => "<file_xml>", :aliases => :f
     option :target, :banner => "<target_gdl>", :aliases => :t
     def deploy(srcdir, comments = nil)
-      ConfigHelper.env = options[:environment] unless options[:environment].nil?
-
-      user, pass = credentials
-      if user.empty? || pass.empty?
-        say "aborting deploy", :red
-        return
-      end
-
-      ConfigHelper.page_factory.login_page.login_as user, pass
-      gdl = Guideline.new ConfigHelper.page_factory
+      gdl = client.guideline
 
       if options[:file]
         srcfile = Pathname(srcdir) + options[:file]
@@ -46,7 +37,7 @@ module AdminModule
         gdl.deploy(srcdir, comments)
       end
 
-      ConfigHelper.page_factory.login_page.logout
+      client.logout
     end
 
     desc "version <comments>",
@@ -63,13 +54,7 @@ module AdminModule
     LD
     option :target, :banner => "<target_gdl>", :aliases => :t
     def version(comments = nil)
-      ConfigHelper.env = options[:environment] unless options[:environment].nil?
-
-      user, pass = credentials
-      if user.empty? || pass.empty?
-        say "aborting deploy", :red
-        return
-      end
+      gdl = client.guideline
 
       gdls = [options[:target]] unless options[:target].nil?
       gdls = AdminModule.configuration.xmlmaps.values.uniq if options[:target].nil?
@@ -78,10 +63,9 @@ module AdminModule
         return
       end
 
-      ConfigHelper.page_factory.login_page.login_as user, pass
-      gdl = Guideline.new ConfigHelper.page_factory
       gdl.version(gdls, comments)
-      ConfigHelper.page_factory.login_page.logout
+
+      client.logout
     end
 
   private
@@ -93,6 +77,23 @@ module AdminModule
         pass = ask "password:"
       end
       [user, pass]
+    end
+
+    def client
+      return @client unless @client.nil?
+
+      @client = AdminModule::Client.new
+      @client.env = options[:environment] unless options[:environment].nil?
+
+      user, pass = credentials
+      if user.empty? || pass.empty?
+        say "aborting deploy", :red
+        return
+      end
+
+      @client.user = user
+      @client.password = pass
+      @client
     end
 =begin
   ##
