@@ -8,6 +8,7 @@
 ##############################################################################
 
 require 'thor'
+require 'admin_module/cli/client_access'
 require 'admin_module/cli/gdl'
 require 'admin_module/cli/config'
 

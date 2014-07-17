@@ -9,6 +9,8 @@
 
 module AdminModule
   class Gdl < Thor
+    include AdminModule::ClientAccess
+
     class_option :environment, :banner => "dev", :aliases => :e
 
     desc "deploy <srcdir> <comments>",
@@ -63,35 +65,6 @@ module AdminModule
       gdl.version(gdls, comments)
 
       client.logout
-    end
-
-  private
-
-    def credentials
-      config = AdminModule.configuration
-      user, pass = config.user_credentials
-      if user.nil? || pass.nil?
-        user = ask "username for #{config.current_env} environment:"
-        pass = ask "password:"
-      end
-      [user, pass]
-    end
-
-    def client
-      return @client unless @client.nil?
-
-      @client = AdminModule.client
-      @client.env = options[:environment] unless options[:environment].nil?
-
-      user, pass = credentials
-      if user.empty? || pass.empty?
-        say "aborting deploy", :red
-        return
-      end
-
-      @client.user = user
-      @client.password = pass
-      @client
     end
   end # Gdl
 end # AdminModule
