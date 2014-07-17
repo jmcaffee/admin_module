@@ -9,6 +9,5 @@ Signal.trap("INT") { exit 1 }
 
 require 'admin_module'
 
-require 'admin_module/cli'
-AdminModule::CLI.start(ARGV, :debug => true)
+AdminModule::Runner.new(ARGV.dup).execute!
 
