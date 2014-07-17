@@ -4,6 +4,7 @@ require "admin_module/cli"
 require 'admin_module/page_factory'
 require 'admin_module/pages'
 require 'admin_module/guideline'
+require 'admin_module/rulesets'
 require 'admin_module/client'
 
 if ENV['DEBUG'].nil?

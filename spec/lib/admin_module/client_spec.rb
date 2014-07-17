@@ -35,7 +35,7 @@ describe AdminModule::Client do
   end
 
   context "#guideline" do
-    it "logs into the current env and returns a pre-configured guideline object" do
+    it "logs into the current env and returns a pre-configured Guideline object" do
 
       expect(login_page)
         .to receive(:login_as)
@@ -45,6 +45,20 @@ describe AdminModule::Client do
       client.password = 'testpass'
 
       expect( client.guideline ).to_not be nil
+    end
+  end
+
+  context "#rulesets" do
+    it "logs into the current env and returns a pre-configured Rulesets object" do
+
+      expect(login_page)
+        .to receive(:login_as)
+        .with('testuser', 'testpass')
+
+      client.user = 'testuser'
+      client.password = 'testpass'
+
+      expect( client.rulesets ).to_not be nil
     end
   end
 
