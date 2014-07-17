@@ -28,137 +28,119 @@ describe 'gdl command' do
 
   let(:cli) { AdminModule::CLI }
 
+  let(:guideline_obj) { mock_guideline(page_factory) }
+
+  before do
+    allow_any_instance_of(AdminModule::Client)
+      .to receive(:page_factory)
+      .and_return(page_factory)
+
+    allow_any_instance_of(AdminModule::Client)
+      .to receive(:guideline)
+      .and_return(guideline_obj)
+
+    AdminModule.configure do |config|
+      config.credentials[:dev] = ['user', 'pass']
+      config.xmlmaps['test1'] = 'Z-TEMP'
+      config.xmlmaps['test2'] = 'Z-TEMP2'
+    end
+  end
+
   context "gdl deploy" do
     it "deploys multiple guidelines" do
-      AdminModule::ConfigHelper.page_factory = page_factory
+      expect_any_instance_of(AdminModule::Client)
+        .to receive(:user=)
+        .with('user')
 
-      AdminModule.configure do |config|
-        config.credentials[:dev] = ['user', 'pass']
-        config.xmlmaps['test1'] = 'Z-TEMP'
-        config.xmlmaps['test2'] = 'Z-TEMP'
-      end
+      expect_any_instance_of(AdminModule::Client)
+        .to receive(:password=)
+        .with('pass')
 
-      expect(page_factory.login_page)
-        .to receive(:login_as)
-        .with('user', 'pass')
+      expect_any_instance_of(AdminModule::Client)
+        .to receive(:guideline)
 
-      expect(page_factory.guidelines_page)
-        .to receive(:open_guideline)
-        .with('Z-TEMP')
-        .and_return(guideline_page_stub)
-        .twice
+      expect(guideline_obj)
+        .to receive(:deploy)
 
-      expect(guideline_page_stub)
-        .to receive(:add_version)
-        .and_return(guideline_page_stub)
-        .twice
-
-      expect(guideline_page_stub)
-        .to receive(:upload)
-        .and_return(page_factory.guidelines_page)
-        .twice
-
-      expect(page_factory.login_page)
+      expect_any_instance_of(AdminModule::Client)
         .to receive(:logout)
 
       build_dir = data_dir('build')
-      cli.start %W(gdl deploy -e dev #{build_dir})
+      run_with_args %W(gdl deploy -e dev #{build_dir})
     end
 
     it "deploys a single guideline" do
-      AdminModule::ConfigHelper.page_factory = page_factory
-
-      AdminModule.configure do |config|
-        config.credentials[:dev] = ['user', 'pass']
-        config.xmlmaps['test1'] = 'Z-TEMP'
-        config.xmlmaps['test2'] = 'Z-TEMP'
-      end
-
       build_dir = data_dir('build')
       file_to_upload = Pathname(build_dir) + 'test1.xml'
 
-      expect(page_factory.login_page)
-        .to receive(:login_as)
-        .with('user', 'pass')
+      expect_any_instance_of(AdminModule::Client)
+        .to receive(:user=)
+        .with('user')
 
-      expect(page_factory.guidelines_page)
-        .to receive(:open_guideline)
-        .with('Z-TEMP')
-        .and_return(guideline_page_stub)
+      expect_any_instance_of(AdminModule::Client)
+        .to receive(:password=)
+        .with('pass')
 
-      expect(guideline_page_stub)
-        .to receive(:add_version)
-        .and_return(guideline_page_stub)
+      expect_any_instance_of(AdminModule::Client)
+        .to receive(:guideline)
 
-      expect(guideline_page_stub)
-        .to receive(:upload)
-        .with(file_to_upload, default_comment)
+      expect(guideline_obj)
+        .to receive(:deploy_file)
+        .with(file_to_upload, anything)
 
-      expect(page_factory.login_page)
+      expect_any_instance_of(AdminModule::Client)
         .to receive(:logout)
 
-      cli.start %W(gdl deploy -f test1.xml -e dev #{build_dir})
+      run_with_args %W(gdl deploy -f test1.xml -e dev #{build_dir})
     end
   end
 
   context "gdl version" do
     it "versions multiple guidelines" do
-      AdminModule::ConfigHelper.page_factory = page_factory
+      expect_any_instance_of(AdminModule::Client)
+        .to receive(:user=)
+        .with('user')
 
-      AdminModule.configure do |config|
-        config.credentials[:dev] = ['user', 'pass']
-        config.xmlmaps['test1'] = 'Z-TEMP'
-        config.xmlmaps['test2'] = 'Z-TEMP2'
-      end
+      expect_any_instance_of(AdminModule::Client)
+        .to receive(:password=)
+        .with('pass')
 
-      expect(page_factory.login_page)
-        .to receive(:login_as)
-        .with('user', 'pass')
+      expect_any_instance_of(AdminModule::Client)
+        .to receive(:guideline)
 
-      expect(page_factory.guidelines_page)
-        .to receive(:version_all)
-        .and_return(page_factory.guidelines_page)
-
-      expect(page_factory.guidelines_page)
+      expect(guideline_obj)
         .to receive(:version)
-        .with(['Z-TEMP', 'Z-TEMP2'], default_comment)
-        .and_return(page_factory.guidelines_page)
+        .with(['Z-TEMP', 'Z-TEMP2'], anything)
 
-      expect(page_factory.login_page)
+      expect_any_instance_of(AdminModule::Client)
         .to receive(:logout)
 
       build_dir = data_dir('build')
-      cli.start %w(gdl version -e dev)
+      run_with_args %w(gdl version -e dev)
     end
 
     context "with --target option" do
       it "versions specified guideline" do
-        AdminModule::ConfigHelper.page_factory = page_factory
+        expect_any_instance_of(AdminModule::Client)
+          .to receive(:user=)
+          .with('user')
 
-        AdminModule.configure do |config|
-          config.credentials[:dev] = ['user', 'pass']
-          config.xmlmaps['test1'] = 'Z-TEMP'
-          config.xmlmaps['test2'] = 'Z-TEMP2'
-        end
+        expect_any_instance_of(AdminModule::Client)
+          .to receive(:password=)
+          .with('pass')
 
-        expect(page_factory.login_page)
-          .to receive(:login_as)
-          .with('user', 'pass')
+        expect_any_instance_of(AdminModule::Client)
+          .to receive(:guideline)
 
-        expect(page_factory.guidelines_page)
-          .to receive(:version_all)
-          .and_return(page_factory.guidelines_page)
-
-        expect(page_factory.guidelines_page)
+        expect(guideline_obj)
           .to receive(:version)
-          .with(['TestGdl'], anything())
-          .and_return(page_factory.guidelines_page)
+          .with(['TestGdl'], anything)
 
-        expect(page_factory.login_page)
+        expect_any_instance_of(AdminModule::Client)
           .to receive(:logout)
 
         build_dir = data_dir('build')
-        cli.start %w(gdl version -e dev --target TestGdl)
+        run_with_args %w(gdl version -e dev --target TestGdl)
       end
     end
   end
