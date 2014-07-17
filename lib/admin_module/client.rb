@@ -32,6 +32,11 @@ module AdminModule
       Guideline.new page_factory
     end
 
+    def rulesets
+      login
+      Rulesets.new page_factory
+    end
+
     def page_factory
       @page_factory ||= AdminModule::PageFactory.new
     end

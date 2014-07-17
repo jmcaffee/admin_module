@@ -15,6 +15,7 @@ describe 'admin_module executable' do
     expect( output ).to include "help [COMMAND]"
     expect( output ).to include "gdl [COMMAND]"
     expect( output ).to include "config [COMMAND]"
+    expect( output ).to include "ruleset [COMMAND]"
   end
 
 =begin

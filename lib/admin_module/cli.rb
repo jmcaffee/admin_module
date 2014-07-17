@@ -11,6 +11,7 @@ require 'thor'
 require 'admin_module/cli/client_access'
 require 'admin_module/cli/gdl'
 require 'admin_module/cli/config'
+require 'admin_module/cli/ruleset'
 
 
 module AdminModule
@@ -31,6 +32,9 @@ module AdminModule
 
     desc "config [COMMAND]", "modify configuration values"
     subcommand "config", AdminModule::Config
+
+    desc "ruleset [COMMAND]", "run a ruleset command"
+    subcommand "ruleset", AdminModule::Ruleset
 
     #def guideline
     #  require 'admin_module/cli/guideline_command'
