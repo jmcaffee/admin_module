@@ -32,18 +32,22 @@ class RulesetPage
     clear_browser_alert
 
     self.ruleset_name = new_name
+
+    self
   end
 
   def save
     clear_browser_alert
 
     self.save_button
+    RulesetsPage.new(@browser, false)
   end
 
   def cancel
     clear_browser_alert
 
     self.cancel_button
+    RulesetsPage.new(@browser, false)
   end
 
 private
