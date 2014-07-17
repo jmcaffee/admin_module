@@ -14,7 +14,7 @@ module AdminModule
       user, pass = config.user_credentials
       if user.nil? || pass.nil?
         user = ask "username for #{config.current_env} environment:"
-        pass = ask "password:"
+        pass = ask "password:", echo: false
       end
       [user, pass]
     end
