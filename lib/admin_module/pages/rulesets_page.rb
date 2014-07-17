@@ -42,8 +42,8 @@ class RulesetsPage
 
     clear_browser_alert
 
-    # Return the url of the landing page.
-    current_url
+    # Return the next page object
+    RulesetPage.new(@browser, false)
   end
 
 private
