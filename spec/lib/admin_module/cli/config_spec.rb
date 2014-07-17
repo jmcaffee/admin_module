@@ -24,47 +24,43 @@ describe 'config command' do
     expect( output ).to include "config add [CATEGORY]"
     expect( output ).to include "config show [CATEGORY]"
     expect( output ).to include "config del [CATEGORY]"
+    expect( output ).to include "config init"
     expect( output ).to include "config timeout <seconds>"
     expect( output ).to include "config defcomment '<comment>'"
     expect( output ).to include "config defenv <envname>"
   end
 
-  context 'config write' do
+  context 'config init' do
 
     context "no filename/path provided" do
       it "writes a configuration file to the current working directory" do
-        working_dir = clean_output_dir('config')
-
-        output = ""
-        FileUtils.cd working_dir do
+        with_target_dir('config/init') do |working_dir|
           output = capture_output do
-            cli.start %w(config write)
+            run_with_args %w(config init)
           end
+
+          output_file = Pathname(working_dir) + '.admin_module'
+
+          expect( output ).to include "configuration written to #{output_file.to_s}"
+          expect( output_file.exist? ).to eq true
         end
-
-        output_file = Pathname(working_dir) + '.admin_module'
-
-        expect( output ).to include "configuration written to #{output_file.to_s}"
-        expect( output_file.exist? ).to eq true
       end
     end
 
     context "filename/path provided" do
       it "writes a configuration file to the specified directory" do
-        working_dir = clean_output_dir('config')
-        final_dir = clean_output_dir('config/nested/dir')
+        with_target_dir('config/init') do |working_dir|
+          final_dir = clean_target_dir(working_dir + 'nested/dir')
 
-        output = ""
-        FileUtils.cd working_dir do
           output = capture_output do
-            cli.start %W(config write #{final_dir.to_s})
+            run_with_args %W(config init #{final_dir.to_s})
           end
+
+          output_file = Pathname(final_dir) + '.admin_module'
+
+          expect( output_file.exist? ).to eq true
+          expect( output ).to include "configuration written to #{output_file.to_s}"
         end
-
-        output_file = Pathname(final_dir) + '.admin_module'
-
-        expect( output_file.exist? ).to eq true
-        expect( output ).to include "configuration written to #{output_file.to_s}"
       end
     end
   end
@@ -72,72 +68,102 @@ describe 'config command' do
   context 'config timeout' do
 
     it "returns the current timeout when no argument provided" do
-      output = capture_output do
-        cli.start %w(config timeout)
-      end
+      with_target_dir('config/timeout') do
+        run_with_args %w(config init -q)
 
-      expect( output ).to include 'browser timeout: 360'
+        output = capture_output do
+          run_with_args %w(config timeout)
+        end
+
+        expect( output ).to include 'browser timeout: 360'
+      end
     end
 
     it "sets the current timeout when an argument is provided" do
-      cli.start %w(config timeout 180)
+      with_target_dir('config/timout') do
+        run_with_args %w(config init -q)
 
-      expect( AdminModule.configuration.browser_timeout ).to eq 180
+        run_with_args %w(config timeout 180)
+
+        expect( AdminModule.configuration.browser_timeout ).to eq 180
+      end
     end
 
     it "displays an argument error if timeout value is not an integer" do
-      output = capture_output do
-        cli.start %w(config timeout blag)
-      end
+      with_target_dir('config/timeout') do
+        output = capture_output do
+          run_with_args %w(config timeout blag)
+        end
 
-      expect( output ).to include 'argument error: seconds must be an integer'
+        expect( output ).to include 'argument error: seconds must be an integer'
+      end
     end
   end
 
   context 'config defenv' do
 
     it "returns the current default environment when no argument provided" do
-      cli.start %w(config add env test1 http://example.com)
-      cli.start %w(config defenv test1)
+      with_target_dir('config/defenv') do
+        run_with_args %w(config init -q)
 
-      output = capture_output do
-        cli.start %w(config defenv)
+        run_with_args %w(config add env test1 http://example.com)
+        run_with_args %w(config defenv test1)
+
+        output = capture_output do
+          run_with_args %w(config defenv)
+        end
+
+        expect( output ).to include 'default environment: test1'
       end
-
-      expect( output ).to include 'default environment: test1'
     end
 
     it "sets the current default environment when an argument is provided" do
-      cli.start %w(config add env test2 http://example.com)
-      cli.start %w(config defenv test2)
+      with_target_dir('config/defenv') do
+        run_with_args %w(config init -q)
 
-      expect( AdminModule.configuration.default_environment ).to eq :test2
+        run_with_args %w(config add env test2 http://example.com)
+        run_with_args %w(config defenv test2)
+
+        expect( AdminModule.configuration.default_environment ).to eq :test2
+      end
     end
 
     it "displays an argument error if environment doesn't exist" do
-      output = capture_output do
-        cli.start %w(config defenv nope)
-      end
+      with_target_dir('config/defenv') do
+        run_with_args %w(config init -q)
 
-      expect( output ).to include "argument error: environment 'nope' has not been configured"
+        output = capture_output do
+          run_with_args %w(config defenv nope)
+        end
+
+        expect( output ).to include "argument error: environment 'nope' has not been configured"
+      end
     end
   end
 
   context 'config defcomment' do
 
     it "returns the current default comment when no argument provided" do
-      output = capture_output do
-        cli.start %w(config defcomment)
-      end
+      with_target_dir('config/defcomment') do
+        run_with_args %w(config init -q)
 
-      expect( output ).to include 'default comment: no comment'
+        output = capture_output do
+          run_with_args %w(config defcomment)
+        end
+
+        expect( output ).to include 'default comment: no comment'
+      end
     end
 
     it "sets the default comment when an argument is provided" do
-      cmt = "new default comment"
-      cli.start %W(config defcomment #{cmt})
+      with_target_dir('config/defcomment') do
+        run_with_args %w(config init -q)
 
-      expect( AdminModule.configuration.default_comment ).to eq 'new default comment'
+        cmt = "new default comment"
+        run_with_args %W(config defcomment #{cmt})
+
+        expect( AdminModule.configuration.default_comment ).to eq 'new default comment'
+      end
     end
   end
 
@@ -145,7 +171,7 @@ describe 'config command' do
 
     it "returns help info" do
       output = capture_output do
-        cli.start %w(config help add)
+        run_with_args %w(config help add)
       end
 
       expect( output ).to include "add help [COMMAND]"
@@ -157,78 +183,106 @@ describe 'config command' do
     context "env" do
 
       it "adds an environment" do
-        cli.start %w(config add env test http://example.com)
+        with_target_dir('config/add/env') do
+          run_with_args %w(config init -q)
 
-        actual = AdminModule.configuration.base_urls[:test]
-        expect( actual ).to eq 'http://example.com'
+          run_with_args %w(config add env test http://example.com)
+
+          actual = AdminModule.configuration.base_urls[:test]
+          expect( actual ).to eq 'http://example.com'
+        end
       end
 
       it "displays an error if environment already exists" do
-        cli.start %w(config add env test http://example.com)
+        with_target_dir('config/add/env') do
+          run_with_args %w(config init -q)
 
-        output = capture_output do
-          cli.start %w(config add env test http://example.com)
+          run_with_args %w(config add env test http://example.com)
+
+          output = capture_output do
+            run_with_args %w(config add env test http://example.com)
+          end
+
+          expect( output ).to include "environment 'test' already exists"
         end
-
-        expect( output ).to include "environment 'test' already exists"
       end
     end
 
     context "xmlmap" do
 
       it "adds an xml file to guideline mapping" do
-        cli.start %w(config add xmlmap file.xml Guideline)
+        with_target_dir('config/add/xmlmap') do
+          run_with_args %w(config init -q)
 
-        actual = AdminModule.configuration.xmlmaps['file']
-        expect( actual ).to eq 'Guideline'
+          run_with_args %w(config add xmlmap file.xml Guideline)
+
+          actual = AdminModule.configuration.xmlmaps['file']
+          expect( actual ).to eq 'Guideline'
+        end
       end
 
       it "displays an error if the file is already mapped" do
-        cli.start %w(config add xmlmap file.xml Guideline)
+        with_target_dir('config/add/xmlmap') do
+          run_with_args %w(config init -q)
 
-        output = capture_output do
-          cli.start %w(config add xmlmap file.xml Guideline)
+          run_with_args %w(config add xmlmap file.xml Guideline)
+
+          output = capture_output do
+            run_with_args %w(config add xmlmap file.xml Guideline)
+          end
+
+          expect( output ).to include "a mapping already exists for 'file'"
+          expect( output ).to include "delete and re-add the mapping to change it"
         end
-
-        expect( output ).to include "a mapping already exists for 'file'"
-        expect( output ).to include "delete and re-add the mapping to change it"
       end
     end
 
     context "credentials" do
 
       it "adds a set of credentials" do
-        # Add an environment first...
-        cli.start %w(config add env test http://example.com)
+        with_target_dir('config/add/credentials') do
+          run_with_args %w(config init -q)
 
-        cli.start %w(config add credentials test testuser testpass)
+          # Add an environment first...
+          run_with_args %w(config add env test http://example.com)
 
-        actual_user, actual_pass = AdminModule.configuration.credentials[:test]
-        expect( actual_user ).to eq 'testuser'
-        expect( actual_pass ).to eq 'testpass'
+          run_with_args %w(config add credentials test testuser testpass)
+
+          actual_user, actual_pass = AdminModule.configuration.credentials[:test]
+          expect( actual_user ).to eq 'testuser'
+          expect( actual_pass ).to eq 'testpass'
+        end
       end
 
       it "displays an error if credentials already exist for the given env" do
-        # Add an environment first...
-        cli.start %w(config add env test http://example.com)
+        with_target_dir('config/add/credentials') do
+          run_with_args %w(config init -q)
 
-        cli.start %w(config add credentials test testuser testpass)
+          # Add an environment first...
+          run_with_args %w(config add env test http://example.com)
 
-        output = capture_output do
-          cli.start %w(config add credentials test testuser testpass)
+          run_with_args %w(config add credentials test testuser testpass)
+
+          output = capture_output do
+            run_with_args %w(config add credentials test testuser testpass)
+          end
+
+          expect( output ).to include "credentials already exist for environment 'test'"
         end
-
-        expect( output ).to include "credentials already exist for environment 'test'"
       end
 
       it "displays an error if environment hasn't been created first" do
-        output = capture_output do
-          cli.start %w(config add credentials test testuser testpass)
-        end
+        with_target_dir('config/add/credentials') do
+          run_with_args %w(config init -q)
 
-        expect( output ).to include "environment 'test' doesn't exist"
-        expect( output ).to include "create environment before adding credentials"
-        expect( AdminModule.configuration.credentials.key?(:test) ).to be false
+          output = capture_output do
+            run_with_args %w(config add credentials test testuser testpass)
+          end
+
+          expect( output ).to include "environment 'test' doesn't exist"
+          expect( output ).to include "create environment before adding credentials"
+          expect( AdminModule.configuration.credentials.key?(:test) ).to be false
+        end
       end
     end
   end
@@ -237,7 +291,7 @@ describe 'config command' do
 
     it "returns help info" do
       output = capture_output do
-        cli.start %w(config help show)
+        run_with_args %w(config help show)
       end
 
       expect( output ).to include "show help [COMMAND]"
@@ -249,69 +303,85 @@ describe 'config command' do
     context "envs" do
 
       it "displays configured environments" do
-        cli.start %w(config add env test1 http://example.com)
-        cli.start %w(config add env test2 http://example.org)
+        with_target_dir('config/show/credentials') do
+          run_with_args %w(config init -q)
 
-        output = capture_output do
-          cli.start %w(config show envs)
+          run_with_args %w(config add env test1 http://example.com)
+          run_with_args %w(config add env test2 http://example.org)
+
+          output = capture_output do
+            run_with_args %w(config show envs)
+          end
+
+          expect( output ).to include 'Environments:'
+          expect( output ).to include 'test1  http://example.com'
+          expect( output ).to include 'test2  http://example.org'
         end
-
-        expect( output ).to include 'Environments:'
-        expect( output ).to include 'test1  http://example.com'
-        expect( output ).to include 'test2  http://example.org'
       end
     end
 
     context "xmlmaps" do
 
       it "displays configured xmlmaps" do
-        gdl1 = 'Guideline 1'
-        gdl2 = 'Guideline 2'
-        cli.start %W(config add xmlmap file1.xml #{gdl1})
-        cli.start %W(config add xmlmap file2.xml #{gdl2})
+        with_target_dir('config/show/xmlmaps') do
+          run_with_args %w(config init -q)
 
-        output = capture_output do
-          cli.start %w(config show xmlmaps)
+          gdl1 = 'Guideline 1'
+          gdl2 = 'Guideline 2'
+          run_with_args %W(config add xmlmap file1.xml #{gdl1})
+          run_with_args %W(config add xmlmap file2.xml #{gdl2})
+
+          output = capture_output do
+            run_with_args %w(config show xmlmaps)
+          end
+
+          expect( output ).to include 'xmlmaps:'
+          expect( output ).to include 'file1  Guideline 1'
+          expect( output ).to include 'file2  Guideline 2'
         end
-
-        expect( output ).to include 'xmlmaps:'
-        expect( output ).to include 'file1  Guideline 1'
-        expect( output ).to include 'file2  Guideline 2'
       end
     end
 
     context "credentials" do
 
       it "displays configured credentials" do
-        cli.start %w(config add env test1 http://example.com)
-        cli.start %w(config add credentials test1 testuser1 testpass1)
+        with_target_dir('config/show/credentials') do
+          run_with_args %w(config init -q)
 
-        cli.start %w(config add env test2 http://example.org)
-        cli.start %w(config add credentials test2 testuser2 testpass2)
+          run_with_args %w(config add env test1 http://example.com)
+          run_with_args %w(config add credentials test1 testuser1 testpass1)
 
-        output = capture_output do
-          cli.start %w(config show credentials)
+          run_with_args %w(config add env test2 http://example.org)
+          run_with_args %w(config add credentials test2 testuser2 testpass2)
+
+          output = capture_output do
+            run_with_args %w(config show credentials)
+          end
+
+          expect( output ).to include 'credentials:'
+          expect( output ).to include 'test1  testuser1  testpass1'
+          expect( output ).to include 'test2  testuser2  testpass2'
         end
-
-        expect( output ).to include 'credentials:'
-        expect( output ).to include 'test1  testuser1  testpass1'
-        expect( output ).to include 'test2  testuser2  testpass2'
       end
 
       it "displays configured credentials for specified environment" do
-        cli.start %w(config add env test1 http://example.com)
-        cli.start %w(config add credentials test1 testuser1 testpass1)
+        with_target_dir('config/show/credentials') do
+          run_with_args %w(config init -q)
 
-        cli.start %w(config add env test2 http://example.org)
-        cli.start %w(config add credentials test2 testuser2 testpass2)
+          run_with_args %w(config add env test1 http://example.com)
+          run_with_args %w(config add credentials test1 testuser1 testpass1)
 
-        output = capture_output do
-          cli.start %w(config show credentials test1)
+          run_with_args %w(config add env test2 http://example.org)
+          run_with_args %w(config add credentials test2 testuser2 testpass2)
+
+          output = capture_output do
+            run_with_args %w(config show credentials test1)
+          end
+
+          expect( output ).to include 'credentials:'
+          expect( output ).to include 'test1  testuser1  testpass1'
+          expect( output ).to_not include 'test2  testuser2  testpass2'
         end
-
-        expect( output ).to include 'credentials:'
-        expect( output ).to include 'test1  testuser1  testpass1'
-        expect( output ).to_not include 'test2  testuser2  testpass2'
       end
     end
   end
@@ -320,7 +390,7 @@ describe 'config command' do
 
     it "returns help info" do
       output = capture_output do
-        cli.start %w(config help del)
+        run_with_args %w(config help del)
       end
 
       expect( output ).to include "del help [COMMAND]"
@@ -332,54 +402,74 @@ describe 'config command' do
     context "env" do
 
       it "deletes an existing environment" do
-        cli.start %w(config add env test1 http://example.com)
+        with_target_dir('config/del/env') do
+          run_with_args %w(config init -q)
 
-        cli.start %w(config del env test1)
+          run_with_args %w(config add env test1 http://example.com)
 
-        expect( AdminModule.configuration.base_urls.key?(:test1) ).to be false
+          run_with_args %w(config del env test1)
+
+          expect( AdminModule.configuration.base_urls.key?(:test1) ).to be false
+        end
       end
 
       it "deletes matching credentials when deleting an environment" do
-        cli.start %w(config add env test1 http://example.com)
-        cli.start %w(config add credentials test1 testuser1 testpass1)
+        with_target_dir('config/del/env') do
+          run_with_args %w(config init -q)
 
-        cli.start %w(config del env test1)
+          run_with_args %w(config add env test1 http://example.com)
+          run_with_args %w(config add credentials test1 testuser1 testpass1)
 
-        expect( AdminModule.configuration.base_urls.key?(:test1) ).to be false
-        expect( AdminModule.configuration.credentials.key?(:test1) ).to be false
+          run_with_args %w(config del env test1)
+
+          expect( AdminModule.configuration.base_urls.key?(:test1) ).to be false
+          expect( AdminModule.configuration.credentials.key?(:test1) ).to be false
+        end
       end
     end
 
     context "xmlmap" do
 
       it "deletes an existing xmlmap" do
-        cli.start %w(config add xmlmap file1.xml Guideline1)
+        with_target_dir('config/del/xmlmap') do
+          run_with_args %w(config init -q)
 
-        cli.start %w(config del xmlmap file1.xml)
+          run_with_args %w(config add xmlmap file1.xml Guideline1)
 
-        expect( AdminModule.configuration.xmlmaps.key?('file1') ).to be false
+          run_with_args %w(config del xmlmap file1.xml)
+
+          expect( AdminModule.configuration.xmlmaps.key?('file1') ).to be false
+        end
       end
     end
 
     context "credentials" do
 
       it "deletes existing credentials" do
-        cli.start %w(config add env test1 http://example.com)
-        cli.start %w(config add credentials test1 testuser1 testpass1)
+        with_target_dir('config/del/credentials') do
+          run_with_args %w(config init -q)
 
-        cli.start %w(config del credentials test1)
+          run_with_args %w(config add env test1 http://example.com)
+          run_with_args %w(config add credentials test1 testuser1 testpass1)
 
-        expect( AdminModule.configuration.credentials.key?(:test1) ).to be false
+          run_with_args %w(config del credentials test1)
+
+          expect( AdminModule.configuration.credentials.key?(:test1) ).to be false
+        end
       end
 
       it "does not delete matching environment when deleting credentials" do
-        cli.start %w(config add env test1 http://example.com)
-        cli.start %w(config add credentials test1 testuser1 testpass1)
+        with_target_dir('config/del/credentials') do
+          run_with_args %w(config init -q)
 
-        cli.start %w(config del credentials test1)
+          run_with_args %w(config add env test1 http://example.com)
+          run_with_args %w(config add credentials test1 testuser1 testpass1)
 
-        expect( AdminModule.configuration.base_urls.key?(:test1) ).to be true
-        expect( AdminModule.configuration.credentials.key?(:test1) ).to be false
+          run_with_args %w(config del credentials test1)
+
+          expect( AdminModule.configuration.base_urls.key?(:test1) ).to be true
+          expect( AdminModule.configuration.credentials.key?(:test1) ).to be false
+        end
       end
     end
   end
