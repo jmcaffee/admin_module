@@ -11,10 +11,6 @@ require 'admin_module/pages'
 
 module AdminModule
 
-  class BaseInterface
-    include AdminModule::Pages
-  end
-
   class Guideline
     attr_reader :page_factory
 
