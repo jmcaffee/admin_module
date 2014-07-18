@@ -15,6 +15,8 @@ module AdminModule
       if user.nil? || pass.nil?
         user = ask "username for #{config.current_env} environment:"
         pass = ask "password:", echo: false
+        # Force a new line - hiding the echo on the password eats the new line.
+        say "\n"
       end
       [user, pass]
     end
