@@ -12,6 +12,7 @@ require 'admin_module/cli/client_access'
 require 'admin_module/cli/gdl'
 require 'admin_module/cli/config'
 require 'admin_module/cli/ruleset'
+require 'admin_module/cli/rule'
 
 
 module AdminModule
@@ -35,6 +36,9 @@ module AdminModule
 
     desc "ruleset [COMMAND]", "run a ruleset command"
     subcommand "ruleset", AdminModule::Ruleset
+
+    desc "rule [COMMAND]", "run a rule command"
+    subcommand "rule", AdminModule::Rule
 
     #def guideline
     #  require 'admin_module/cli/guideline_command'

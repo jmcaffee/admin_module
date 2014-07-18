@@ -23,6 +23,10 @@ def mock_rulesets_page(nav_to_page = true)
   rulesets_page = object_double(AdminModule::Pages::RulesetsPage.new(mock_watir_browser, nav_to_page))
 end
 
+def mock_rules_page(nav_to_page = true)
+  rules_page = object_double(AdminModule::Pages::RulesPage.new(mock_watir_browser, nav_to_page))
+end
+
 def mock_page_factory_with_method(meth, obj)
   page_factory = instance_double('AdminModule::PageFactory')
   allow(page_factory).to receive(meth).and_return(obj)
@@ -34,6 +38,7 @@ def mock_page_factory
   obj.login_page = mock_login_page
   obj.guidelines_page = mock_guidelines_page
   obj.rulesets_page = mock_rulesets_page
+  obj.rules_page = mock_rules_page
   obj
 end
 
@@ -42,6 +47,7 @@ class MockPageFactory
   attr_writer :login_page
   attr_writer :guidelines_page
   attr_writer :rulesets_page
+  attr_writer :rules_page
 
   def login_page(nav_to_page = true)
     @login_page ||= mock_login_page(nav_to_page)
@@ -53,6 +59,10 @@ class MockPageFactory
 
   def rulesets_page(nav_to_page = true)
     @rulesets_page ||= mock_rulesets_page(nav_to_page)
+  end
+
+  def rules_page(nav_to_page = true)
+    @rules_page ||= mock_rules_page(nav_to_page)
   end
 end
 
@@ -87,5 +97,15 @@ def mock_rulesets(pg_factory)
   allow(mock_rulesets).to receive(:rename).and_return(nil)
 
   mock_rulesets
+end
+
+def mock_rules(pg_factory)
+  mock_rules = object_double(AdminModule::Rules.new(pg_factory))
+
+  allow(mock_rules).to receive(:list).and_return([])
+  allow(mock_rules).to receive(:rename).and_return(nil)
+  allow(mock_rules).to receive(:delete).and_return(nil)
+
+  mock_rules
 end
 

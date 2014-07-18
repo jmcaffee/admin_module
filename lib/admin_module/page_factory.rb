@@ -24,5 +24,9 @@ module AdminModule
     def rulesets_page(goto_page = true)
       return Pages::RulesetsPage.new(browser, goto_page)
     end
+
+    def rules_page(goto_page = true)
+      return Pages::RulesPage.new(browser, goto_page)
+    end
   end
 end # AdminModule

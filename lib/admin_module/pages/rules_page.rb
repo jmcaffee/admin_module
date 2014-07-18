@@ -45,8 +45,8 @@ class RulesPage
 
     clear_browser_alert
 
-    # Return the url of the landing page.
-    current_url
+    # Return the page object of the next page.
+    RulePage.new(@browser, false)
   end
 
   def delete_rule(rule_name)
@@ -56,8 +56,8 @@ class RulesPage
 
     clear_browser_alert
 
-    # Return the url of the landing page.
-    current_url
+    # Return the page object
+    self
   end
 
 private

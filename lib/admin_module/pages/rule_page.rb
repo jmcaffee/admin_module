@@ -32,18 +32,26 @@ class RulePage
     clear_browser_alert
 
     self.rule_name = new_name
+    # Return self as page object.
+    self
   end
 
   def save
     clear_browser_alert
 
     self.save_button
+
+    # Return the next page object.
+    RulesPage.new(@browser, false)
   end
 
   def cancel
     clear_browser_alert
 
     self.cancel_button
+
+    # Return the next page object.
+    RulesPage.new(@browser, false)
   end
 
 private
