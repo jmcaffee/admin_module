@@ -8,6 +8,10 @@ def mock_watir_browser
   watir_browser
 end
 
+#
+# Page Object Mocks
+#
+
 def mock_login_page(nav_to_page = true)
   login_page = object_double(AdminModule::Pages::LoginPage.new(mock_watir_browser, nav_to_page))
   allow(login_page).to receive(:login_as)#.with(anything()).and_return(nil)
@@ -27,6 +31,14 @@ def mock_rules_page(nav_to_page = true)
   rules_page = object_double(AdminModule::Pages::RulesPage.new(mock_watir_browser, nav_to_page))
 end
 
+def mock_lock_definitions_page(nav_to_page = true)
+  locks_page = object_double(AdminModule::Pages::LockDefinitionsPage.new(mock_watir_browser, nav_to_page))
+end
+
+#
+# Page Factory Mocks
+#
+
 def mock_page_factory_with_method(meth, obj)
   page_factory = instance_double('AdminModule::PageFactory')
   allow(page_factory).to receive(meth).and_return(obj)
@@ -39,6 +51,7 @@ def mock_page_factory
   obj.guidelines_page = mock_guidelines_page
   obj.rulesets_page = mock_rulesets_page
   obj.rules_page = mock_rules_page
+  obj.locks_page = mock_lock_definitions_page
   obj
 end
 
@@ -48,6 +61,7 @@ class MockPageFactory
   attr_writer :guidelines_page
   attr_writer :rulesets_page
   attr_writer :rules_page
+  attr_writer :locks_page
 
   def login_page(nav_to_page = true)
     @login_page ||= mock_login_page(nav_to_page)
@@ -64,7 +78,15 @@ class MockPageFactory
   def rules_page(nav_to_page = true)
     @rules_page ||= mock_rules_page(nav_to_page)
   end
+
+  def locks_page(nav_to_page = true)
+    @locks_page ||= mock_lock_definitions_page(nav_to_page)
+  end
 end
+
+#
+# Mock Client Objects
+#
 
 def mock_client()
   mock_client = object_double(AdminModule::Client.new)
@@ -107,5 +129,15 @@ def mock_rules(pg_factory)
   allow(mock_rules).to receive(:delete).and_return(nil)
 
   mock_rules
+end
+
+def mock_locks(pg_factory)
+  mock_locks = object_double(AdminModule::Locks.new(pg_factory))
+
+  allow(mock_locks).to receive(:list).and_return([])
+  allow(mock_locks).to receive(:rename).and_return(nil)
+  allow(mock_locks).to receive(:delete).and_return(nil)
+
+  mock_locks
 end
 

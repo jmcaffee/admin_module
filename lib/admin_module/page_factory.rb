@@ -28,5 +28,9 @@ module AdminModule
     def rules_page(goto_page = true)
       return Pages::RulesPage.new(browser, goto_page)
     end
+
+    def locks_page(goto_page = true)
+      return Pages::LockDefinitionsPage.new(browser, goto_page)
+    end
   end
 end # AdminModule
