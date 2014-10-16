@@ -42,6 +42,11 @@ module AdminModule
       Rules.new page_factory
     end
 
+    def locks
+      login
+      Locks.new page_factory
+    end
+
     def page_factory
       @page_factory ||= AdminModule::PageFactory.new
     end
