@@ -66,6 +66,24 @@ class WorkflowDetailPage
   button(:remove_all_states_button,
          id: 'ctl00_cntPlh_tsStates_btnRemoveAll')
 
+  # Groups Tab
+  select_list(:available_groups,
+              id: 'ctl00_cntPlh_tsGroups_lstAvailable')
+
+  select_list(:selected_groups,
+              id: 'ctl00_cntPlh_tsGroups_lstSelected')
+
+  button(:add_group_button,
+         id: 'ctl00_cntPlh_tsGroups_btnAdd')
+
+  button(:add_all_groups_button,
+         id: 'ctl00_cntPlh_tsGroups_btnAddAll')
+
+  button(:remove_group_button,
+         id: 'ctl00_cntPlh_tsGroups_btnRemove')
+
+  button(:remove_all_groups_button,
+         id: 'ctl00_cntPlh_tsGroups_btnRemoveAll')
 
   # Save/Cancel buttons
   button(:save_button,
@@ -83,6 +101,9 @@ class WorkflowDetailPage
 
     self.transition_to_states_tab
     stage_data[:transition_to] = self.selected_states_options
+
+    self.groups_tab
+    stage_data[:groups] = self.selected_groups_options
 
     self.workflow_events_tab
     stage_data[:events] = capture_events
@@ -116,8 +137,6 @@ class WorkflowDetailPage
     events = []
 
     Nokogiri::HTML(@browser.html).css("table#ctl00_cntPlh_DatagridEvents").each do |tbl|
-    #require 'pry'; binding.pry
-
       rows = tbl.css('tr')
       rows.each do |r|
         next if r.attribute('class').value == 'GridHeader'
@@ -145,6 +164,8 @@ class WorkflowDetailPage
 
     set_transitions data[:transition_to] if data.key?(:transition_to)
 
+    set_groups data[:groups] if data.key?(:groups)
+
     set_events data[:events] if data.key?(:events)
 
     self.save_button
@@ -163,6 +184,17 @@ class WorkflowDetailPage
     trans.each do |t|
       available_states_element.select(t)
       self.add_state_button
+    end
+  end
+
+  def set_groups groups
+    self.groups_tab
+
+    # Remove all groups, then add back the requested groups.
+    self.remove_all_groups_button
+    groups.each do |item|
+      available_groups_element.select(item)
+      self.add_group_button
     end
   end
 
