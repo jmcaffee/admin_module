@@ -132,7 +132,7 @@ class AdminModule::CLI
   ##
   # Import stage configurations into the current environment from a file.
 
-  def import_stages file_name
+  def import_stages file_name, allow_creation = false
     raise IOError, "File not found: #{file_name}" unless File.exists?(file_name)
 
     stages = {}
@@ -146,7 +146,11 @@ class AdminModule::CLI
       if existing_stages.include?(name)
         modify_stage(data, name)
       else
-        create_stage(data)
+        if allow_creation
+          create_stage(data)
+        else
+          puts "Stage '#{name}' does not exist. Skipping import."
+        end
       end
     end
   end
