@@ -14,6 +14,7 @@ require_relative 'cli/cli_ruleset'
 require_relative 'cli/cli_guideline'
 require_relative 'cli/cli_lock'
 require_relative 'cli/cli_stage'
+require_relative 'cli/cli_task'
 
 
 class AdminModule::CLI
