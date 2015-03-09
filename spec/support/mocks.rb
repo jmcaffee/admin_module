@@ -136,7 +136,7 @@ def mock_locks(pg_factory)
 
   allow(mock_locks).to receive(:list).and_return([])
   allow(mock_locks).to receive(:rename).and_return(nil)
-  allow(mock_locks).to receive(:delete).and_return(nil)
+  #allow(mock_locks).to receive(:delete).and_return(nil)
 
   mock_locks
 end

@@ -35,27 +35,6 @@ module AdminModule
       client.logout
     end
 
-    desc "delete <lockname>",
-      "Delete a lock named <lockname>"
-    long_desc <<-LD
-      Delete a lock with the name <lockname>.
-
-      With -e <env>, sets the environment to work with.
-
-      This operation will fail if the lock does not exist.
-    LD
-    def delete(lock)
-      rs = client.locks
-
-      rs.delete lock
-
-    rescue ArgumentError => e
-      say e.message, :red
-
-    ensure
-      client.logout
-    end
-
     desc "list",
       "List all locks in the environment"
     long_desc <<-LD

@@ -108,45 +108,6 @@ describe 'lock command' do
     end
   end
 
-  context "lock delete" do
-    it "deletes a lock" do
-      expect(client)
-        .to receive(:user=)
-        .with('user')
-
-      expect(client)
-        .to receive(:password=)
-        .with('pass')
-
-      expect(client)
-        .to receive(:locks)
-
-      expect(locks_mock)
-        .to receive(:delete)
-        .with('TestLock1')
-
-      expect(client)
-        .to receive(:logout)
-
-      build_dir = data_dir('build')
-      run_with_args %w(lock delete -e dev TestLock1), client
-    end
-
-    it "displays a helpful message if delete fails" do
-      msg = 'delete failed'
-
-      expect(locks_mock)
-        .to receive(:delete)
-        .and_raise(ArgumentError, msg)
-
-      output = capture_output do
-        run_with_args %w(lock delete -e dev TestLock1), client
-      end
-
-      expect( output ).to include msg
-    end
-  end
-
   it "returns help info" do
     output = capture_output do
       run_with_args %w(help lock)

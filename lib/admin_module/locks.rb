@@ -65,8 +65,27 @@ module AdminModule
       fail "Not implemented"
     end
 
+    ##
+    # Import lock configurations into the current environment from a file.
+
     def import file_path
-      fail "Not implemented"
+      raise IOError, "File not found: #{file_path}" unless File.exists?(file_path)
+
+      locks = {}
+      File.open(file_path, 'r') do |f|
+        # Read array of lock hashes.
+        locks = YAML.load(f)
+      end
+
+      existing_locks = list
+
+      locks.each do |name, data|
+        if existing_locks.include?(name)
+          update(data)
+        else
+          create(data)
+        end
+      end
     end
 
   private

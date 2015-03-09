@@ -13,6 +13,7 @@ require 'admin_module/cli/gdl'
 require 'admin_module/cli/config'
 require 'admin_module/cli/ruleset'
 require 'admin_module/cli/rule'
+require 'admin_module/cli/lock'
 
 
 module AdminModule
@@ -39,6 +40,9 @@ module AdminModule
 
     desc "rule [COMMAND]", "run a rule command"
     subcommand "rule", AdminModule::Rule
+
+    desc "lock [COMMAND]", "run a lock command"
+    subcommand "lock", AdminModule::Lock
 
     #def guideline
     #  require 'admin_module/cli/guideline_command'
