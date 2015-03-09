@@ -62,7 +62,23 @@ module AdminModule
     #
 
     def export file_path
-      fail "Not implemented"
+      locks = list
+      export_data = {}
+
+      locks.each do |lock|
+        export_data[lock] = read lock
+      end
+
+      File.open(file_path, 'w') do |f|
+        f.write export_data.to_yaml
+      end
+
+    rescue Exception => e
+      if e.message.include? 'No such file or directory'
+        raise "No such directory - #{file_path}"
+      else
+        raise e
+      end
     end
 
     ##
@@ -95,13 +111,11 @@ module AdminModule
     end
 
     def extract_lock_name lock
-      lock_name =
-        case lock.class
-        when Hash
-          lock[:name]
-        else
-          String(lock)
-        end
+      lock_name = if lock.is_a? Hash
+                    lock[:name]
+                  else
+                    String(lock)
+                  end
     end
 
     def assert_lock_exists lock_name

@@ -1,5 +1,14 @@
 require 'spec_helper'
 
+def create_lock_hash name
+  { name: name,
+    description: "Description of #{name}",
+    is_program_lock: false,
+    parameters: [ 'Var 1', 'Var 2' ],
+    dts: [ 'Field 1', 'Field 2' ],
+  }
+end
+
 describe AdminModule::Locks do
 
   context "api" do
@@ -13,7 +22,7 @@ describe AdminModule::Locks do
       allow(obj).to receive(:modify).and_return(obj)
       allow(obj).to receive(:set_name).and_return(obj)
       allow(obj).to receive(:set_lock_data).and_return(nil)
-      allow(obj).to receive(:get_lock_data).and_return(mock_lock_data)
+      allow(obj).to receive(:get_lock_data).and_return(create_lock_hash('TstLock1'))
       allow(obj).to receive(:save).and_return(obj)
       #allow(obj).to receive(:add_version).and_return(obj)
       obj
@@ -24,15 +33,6 @@ describe AdminModule::Locks do
       obj.login_page = double('login_page')
       obj.locks_page = locks_page_stub
       obj
-    end
-
-    let(:mock_lock_data) do
-      { name: 'Mock Lock',
-        description: 'A mock lock',
-        is_program_lock: false,
-        parameters: [ 'Var 1', 'Var 2' ],
-        dts: [ 'Field 1', 'Field 2' ],
-      }
     end
 
     context "#list" do
@@ -102,7 +102,7 @@ describe AdminModule::Locks do
 
           expect(page_factory.locks_page)
             .to receive(:get_lock_data)
-            .and_return(mock_lock_data)
+            .and_return(create_lock_hash('TstLock1'))
 
           locks = AdminModule::Locks.new(page_factory)
           locks.read(src)
@@ -122,6 +122,7 @@ describe AdminModule::Locks do
     context "#export" do
       context "file directory exists" do
         it "exports the lock definitions" do
+          dest_file = spec_tmp_dir('locks') + 'export.yml'
           src = 'TstLock1'
 
           expect(page_factory.locks_page)
@@ -130,19 +131,25 @@ describe AdminModule::Locks do
 
           expect(page_factory.locks_page)
             .to receive(:get_lock_data)
-            .and_return(mock_lock_data)
+            .and_return(create_lock_hash('TstLock1'))
+
+          expect(page_factory.locks_page)
+            .to receive(:get_lock_data)
+            .and_return(create_lock_hash('TstLock2'))
 
           locks = AdminModule::Locks.new(page_factory)
-          locks.export(src)
+          locks.export(dest_file)
+
+          expect(File.exist?(dest_file)).to eq true
         end
       end
 
       context "file directory does not exist" do
         it "raises exception" do
-          src = 'NotALock1'
+          dest_path = spec_tmp_dir('locks') + 'not/a/real/dir/export.yml'
 
           locks = AdminModule::Locks.new(page_factory)
-          expect { locks.export(src) }.to raise_exception /named 'NotALock1' does not exist/
+          expect { locks.export(dest_path) }.to raise_exception /No such directory - #{dest_path}/
         end
       end
     end
@@ -150,7 +157,10 @@ describe AdminModule::Locks do
     context "#import" do
       context "file exists" do
         it "imports the lock definitions" do
+          src_file = spec_data_dir + 'import_stages.yml'
           src = 'TstLock1'
+
+          #allow(File).to receive(:exists?).and_return(true)
 
           expect(page_factory.locks_page)
             .to receive(:modify)
@@ -160,7 +170,7 @@ describe AdminModule::Locks do
             .to receive(:set_lock_data)
 
           locks = AdminModule::Locks.new(page_factory)
-          locks.import(src)
+          locks.import(src_file)
         end
       end
 
@@ -169,7 +179,7 @@ describe AdminModule::Locks do
           src = 'NotALock1'
 
           locks = AdminModule::Locks.new(page_factory)
-          expect { locks.import(src) }.to raise_exception /named 'NotALock1' does not exist/
+          expect { locks.import(src) }.to raise_exception /File not found: NotALock1/
         end
       end
     end
