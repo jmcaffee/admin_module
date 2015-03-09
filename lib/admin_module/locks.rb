@@ -75,7 +75,7 @@ module AdminModule
 
     rescue Exception => e
       if e.message.include? 'No such file or directory'
-        raise "No such directory - #{file_path}"
+        raise IOError, "No such directory - #{file_path}"
       else
         raise e
       end
