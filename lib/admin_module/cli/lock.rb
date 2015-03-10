@@ -24,9 +24,9 @@ module AdminModule
       if the destination lock name already exists.
     LD
     def rename(src, dest)
-      rs = client.locks
+      cl = client.locks
 
-      rs.rename src, dest
+      cl.rename src, dest
 
     rescue ArgumentError => e
       say e.message, :red
@@ -43,10 +43,62 @@ module AdminModule
       With -e <env>, sets the environment to work with.
     LD
     def list
-      rs = client.locks
-      list = rs.list
+      cl = client.locks
+      list = cl.list
 
       list.each { |r| say r; }
+
+    ensure
+      client.logout
+    end
+
+    desc "import <filepath>",
+      "Import a lock configuration file into the environment"
+    long_desc <<-LD
+      Import a lock configuration file into the environment.
+
+      <filepath> is a path to a YAML configuration file to import.
+
+      With -e <env>, sets the environment to work with.
+    LD
+    def import filepath
+      cl = client.locks
+      cl.import filepath
+
+    ensure
+      client.logout
+    end
+
+    desc "export <filepath>",
+      "Export a lock configuration file from the environment"
+    long_desc <<-LD
+      Export a lock configuration file from the environment.
+
+      <filepath> path where the YAML configuration file will be exported to.
+
+      With -e <env>, sets the environment to work with.
+    LD
+    def export filepath
+      cl = client.locks
+      cl.export filepath
+
+    ensure
+      client.logout
+    end
+
+    desc "read <name>",
+      "Emit a lock's configuration from the environment in YAML format"
+    long_desc <<-LD
+      Emit a lock's configuration from the environment in YAML format.
+
+      <name> of lock to dump.
+
+      With -e <env>, sets the environment to work with.
+    LD
+    def read name
+      cl = client.locks
+      output = cl.read(name)
+      $stdout << output.to_yaml
 
     ensure
       client.logout
