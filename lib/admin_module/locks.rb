@@ -37,7 +37,7 @@ module AdminModule
 
       locks_page
         .add
-        .set_lock_data lock
+        .set_lock_data(lock)
         .save
     end
 
