@@ -1,157 +1,126 @@
 ##############################################################################
-# File::    cli_stage.rb
-# Purpose:: filedescription
+# File::    stage.rb
+# Purpose:: Stage command line interface
 # 
 # Author::    Jeff McAffee 11/15/2013
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
+# Copyright:: Copyright (c) 2015, kTech Systems LLC. All rights reserved.
 # Website::   http://ktechsystems.com
 ##############################################################################
 
-require 'admin_module/pages'
+module AdminModule
+  class Stage < Thor
+    include AdminModule::ClientAccess
 
+    class_option :environment, :banner => "dev", :aliases => :e
 
-class AdminModule::CLI
-  include AdminModule::Pages
+    desc "rename <srcname> <destname>",
+      "Rename a stage from <srcname> to <destname>"
+    long_desc <<-LD
+      Rename a stage from <srcname> to <destname>.
 
+      With -e <env>, sets the environment to work with.
 
-  ##
-  # Export all stage data from the current environment to a file
+      This operation will fail if the source stage does not exist or
+      if the destination stage name already exists.
+    LD
+    def rename src, dest
+      cs = client.stages
+      cs.rename src, dest
 
-  def export_stages file_name
-    FileUtils.mkdir_p File.dirname(file_name)
-    File.open(file_name, 'w') do |f|
-      # Write array of stage hashes.
-      f << YAML.dump(all_stages)
-    end
-  end
+    rescue ArgumentError => e
+      say e.message, :red
 
-  ##
-  # Return configuration data for all stages in the current environment
-
-  def all_stages
-    stages = {}
-
-    current_stage_names.each do |name|
-      stages[name] = get_stage(name)
-    end
-
-    stages
-  end
-
-  ##
-  # Return a list of stage names in the current environment
-
-  def current_stage_names
-    login
-    WorkflowDetailsPage.new(browser, base_url).states_options
-  end
-
-  ##
-  # Retrieve lock configuration data from the current environment
-
-  def get_stage stage_name
-    login
-
-    begin
-      workflow_details_url = WorkflowDetailsPage.new(browser, base_url).
-        modify_stage(stage_name)
-    rescue Watir::Exception::NoValueFoundException => e
-      raise ArgumentError, "Stage [#{stage_name}] not found.\n\n#{e.message}"
+    ensure
+      client.logout
     end
 
-    stage_data = WorkflowDetailPage.new(browser, workflow_details_url).get_stage_data
-  end
+    desc "list",
+      "List all stages in the environment"
+    long_desc <<-LD
+      List all stages in the current environment.
 
-  ##
-  # Create a new stage in the current environment
+      With -e <env>, sets the environment to work with.
+    LD
+    def list
+      cs = client.stages
+      list = cs.list
 
-  def create_stage data
-    raise ArgumentError, "Invalid stage data: #{data.inspect}" unless valid_stage_data?(data)
-    raise ArgumentError, "Stage name already in use: #{data[:name]}" if current_stage_names.include?(data[:name])
+      list.each { |s| say s; }
 
-    login
-
-    workflow_details_url = WorkflowDetailsPage.new(browser, base_url).
-      create_stage(data)
-
-    WorkflowDetailPage.new(browser, workflow_details_url).set_stage_data data
-  end
-
-  ##
-  # Delete a stage in the current environment
-
-  def delete_stage data
-    name = data
-    if data.class == Hash
-      raise ArgumentError, "Invalid stage data: #{data.inspect}" unless valid_stage_data?(data)
-      name = data[:name]
-    end
-    raise ArgumentError, "Stage name does not exist: #{name}" if !current_stage_names.include?(name)
-
-    login
-
-    workflow_details_url = WorkflowDetailsPage.new(browser, base_url).
-      delete_stage(name)
-  end
-
-  ##
-  # Test stage data structure for validity
-  #
-  # Required: name
-
-  def valid_stage_data? data
-    if !data.key?(:name) || data[:name].nil? || data[:name].empty?
-      return false
-    end
-    true
-  end
-
-  ##
-  # Modify an existing stage in the current environment
-
-  def modify_stage data, stage_name = nil
-    stage_name ||= data[:name]
-    raise ArgumentError, "Missing stage name" if (stage_name.nil? || stage_name.empty?)
-    data[:name] ||= stage_name
-    raise ArgumentError, "Invalid stage data: #{data.inspect}" unless valid_stage_data?(data)
-
-    # Make sure we populate the data's name param if empty so we don't try to write
-    # and save an empty name.
-    if data[:name].nil? || data[:name].empty?
-      data[:name] = stage_name
+    ensure
+      client.logout
     end
 
-    login
+    desc "import <filepath>",
+      "Import a stage configuration file into the environment"
+    long_desc <<-LD
+      Import a stage configuration file into the environment.
 
-    workflow_details_url = WorkflowDetailsPage.new(browser, base_url).
-      modify_stage(stage_name)
+      <filepath> is a path to a YAML configuration file to import.
 
-    WorkflowDetailPage.new(browser, workflow_details_url).set_stage_data data
-  end
+      With -e <env>, sets the environment to work with.
 
-  ##
-  # Import stage configurations into the current environment from a file.
+      With -c, allow creation of new stages
+    LD
+    option :create, :type => :boolean, :default => false, :aliases => :c
+    def import filepath
+      cs = client.stages
+      cs.import filepath, options[:create]
 
-  def import_stages file_name, allow_creation = false
-    raise IOError, "File not found: #{file_name}" unless File.exists?(file_name)
-
-    stages = {}
-    File.open(file_name, 'r') do |f|
-      stages = YAML.load(f)
+    ensure
+      client.logout
     end
 
-    existing_stages = current_stage_names
+    desc "export <filepath>",
+      "Export a stage configuration file from the environment"
+    long_desc <<-LD
+      Export a stage configuration file from the environment.
 
-    stages.each do |name, data|
-      if existing_stages.include?(name)
-        modify_stage(data, name)
-      else
-        if allow_creation
-          create_stage(data)
-        else
-          puts "Stage '#{name}' does not exist. Skipping import."
-        end
-      end
+      <filepath> path where the YAML configuration file will be exported to.
+
+      With -e <env>, sets the environment to work with.
+    LD
+    def export filepath
+      cs = client.stages
+      cs.export filepath
+
+    ensure
+      client.logout
     end
-  end
-end
+
+    desc "delete <name>",
+      "Delete a stage from the environment"
+    long_desc <<-LD
+      Delete a stage from the environment.
+
+      <name> of stage to delete.
+
+      With -e <env>, sets the environment to work with.
+    LD
+    def delete name
+      cs = client.stages
+      cs.delete name
+
+    ensure
+      client.logout
+    end
+
+    desc "read <name>",
+      "Emit a stage's configuration from the environment in YAML format"
+    long_desc <<-LD
+      Emit a stage's configuration from the environment in YAML format.
+
+      <name> of stage to dump.
+
+      With -e <env>, sets the environment to work with.
+    LD
+    def read name
+      cs = client.stages
+      output = cs.read(name)
+      $stdout << output.to_yaml
+
+    ensure
+      client.logout
+    end
+  end # class
+end # module

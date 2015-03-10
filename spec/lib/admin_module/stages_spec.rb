@@ -1,13 +1,5 @@
 require 'spec_helper'
 
-def create_stage_hash name
-  { name: name,
-    transition_to: {},
-    groups: ['Appeal Underwriter', 'CV Admin'],
-    events: {'ForwardApplication PreEvent' => '', 'ForwardApplication PostEvent' => 'WF-ForwardApp-Post'},
-  }
-end
-
 describe AdminModule::Stages do
 
   context "api" do

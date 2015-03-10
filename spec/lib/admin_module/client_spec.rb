@@ -90,6 +90,20 @@ describe AdminModule::Client do
     end
   end
 
+  context "#stages" do
+    it "logs into the current env and returns a pre-configured Stages object" do
+
+      expect(login_page)
+        .to receive(:login_as)
+        .with('testuser', 'testpass')
+
+      client.user = 'testuser'
+      client.password = 'testpass'
+
+      expect( client.stages ).to_not be nil
+    end
+  end
+
   context "#login" do
     context "credentials not passed" do
 

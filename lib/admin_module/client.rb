@@ -47,6 +47,11 @@ module AdminModule
       Locks.new page_factory
     end
 
+    def stages
+      login
+      Stages.new page_factory
+    end
+
     def page_factory
       @page_factory ||= AdminModule::PageFactory.new
     end
