@@ -168,12 +168,18 @@ class WorkflowDetailPage
 
     set_events data[:events] if data.key?(:events)
 
+    self
+  end
+
+  def save
     self.save_button
   end
 
-  def set_stage_name name
+  def set_name name
     self.details_tab
     self.name = name
+
+    self
   end
 
   def set_transitions trans
@@ -185,6 +191,8 @@ class WorkflowDetailPage
       available_states_element.select(t)
       self.add_state_button
     end
+
+    self
   end
 
   def set_groups groups
@@ -196,6 +204,8 @@ class WorkflowDetailPage
       available_groups_element.select(item)
       self.add_group_button
     end
+
+    self
   end
 
   def set_events events
@@ -222,6 +232,8 @@ class WorkflowDetailPage
         end
       end
     end
+
+    self
   end
 end # class WorkflowDetailPage
 
