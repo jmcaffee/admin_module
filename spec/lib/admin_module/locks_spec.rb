@@ -21,7 +21,7 @@ describe AdminModule::Locks do
       allow(obj).to receive(:add).and_return(obj)
       allow(obj).to receive(:modify).and_return(obj)
       allow(obj).to receive(:set_name).and_return(obj)
-      allow(obj).to receive(:set_lock_data).and_return(nil)
+      allow(obj).to receive(:set_lock_data).and_return(obj)
       allow(obj).to receive(:get_lock_data).and_return(create_lock_hash('TstLock1'))
       allow(obj).to receive(:save).and_return(obj)
       #allow(obj).to receive(:add_version).and_return(obj)
@@ -157,7 +157,7 @@ describe AdminModule::Locks do
     context "#import" do
       context "file exists" do
         it "imports the lock definitions" do
-          src_file = spec_data_dir + 'import_stages.yml'
+          src_file = spec_data_dir + 'import_locks.yml'
           src = 'TstLock1'
 
           #allow(File).to receive(:exists?).and_return(true)
