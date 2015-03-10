@@ -1,4 +1,4 @@
 ---
-TstLock1:
-  :name: TstLock1
+TstStage1:
+  :name: TstStage1
   :transition_to:

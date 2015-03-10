@@ -6,6 +6,7 @@ require 'admin_module/pages'
 require 'admin_module/guideline'
 require 'admin_module/rulesets'
 require 'admin_module/rules'
+require 'admin_module/stages'
 require 'admin_module/locks'
 require 'admin_module/client'
 

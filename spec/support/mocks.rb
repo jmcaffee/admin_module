@@ -35,6 +35,10 @@ def mock_lock_definitions_page(nav_to_page = true)
   locks_page = object_double(AdminModule::Pages::LockDefinitionsPage.new(mock_watir_browser, nav_to_page))
 end
 
+def mock_stages_page(nav_to_page = true)
+  stages_page = object_double(AdminModule::Pages::WorkflowDetailsPage.new(mock_watir_browser, nav_to_page))
+end
+
 #
 # Page Factory Mocks
 #
@@ -52,6 +56,7 @@ def mock_page_factory
   obj.rulesets_page = mock_rulesets_page
   obj.rules_page = mock_rules_page
   obj.locks_page = mock_lock_definitions_page
+  obj.stages_page = mock_stages_page
   obj
 end
 
@@ -62,6 +67,7 @@ class MockPageFactory
   attr_writer :rulesets_page
   attr_writer :rules_page
   attr_writer :locks_page
+  attr_writer :stages_page
 
   def login_page(nav_to_page = true)
     @login_page ||= mock_login_page(nav_to_page)
@@ -81,6 +87,10 @@ class MockPageFactory
 
   def locks_page(nav_to_page = true)
     @locks_page ||= mock_lock_definitions_page(nav_to_page)
+  end
+
+  def stages_page(nav_to_page = true)
+    @stages_page ||= mock_stages_page(nav_to_page)
   end
 end
 
@@ -139,5 +149,14 @@ def mock_locks(pg_factory)
   #allow(mock_locks).to receive(:delete).and_return(nil)
 
   mock_locks
+end
+
+def mock_stages(pg_factory)
+  mock_stages = object_double(AdminModule::Stages.new(pg_factory))
+
+  allow(mock_stages).to receive(:list).and_return([])
+  allow(mock_stages).to receive(:rename).and_return(nil)
+
+  mock_stages
 end
 

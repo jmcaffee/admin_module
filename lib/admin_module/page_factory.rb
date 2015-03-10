@@ -32,5 +32,9 @@ module AdminModule
     def locks_page(goto_page = true)
       return Pages::LockDefinitionsPage.new(browser, goto_page)
     end
+
+    def stages_page(goto_page = true)
+      return Pages::WorkflowDetailsPage.new(browser, goto_page)
+    end
   end
 end # AdminModule
