@@ -94,7 +94,7 @@ module AdminModule::Rake
     end
 
     def read client
-      $stdout << client.stages.read(name)
+      $stdout << client.stages.read(name).to_yaml
       $stdout << "\n"
     end
 
