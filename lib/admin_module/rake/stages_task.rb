@@ -178,19 +178,16 @@ module AdminModule::Rake
 
     def install
       AdminModule.configuration.credentials.keys.each do |e|
-        AdminModule::Rake::StagesTask.new("am:#{e}:list", "list #{e} stages") do |t|
-          t.env = e
-          t.action = 'list'
+        ['list','read'].each do |action|
+          AdminModule::Rake::StagesTask.new("am:#{e}:stage:#{action}", "#{action} #{e} stage(s)") do |t|
+            t.env = e
+            t.action = action
+          end
         end
       end
     end
   end # class
 end # module
-
-#AdminModule::Rake::StagesTask.new('am:stages:list', 'list stages') do |t|
-#  #task.set_arg_names [:env]
-#  t.action = 'list'
-#end
 
 AdminModule::Rake::StagesTask.install
 
