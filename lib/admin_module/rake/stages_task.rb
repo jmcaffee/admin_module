@@ -58,6 +58,13 @@ module AdminModule::Rake
       client = AdminModule::Client.new
       client.env = env
 
+      if self.respond_to? action
+        self.send(action, client)
+        return
+      else
+        raise "Unknown action - #{action}"
+      end
+
       case action
       when 'import'
         client.stages.import path, allow_create
@@ -85,6 +92,11 @@ module AdminModule::Rake
       raise e if stop_on_exception == true
     ensure
       client.logout unless client.nil?
+    end
+
+    def list client
+      output = client.stages.list
+      output.each { |o| $stdout << o }
     end
 
     def validate_params
