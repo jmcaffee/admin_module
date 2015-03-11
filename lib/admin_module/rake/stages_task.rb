@@ -95,8 +95,7 @@ module AdminModule::Rake
     end
 
     def list client
-      output = client.stages.list
-      output.each { |o| $stdout << o }
+      $stdout << client.stages.list.join("\n") + "\n"
     end
 
     def validate_params
