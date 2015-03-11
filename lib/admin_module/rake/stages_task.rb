@@ -24,11 +24,9 @@ module AdminModule::Rake
     attr_reader   :action
     attr_reader   :stop_on_exception
 
-    def initialize(task_name = 'stages_task', desc = "Modify a stage or stages", args = [])
+    def initialize(task_name = 'stages_task', desc = "Modify a stage or stages")
       @task_name, @desc = task_name, desc
-      require 'pry'; binding.pry
 
-      set_arg_names = args
       @stop_on_exception = true
       @allow_create = false
 
@@ -39,7 +37,7 @@ module AdminModule::Rake
 
     def define_task #:nodoc:
       desc @desc
-      task @task_name do
+      task(@task_name, required_args_for_action) do
         commit  # Call method to perform when invoked.
       end
     end
@@ -131,6 +129,27 @@ module AdminModule::Rake
       if value.nil? || value.empty?
         raise msg
       end
+    end
+
+    def required_args_for_action
+      args = [:env]
+
+      case action
+      when 'read','delete'
+        args << :name
+
+      when 'rename'
+        args << :name
+        args << :to
+
+      when 'import','export'
+        args << :path
+
+      else
+        # Noop
+      end
+
+      args
     end
   end # class
 end # module
