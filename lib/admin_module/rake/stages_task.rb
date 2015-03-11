@@ -53,6 +53,7 @@ module AdminModule::Rake
     end
 
     def commit
+      env = args[:env]
       validate_params
 
       client = AdminModule::Client.new
@@ -133,7 +134,6 @@ end # module
 
 AdminModule::Rake::StagesTask.new('am:stages:list', 'list stages') do |t|
   task.set_arg_names [:env]
-  t.env = args[:env]
   t.action = 'list'
 end
 
