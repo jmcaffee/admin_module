@@ -24,8 +24,9 @@ module AdminModule::Rake
     attr_reader   :action
     attr_reader   :stop_on_exception
 
-    def initialize(task_name = 'stages_task', desc = "Modify a stage or stages")
+    def initialize(task_name = 'stages_task', desc = "Modify a stage or stages", args = [])
       @task_name, @desc = task_name, desc
+      task.set_arg_names = args
       @stop_on_exception = true
       @allow_create = false
 
@@ -133,7 +134,7 @@ module AdminModule::Rake
 end # module
 
 AdminModule::Rake::StagesTask.new('am:stages:list', 'list stages') do |t|
-  task.set_arg_names [:env]
+  #task.set_arg_names [:env]
   t.action = 'list'
 end
 
