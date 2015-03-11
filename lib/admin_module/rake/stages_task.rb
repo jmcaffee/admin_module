@@ -37,9 +37,18 @@ module AdminModule::Rake
 
     def define_task #:nodoc:
       desc @desc
-      task(@task_name, required_args_for_action) do
+      task(@task_name, required_args_for_action) do |t,args|
+        set_vars args
         commit  # Call method to perform when invoked.
       end
+    end
+
+    def set_vars args
+      args.each do |arg,val|
+        instance_variable_set "@#{arg}", val
+      end
+
+      args
     end
 
     def action=(task_action)
@@ -54,7 +63,6 @@ module AdminModule::Rake
     end
 
     def commit
-      env = args[:env]
       validate_params
 
       client = AdminModule::Client.new
@@ -123,11 +131,21 @@ module AdminModule::Rake
         assert_provided name, 'Missing "name"'
 
       end
+
+      assert_env_is_configured env
     end
 
     def assert_provided value, msg
       if value.nil? || value.empty?
         raise msg
+      end
+    end
+
+    def assert_env_is_configured arg
+      unless AdminModule.configuration.credentials.key? arg
+        init_msg = "Have you initialized your config file?\n Try: admin_module config init <filedir>"
+        env_msg = "Have you configured your environments?\n Try: admin_module config add env <envname> <url>"
+        raise "Unknown environment: #{arg}\n#{init_msg}\n\n#{env_msg}"
       end
     end
 
@@ -152,10 +170,26 @@ module AdminModule::Rake
       args
     end
   end # class
+
+  class << self
+    def install
+      new.install
+    end
+  end
+
+  def install
+    AdminModule.configuration.credentials.keys.each do |e|
+      AdminModule::Rake::StagesTask.new("am:#{e}:list", "list #{e} stages") do |t|
+        t.action = 'list'
+      end
+    end
+  end
 end # module
 
-AdminModule::Rake::StagesTask.new('am:stages:list', 'list stages') do |t|
-  #task.set_arg_names [:env]
-  t.action = 'list'
-end
+#AdminModule::Rake::StagesTask.new('am:stages:list', 'list stages') do |t|
+#  #task.set_arg_names [:env]
+#  t.action = 'list'
+#end
+
+AdminModule::Rake::StagesTask.install
 
