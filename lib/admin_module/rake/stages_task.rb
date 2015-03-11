@@ -131,3 +131,9 @@ module AdminModule::Rake
   end # class
 end # module
 
+AdminModule::Rake::StagesTask.new('am:stages:list', 'list stages') do |t|
+  t.set_arg_names [:env]
+  t.env = args[:env]
+  t.action = 'list'
+end
+
