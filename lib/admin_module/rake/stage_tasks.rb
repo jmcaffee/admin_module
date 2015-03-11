@@ -1,6 +1,6 @@
 ##############################################################################
-# File::    stages_task.rb
-# Purpose:: StagesTask definition
+# File::    stage_tasks.rb
+# Purpose:: StageTasks definition
 # 
 # Author::    Jeff McAffee 2015-03-10
 # Copyright:: Copyright (c) 2015, kTech Systems LLC. All rights reserved.
@@ -13,7 +13,7 @@ require 'rake'
 
 module AdminModule::Rake
 
-  class StagesTask
+  class StageTasks
     include ::Rake::DSL if defined?(::Rake::DSL)
 
     attr_accessor :env
@@ -183,7 +183,7 @@ module AdminModule::Rake
     def install
       AdminModule.configuration.credentials.keys.each do |e|
         valid_actions.each do |action|
-          AdminModule::Rake::StagesTask.new("am:#{e}:stage:#{action}", "#{action} #{e} stage(s)") do |t|
+          AdminModule::Rake::StageTask.new("am:#{e}:stage:#{action}", "#{action} #{e} stage(s)") do |t|
             t.env = e
             t.action = action
           end
@@ -193,5 +193,5 @@ module AdminModule::Rake
   end # class
 end # module
 
-AdminModule::Rake::StagesTask.install
+AdminModule::Rake::StageTask.install
 

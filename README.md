@@ -28,7 +28,7 @@ AdminModule provides tasks you can use in your rake file.
 
 #### Stage Tasks
 
-Add `require 'admin_module/rake/stages_task'` to your rake file and
+Add `require 'admin_module/rake/stage_tasks'` to your rake file and
 `admin_module` will add a set of `stage` tasks for each configured
 environment. All tasks are prefixed with `am:ENV_NAME:`.
 
