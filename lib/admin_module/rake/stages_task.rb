@@ -150,7 +150,7 @@ module AdminModule::Rake
     end
 
     def required_args_for_action
-      args = [:env]
+      args = []
 
       case action
       when 'read','delete'
@@ -179,6 +179,7 @@ module AdminModule::Rake
     def install
       AdminModule.configuration.credentials.keys.each do |e|
         AdminModule::Rake::StagesTask.new("am:#{e}:list", "list #{e} stages") do |t|
+          t.env = e
           t.action = 'list'
         end
       end
