@@ -132,9 +132,7 @@ module AdminModule::Rake
 end # module
 
 AdminModule::Rake::StagesTask.new('am:stages:list', 'list stages') do |t|
-  require 'pry'; binding.pry
-
-  t.set_arg_names [:env]
+  task.set_arg_names [:env]
   t.env = args[:env]
   t.action = 'list'
 end
