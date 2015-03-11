@@ -94,8 +94,9 @@ module AdminModule::Rake
     end
 
     def read client
-      $stdout << client.stages.read(name).to_yaml
-      $stdout << "\n"
+      result = {}
+      result[name] = client.stages.read(name)
+      $stdout << result.to_yaml
     end
 
     def validate_params
