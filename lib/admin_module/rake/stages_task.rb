@@ -91,24 +91,24 @@ module AdminModule::Rake
       assert_provided env, 'Missing "env"'
       assert_provided action, 'Missing "action"'
 
-      when action
-        case 'import'
-          assert_provided path, 'Missing "path"'
+      case action
+      when 'import'
+        assert_provided path, 'Missing "path"'
 
-        case 'export'
-          assert_provided path, 'Missing "path"'
+      when 'export'
+        assert_provided path, 'Missing "path"'
 
-        case 'read'
-          assert_provided name, 'Missing "name"'
+      when 'read'
+        assert_provided name, 'Missing "name"'
 
-        case 'rename'
-          assert_provided name, 'Missing "name"'
-          assert_provided to, 'Missing "to"'
+      when 'rename'
+        assert_provided name, 'Missing "name"'
+        assert_provided to, 'Missing "to"'
 
-        case 'delete'
-          assert_provided name, 'Missing "name"'
+      when 'delete'
+        assert_provided name, 'Missing "name"'
 
-        end
+      end
     end
 
     def assert_provided value, msg
