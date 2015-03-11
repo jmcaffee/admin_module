@@ -1,6 +1,10 @@
 # AdminModule
 
-TODO: Write a gem description
+AdminModule is a tool to allow maintenance and configuration of AMS
+environments through the command line or Rake tasks.
+
+Because it is scriptable, it's useful when creating migration scripts that are
+efficient and repeatable, resulting in lower risk deployments.
 
 ## Installation
 
@@ -10,7 +14,7 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
@@ -18,7 +22,37 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Tasks
+
+AdminModule provides tasks you can use in your rake file.
+
+#### Stage Tasks
+
+Add `require 'admin_module/rake/stages_task'` to your rake file and
+`admin_module` will add a set of `stage` tasks for each configured
+environment. All tasks are prefixed with `am:ENV_NAME:`.
+
+Task options are displayed within brackets like so: `am:dev:stage:read[name]`.
+If the option contains spaces, surround the option, or the entire task name
+with single or double quotes:
+
+    rake am:dev:stage:read['Some Stage Name']
+
+    # or
+
+    rake 'am:dev:stage:read[Some Stage Name]'
+
+
+Tasks include:
+
+- `stage:delete` deletes a stage
+- `stage:export` exports all stages to a yaml file
+- `stage:import` imports stage configs from a yaml file
+  - the `allow_create` flag is optional. Default: `false`. If `true`, stages can be created during import.
+- `stage:list` list all stage names
+- `stage:read` output a stage configuration in yaml format
+- `stage:rename` rename an existing stage
+
 
 ## Contributing
 
@@ -30,8 +64,9 @@ TODO: Write usage instructions here
 
 ## ToDo
 
+* document CLI
+* complete conversion to `thor`
 * snapshot configuration
-* add groups to stage config
 * add tasks to stage config
 * tasks configuration
 * PPM configuration
