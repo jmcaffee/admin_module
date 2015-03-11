@@ -63,6 +63,7 @@ module AdminModule
     #
 
     def login(user = nil, pass = nil)
+      puts caller
       if @logged_in
         return true
       end
