@@ -169,21 +169,21 @@ module AdminModule::Rake
 
       args
     end
-  end # class
 
-  class << self
-    def install
-      new.install
-    end
-  end
-
-  def install
-    AdminModule.configuration.credentials.keys.each do |e|
-      AdminModule::Rake::StagesTask.new("am:#{e}:list", "list #{e} stages") do |t|
-        t.action = 'list'
+    class << self
+      def install
+        new.install
       end
     end
-  end
+
+    def install
+      AdminModule.configuration.credentials.keys.each do |e|
+        AdminModule::Rake::StagesTask.new("am:#{e}:list", "list #{e} stages") do |t|
+          t.action = 'list'
+        end
+      end
+    end
+  end # class
 end # module
 
 #AdminModule::Rake::StagesTask.new('am:stages:list', 'list stages') do |t|
