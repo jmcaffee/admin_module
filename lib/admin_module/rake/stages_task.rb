@@ -22,9 +22,11 @@ module AdminModule::Rake
     attr_accessor :path
     attr_accessor :allow_create
     attr_reader   :action
+    attr_reader   :valid_actions
     attr_reader   :stop_on_exception
 
     def initialize(task_name = 'stages_task', desc = "Modify a stage or stages")
+      @valid_actions = ['import', 'export', 'read', 'list', 'rename', 'delete']
       @task_name, @desc = task_name, desc
 
       @stop_on_exception = true
@@ -52,8 +54,7 @@ module AdminModule::Rake
     end
 
     def action=(task_action)
-      valid_types = ['import', 'export', 'read', 'list', 'rename', 'delete']
-      raise "action must be one of #{valid_types.join(', ')}" unless valid_types.include?(task_action.downcase)
+      raise "action must be one of #{valid_types.join(', ')}" unless valid_actions.include?(task_action.downcase)
       @action = task_action
     end
 
@@ -75,23 +76,6 @@ module AdminModule::Rake
         raise "Unknown action - #{action}"
       end
 
-      case action
-      when 'import'
-        client.stages.import path, allow_create
-
-      when 'export'
-        client.stages.export path
-
-      when 'rename'
-        client.stages.rename name, to
-
-      when 'delete'
-        client.stages.delete name
-
-      else
-        # Noop
-      end
-
     rescue Exception => e
       raise e if stop_on_exception == true
     ensure
@@ -107,6 +91,22 @@ module AdminModule::Rake
       result = {}
       result[name] = client.stages.read(name)
       $stdout << result.to_yaml
+    end
+
+    def import client
+      $stdout << client.stages.import(path, allow_create)
+    end
+
+    def export client
+      $stdout << client.stages.export(path)
+    end
+
+    def rename client
+      $stdout << client.stages.rename(name, to)
+    end
+
+    def delete client
+      $stdout << client.stages.delete(name)
     end
 
     def validate_params
@@ -160,7 +160,11 @@ module AdminModule::Rake
         args << :name
         args << :to
 
-      when 'import','export'
+      when 'import'
+        args << :path
+        args << :allow_create
+
+      when 'export'
         args << :path
 
       else
@@ -178,7 +182,7 @@ module AdminModule::Rake
 
     def install
       AdminModule.configuration.credentials.keys.each do |e|
-        ['list','read'].each do |action|
+        valid_actions.each do |action|
           AdminModule::Rake::StagesTask.new("am:#{e}:stage:#{action}", "#{action} #{e} stage(s)") do |t|
             t.env = e
             t.action = action
