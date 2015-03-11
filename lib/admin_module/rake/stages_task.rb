@@ -53,12 +53,7 @@ module AdminModule::Rake
     end
 
     def commit
-      raise 'Missing env' if env.nil? || env.empty?
-      raise 'Missing name' if name.nil? || name.empty?
-      raise 'Missing action' if action.nil? || action.empty?
-      raise 'Missing "to"' if action == 'rename' && (to.nil? || to.empty?)
-      raise 'Missing "path"' if action == 'import' && (path.nil? || path.empty?)
-      raise 'Missing "path"' if action == 'export' && (path.nil? || path.empty?)
+      validate_params
 
       client = AdminModule::Client.new
       client.env = env
@@ -90,6 +85,36 @@ module AdminModule::Rake
       raise e if stop_on_exception == true
     ensure
       client.logout unless client.nil?
+    end
+
+    def validate_params
+      assert_provided env, 'Missing "env"'
+      assert_provided action, 'Missing "action"'
+
+      when action
+        case 'import'
+          assert_provided path, 'Missing "path"'
+
+        case 'export'
+          assert_provided path, 'Missing "path"'
+
+        case 'read'
+          assert_provided name, 'Missing "name"'
+
+        case 'rename'
+          assert_provided name, 'Missing "name"'
+          assert_provided to, 'Missing "to"'
+
+        case 'delete'
+          assert_provided name, 'Missing "name"'
+
+        end
+    end
+
+    def assert_provided value, msg
+      if value.nil? || value.empty?
+        raise msg
+      end
     end
   end # class
 end # module
