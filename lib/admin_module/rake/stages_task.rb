@@ -69,7 +69,7 @@ module AdminModule::Rake
         client.stages.read name
 
       when 'list'
-        $stdio << client.stages.list
+        $stdout << client.stages.list
 
       when 'rename'
         client.stages.rename name, to
