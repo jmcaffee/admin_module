@@ -72,12 +72,6 @@ module AdminModule::Rake
       when 'export'
         client.stages.export path
 
-      when 'read'
-        client.stages.read name
-
-      when 'list'
-        $stdout << client.stages.list
-
       when 'rename'
         client.stages.rename name, to
 
@@ -95,7 +89,13 @@ module AdminModule::Rake
     end
 
     def list client
-      $stdout << client.stages.list.join("\n") + "\n"
+      $stdout << client.stages.list.join("\n")
+      $stdout << "\n"
+    end
+
+    def read client
+      $stdout << client.stages.read(name)
+      $stdout << "\n"
     end
 
     def validate_params
