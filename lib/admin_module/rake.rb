@@ -10,6 +10,7 @@
 module AdminModule::Rake
 end
 
-require_relative 'rake/deploy_task'
-require_relative 'rake/parameter_task'
+require_relative 'rake/gdl_tasks'
+require_relative 'rake/stage_tasks'
+require_relative 'rake/lock_tasks'
 
