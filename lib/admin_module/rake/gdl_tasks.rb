@@ -170,7 +170,7 @@ module AdminModule::Rake
     def install
       AdminModule.configuration.credentials.keys.each do |e|
         valid_actions.each do |action|
-          AdminModule::Rake::GdlTask.new("am:#{e}:gdl:#{action}", "#{action} #{e} gdl(s)") do |t|
+          AdminModule::Rake::GdlTasks.new("am:#{e}:gdl:#{action}", "#{action} #{e} gdl(s)") do |t|
             t.env = e
             t.action = action
           end
@@ -180,5 +180,5 @@ module AdminModule::Rake
   end # class
 end # module
 
-AdminModule::Rake::GdlTask.install
+AdminModule::Rake::GdlTasks.install
 
