@@ -18,7 +18,7 @@ module AdminModule::Rake
 
     attr_accessor :env
     attr_accessor :name
-    attr_accessor :comment
+    attr_accessor :comments
     attr_accessor :path
     attr_reader   :action
     attr_reader   :valid_actions
@@ -94,17 +94,17 @@ module AdminModule::Rake
     end
 
     def default_params
-      if comment.nil? || comment.empty?
-        comment = AdminModule.configuration.default_comment
-        unless comment.nil? || comment.empty?
-          $stdout << "Using default comment - #{comment}\n"
+      if comments.nil? || comments.empty?
+        self.comments = AdminModule.configuration.default_comment
+        unless comments.nil? || comments.empty?
+          $stdout << "Using default comment - #{comments}\n"
         end
       end
 
       if path.nil? || path.empty?
         build_dir = Pathname('build')
         if build_dir.exist? && build_dir.directory?
-          path = build_dir.to_s
+          self.path = build_dir.to_s
           $stdout << "Using default path - #{path}\n"
         end
       end
@@ -148,11 +148,11 @@ module AdminModule::Rake
       case action
       when 'deploy'
         args << :path
-        args << :comment
+        args << :comments
 
       when 'version'
         args << :name
-        args << :comment
+        args << :comments
 
       else
         # Noop
