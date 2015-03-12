@@ -204,8 +204,8 @@ module AdminModule
       if gdlname.nil?
         errmsg = "No guideline has been mapped for #{File.basename(xmlfile)}"
         trymsg = "Have you configured your gdl mappings?"
-        trymsg2= "\n Try: admin_module config add xmlmap <xmlfile> <gdlname>"
-        fail("#{errmsg}\n#{trymsg}\n#{trymsg2}") if gdlname.nil?
+        trymsg2= " Try: admin_module config add xmlmap <xmlfile> <gdlname>"
+        fail("#{errmsg}\n\n#{trymsg}\n#{trymsg2}") if gdlname.nil?
       end
       gdlname
     end

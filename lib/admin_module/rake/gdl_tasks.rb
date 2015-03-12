@@ -104,7 +104,8 @@ module AdminModule::Rake
       if path.nil? || path.empty?
         build_dir = Pathname('build')
         if build_dir.exist? && build_dir.directory?
-          self.path = build_dir.to_s
+          # Must be an absolute path:
+          self.path = build_dir.expand_path.to_s
           $stdout << "Using default path - #{path}\n"
         end
       end
