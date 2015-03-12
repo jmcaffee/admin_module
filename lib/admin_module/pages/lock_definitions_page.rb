@@ -42,7 +42,8 @@ module AdminModule::Pages
       locks_element.select lock_name
       self.modify_button
 
-      self
+      # Return the page object of the next page.
+      detail_page
     end
 
     def add lock_data
@@ -53,6 +54,12 @@ module AdminModule::Pages
       self.add_button
 
       # Return the page object of the next page.
+      detail_page
+    end
+
+  private
+
+    def detail_page
       LockDefinitionPage.new(@browser, false)
     end
   end # class
