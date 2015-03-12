@@ -3,8 +3,8 @@
 AdminModule is a tool to allow maintenance and configuration of AMS
 environments through the command line or Rake tasks.
 
-Because it is scriptable, it's useful when creating migration scripts that are
-efficient and repeatable, resulting in lower risk deployments.
+Because it is scriptable, it can be used to create efficient and repeatable
+migrations resulting in low risk deployments.
 
 ## Installation
 
@@ -21,6 +21,147 @@ Or install it yourself as:
     $ gem install admin_module
 
 ## Usage
+
+### Command Line Help
+
+Thor's usage help is messed up related to subcommands (ie. subcommand help is
+sometimes listed without the subcommand's parent). For this reason, the 'help'
+is listed here.
+
+    $ admin_module help
+
+    Commands:
+      admin_module help [COMMAND]     # Describe available commands or one specific command
+      admin_module config [COMMAND]   # modify configuration values
+      admin_module gdl [COMMAND]      # run a guideline command
+      admin_module lock [COMMAND]     # run a lock command
+      admin_module rule [COMMAND]     # run a rule command
+      admin_module ruleset [COMMAND]  # run a ruleset command
+      admin_module stage [COMMAND]    # run a stage command
+
+
+#### Config Commands
+
+    $ admin_module config help
+
+    Commands:
+      admin_module config help [COMMAND]          # Describe subcommands or one specific subcommand
+      admin_module config defcomment '<comment>'  # show or set the default comment
+      admin_module config defenv <envname>        # show or set the default environment
+      admin_module config init <filedir>          # create a configuration file
+      admin_module config timeout <seconds>       # show or set the browser timeout period
+      admin_module config show [CATEGORY]         # display configuration values for [CATEGORY]
+      admin_module config add [CATEGORY]          # add a configuration value
+      admin_module config del [CATEGORY]          # delete a configuration value for [CATEGORY]
+
+
+##### Config Show Commands
+
+    $ admin_module config show help
+
+    Commands:
+      admin_module config show help [COMMAND]         # Describe subcommands or one specific subcommand
+      admin_module config show credentials <envname>  # display configured credentials for an environment
+      admin_module config show envs                   # display configured environments
+      admin_module config show xmlmaps                # display configured xmlmaps
+
+
+##### Config Add Commands
+
+    $ admin_module config add help
+
+    Commands:
+      admin_module config add help [COMMAND]                           # Describe subcommands or one specific subcommand
+      admin_module config add credentials <envname> <username> <pass>  # add login credentials for an environment
+      admin_module config add env <envname> <url>                      # add a environment url
+      admin_module config add xmlmap <xmlfile> <gdlname>               # map an xml file name to a guideline
+
+
+##### Config Del Commands
+
+    $ admin_module config del help
+
+    Commands:
+      admin_module config del help [COMMAND]         # Describe subcommands or one specific subcommand
+      admin_module config del credentials <envname>  # delete credentials for an environment
+      admin_module config del env <envname>          # delete an environment configuration
+      admin_module config del xmlmap <xmlfile>       # delete an xml file to guideline mapping
+
+
+#### Gdl Commands
+
+    $ admin_module gdl help
+
+    Commands:
+      admin_module gdl help [COMMAND]              # Describe subcommands or one specific subcommand
+      admin_module gdl deploy <srcdir> <comments>  # Deploy all XML files in <srcdir> with version <comments>
+      admin_module gdl version <comments>          # Version guidelines with <comments>
+
+    Options:
+      e, [--environment=dev]
+
+
+#### Lock Commands
+
+    $ admin_module lock help
+
+    Commands:
+      admin_module lock help [COMMAND]               # Describe subcommands or one specific subcommand
+      admin_module lock export <filepath>            # Export a lock configuration file from the environment
+      admin_module lock import <filepath>            # Import a lock configuration file into the environment
+      admin_module lock list                         # List all locks in the environment
+      admin_module lock read <name>                  # Emit a lock's configuration from the environment in YAML format
+      admin_module lock rename <srcname> <destname>  # Rename a lock named <srcname> to <destname>
+
+    Options:
+      e, [--environment=dev]
+
+
+#### Rule Commands
+
+    $ admin_module rule help
+
+    Commands:
+      admin_module rule help [COMMAND]               # Describe subcommands or one specific subcommand
+      admin_module rule delete <rulename>            # Delete a rule named <rulename>
+      admin_module rule list                         # List all rules in the environment
+      admin_module rule rename <srcname> <destname>  # Rename a rule named <srcname> to <destname>
+
+    Options:
+      e, [--environment=dev]
+
+
+#### Ruleset Commands
+
+    $ admin_module ruleset help
+
+    Commands:
+      admin_module ruleset help [COMMAND]               # Describe subcommands or one specific subcommand
+      admin_module ruleset list                         # List all rulesets in the environment
+      admin_module ruleset rename <srcname> <destname>  # Rename a ruleset named <srcname> to <destname>
+
+    Options:
+      e, [--environment=dev]
+
+
+#### Stage Commands
+
+    $ admin_module stage help
+
+    Commands:
+      admin_module stage help [COMMAND]               # Describe subcommands or one specific subcommand
+      admin_module stage delete <name>                # Delete a stage from the environment
+      admin_module stage export <filepath>            # Export a stage configuration file from the environment
+      admin_module stage import <filepath>            # Import a stage configuration file into the environment
+      admin_module stage list                         # List all stages in the environment
+      admin_module stage read <name>                  # Emit a stage's configuration from the environment in YAML format
+      admin_module stage rename <srcname> <destname>  # Rename a stage from <srcname> to <destname>
+
+    Options:
+      e, [--environment=dev]
+
+
+
 
 ### Tasks
 
