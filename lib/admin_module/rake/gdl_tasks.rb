@@ -95,7 +95,7 @@ module AdminModule::Rake
 
     def default_params
       if comment.nil? || comment.empty?
-        comment = AdminConfig.configuration.default_comment
+        comment = AdminModule.configuration.default_comment
         unless comment.nil? || comment.empty?
           $stdout << "Using default comment - #{comment}\n"
         end
