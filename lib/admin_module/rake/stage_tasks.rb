@@ -183,7 +183,7 @@ module AdminModule::Rake
     def install
       AdminModule.configuration.credentials.keys.each do |e|
         valid_actions.each do |action|
-          AdminModule::Rake::StageTask.new("am:#{e}:stage:#{action}", "#{action} #{e} stage(s)") do |t|
+          AdminModule::Rake::StageTasks.new("am:#{e}:stage:#{action}", "#{action} #{e} stage(s)") do |t|
             t.env = e
             t.action = action
           end
@@ -193,5 +193,5 @@ module AdminModule::Rake
   end # class
 end # module
 
-AdminModule::Rake::StageTask.install
+AdminModule::Rake::StageTasks.install
 
