@@ -72,8 +72,7 @@ class LockDefinitionPage
 
     self.parameters_tab
     lock_data[:parameters] = self.params_selected_options
-    #require 'pry'; binding.pry
-    
+
     self.dts_tab
     lock_data[:dts] = self.dts_selected_options
 
@@ -101,6 +100,10 @@ class LockDefinitionPage
       self.add_dts_button
     end
 
+    self
+  end
+
+  def save
     self.save_button
   end
 end
