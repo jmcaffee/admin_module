@@ -32,7 +32,7 @@ module AdminModule
       page = guidelines_page
         .open_guideline(gdlname)
         .add_version
-        .upload(xmlfile, comments_or_default(comments))
+        .upload(xmlfile.expand_path, comments_or_default(comments))
     end
 
     def version gdls, comments = nil
