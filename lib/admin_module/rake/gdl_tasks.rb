@@ -83,14 +83,14 @@ module AdminModule::Rake
     def deploy client
       real_path = Pathname(path)
       if real_path.directory?
-        $stdout << client.guideline.deploy(path, comments)
+        client.guideline.deploy(path, comments)
       else
-        $stdout << client.guideline.deploy_file(path, comments)
+        client.guideline.deploy_file(path, comments)
       end
     end
 
     def version client
-      $stdout << client.guideline.version(name)
+      client.guideline.version(name)
     end
 
     def default_params
