@@ -160,7 +160,7 @@ class WorkflowDetailPage
   end
 
   def set_stage_data data
-    set_stage_name data[:name] if data.key?(:name)
+    set_name data[:name] if data.key?(:name)
 
     set_transitions data[:transition_to] if data.key?(:transition_to)
 
