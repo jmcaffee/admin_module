@@ -195,6 +195,12 @@ Tasks include:
 - `stage:rename` rename an existing stage
 
 
+## Scripting
+
+You can use the Client for scripting.
+
+
+
 ## Contributing
 
 1. Fork it
