@@ -66,7 +66,7 @@ class GuidelineVersionPage
     verify_latest_version comments
 
     # Return the url of the version guideline page.
-    current_url
+    self
 
   rescue Timeout::Error => e
       add_error 'Timeout occurred. Try adjusting the browser_timeout configuration option.'
