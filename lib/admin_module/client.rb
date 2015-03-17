@@ -83,6 +83,15 @@ module AdminModule
       @logged_in = false
     end
 
+    ##
+    # Logout of the admin module and quit the browser
+    #
+
+    def quit
+      logout
+      page_factory.login_page(false).browser.close
+    end
+
   private
 
     ##
