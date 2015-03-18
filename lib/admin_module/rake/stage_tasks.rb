@@ -80,8 +80,6 @@ module AdminModule::Rake
       raise e if stop_on_exception == true
     ensure
       client.quit
-      #sleep 5
-      #client.logout unless client.nil?
     end
 
     def list client
