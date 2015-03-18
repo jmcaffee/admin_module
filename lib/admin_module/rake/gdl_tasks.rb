@@ -70,6 +70,7 @@ module AdminModule::Rake
       if self.respond_to? action
         self.send(action, client)
         client.quit
+        sleep 5
         return
       else
         raise "Unknown action - #{action}"
