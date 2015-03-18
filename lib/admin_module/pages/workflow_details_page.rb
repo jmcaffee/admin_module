@@ -57,10 +57,7 @@ module AdminModule::Pages
       self
     end
 
-    def add stage_name
-      raise ArgumentError, "Missing stage name" if stage_name.nil? || stage_name.empty?
-      raise ArgumentError, "Stage name '#{name}' already exists" if states_options.include? stage_name
-
+    def add
       self.add_button
 
       # Return the page object of the next page.
