@@ -71,8 +71,6 @@ module AdminModule::Rake
 
       if self.respond_to? action
         self.send(action, client)
-        client.quit
-        sleep 5
         return
       else
         raise "Unknown action - #{action}"
@@ -81,7 +79,9 @@ module AdminModule::Rake
     rescue Exception => e
       raise e if stop_on_exception == true
     ensure
-      client.logout unless client.nil?
+      client.quit
+      #sleep 5
+      #client.logout unless client.nil?
     end
 
     def list client
