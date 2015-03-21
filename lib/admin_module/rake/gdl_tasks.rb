@@ -90,7 +90,7 @@ module AdminModule::Rake
     end
 
     def version client
-      client.guideline.version(name)
+      client.guideline.version(name, comments)
     end
 
     def default_params

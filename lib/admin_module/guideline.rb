@@ -36,9 +36,36 @@ module AdminModule
     end
 
     def version gdls, comments = nil
+      gdls = Array(gdls)
       page = guidelines_page
         .version_all
-        .version(gdls, comments_or_default(comments))
+
+      gdl_list = page.get_guidelines
+
+      version_list = []
+      not_found_list = []
+      gdls.each do |gdl|
+        if gdl_list.include? gdl
+          version_list << gdl
+        else
+          mapped_name = mapped_guideline gdl
+          if mapped_name.nil?
+            not_found_list << gdl
+          else
+            version_list << mapped_name
+          end
+        end
+      end
+
+      if not_found_list.count > 0
+        puts "Can't find the following guidelines in the available list:"
+        not_found_list.each do |nf|
+          puts "  #{nf}"
+        end
+        return page
+      end
+
+      page.version(version_list, comments_or_default(comments))
     end
 
   private

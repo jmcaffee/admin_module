@@ -46,6 +46,15 @@ class GuidelinesVersionAllPage
     @errors ||= []
   end
 
+  def get_guidelines
+    gdl_list = []
+    Nokogiri::HTML(@browser.html).css("select#ctl00_cntPlh_tsGuidelines_lstAvailable>option").each do |elem|
+      gdl_list << elem.text
+    end
+
+    gdl_list
+  end
+
   def version(gdl_names, comments = nil)
     gdl_names = Array(gdl_names)
 

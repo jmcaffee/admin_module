@@ -28,6 +28,15 @@ class GuidelinesPage
   button(:version_all_button,
          text: 'Version All')
 
+  def get_guidelines
+    gdl_list = []
+    Nokogiri::HTML(@browser.html).css("select#ctl00_cntPlh_ctlGuidelines_lstItems>option").each do |elem|
+      gdl_list << elem.text
+    end
+
+    gdl_list
+  end
+
   def open_guideline(gdl_name)
     #guidelines_options # List of option text
     guidelines_element.select gdl_name
