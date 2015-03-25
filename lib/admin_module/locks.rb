@@ -85,7 +85,7 @@ module AdminModule
     ##
     # Import lock configurations into the current environment from a file.
 
-    def import file_path
+    def import file_path, allow_create = false
       raise IOError, "File not found: #{file_path}" unless File.exists?(file_path)
 
       locks = {}
@@ -100,7 +100,11 @@ module AdminModule
         if existing_locks.include?(name)
           update(data)
         else
-          create(data)
+          if allow_create
+            create(data)
+          else
+            puts "Unable to create #{name}. allow_create = false"
+          end
         end
       end
     end
