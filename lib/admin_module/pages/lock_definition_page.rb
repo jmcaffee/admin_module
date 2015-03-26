@@ -88,6 +88,7 @@ class LockDefinitionPage
     self.parameters_tab
 
     self.remove_all_param_button
+    assert_all_params_removed
     lock_data[:parameters].each do |p|
       params_available_element.select(p)
       self.add_param_button
@@ -95,6 +96,7 @@ class LockDefinitionPage
 
     self.dts_tab
     self.remove_all_dts_button
+    assert_all_dts_fields_removed
     lock_data[:dts].each do |d|
       dts_available_element.select(d)
       self.add_dts_button
@@ -105,6 +107,16 @@ class LockDefinitionPage
 
   def save
     self.save_button
+  end
+
+private
+
+  def assert_all_params_removed
+    raise "Unable to remove parameters" unless self.params_selected_options.count == 0
+  end
+
+  def assert_all_dts_fields_removed
+    raise "Unable to remove DTS fields" unless self.dts_selected_options.count == 0
   end
 end
 
