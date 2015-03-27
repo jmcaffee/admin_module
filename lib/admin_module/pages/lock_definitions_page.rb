@@ -46,11 +46,7 @@ module AdminModule::Pages
       detail_page
     end
 
-    def add lock_data
-      name = lock_data[:name]
-      raise ArgumentError, "Missing lock name" if name.nil? || name.empty?
-      raise ArgumentError, "Lock name '#{name}' already exists" if locks_options.include? name
-
+    def add
       self.add_button
 
       # Return the page object of the next page.
