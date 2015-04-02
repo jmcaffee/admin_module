@@ -1,10 +1,16 @@
 ##############################################################################
 # File::    lock_definitions_page.rb
 # Purpose:: Lock Definitions page for AdminModule
-# 
+#
+#           Note that the admin module has at least 3 pages that all reference
+#           the same url with the difference being the 'type' parameter.
+#
+#           The Lock Defintions page has a type of 2 and account of 2:
+#
+#             admin/security/ViewDefinitions.aspx?type=2&Act=2
+#
 # Author::    Jeff McAffee 2013-11-22
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 
