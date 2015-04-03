@@ -8,6 +8,7 @@ require 'admin_module/rulesets'
 require 'admin_module/rules'
 require 'admin_module/stages'
 require 'admin_module/locks'
+require 'admin_module/dc'
 require 'admin_module/client'
 
 if ENV['DEBUG'].nil?
@@ -160,6 +161,7 @@ module AdminModule
                        'RulesetPage'              => "/admin/decision/ruleset.aspx",
                        'ParametersPage'           => "/admin/decision/parameters.aspx",
                        'ParameterPage'            => "/admin/decision/parameter.aspx",
+                       'DcDefinitionsPage'        => "/admin/security/ViewDefinitions.aspx?type=3",
                     }
 
       @browser_timeout = 360

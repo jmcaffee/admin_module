@@ -36,5 +36,9 @@ module AdminModule
     def stages_page(goto_page = true)
       return Pages::WorkflowDetailsPage.new(browser, goto_page)
     end
+
+    def dc_definitions_page(goto_page = true)
+      return Pages::DcDefinitionsPage.new(browser, goto_page)
+    end
   end
 end # AdminModule

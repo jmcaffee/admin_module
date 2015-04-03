@@ -52,6 +52,11 @@ module AdminModule
       Stages.new page_factory
     end
 
+    def dcs
+      login
+      DC.new page_factory
+    end
+
     def page_factory
       @page_factory ||= AdminModule::PageFactory.new
     end

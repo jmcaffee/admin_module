@@ -24,6 +24,8 @@ require 'admin_module/pages/rulesets_page'
 require 'admin_module/pages/ruleset_page'
 require 'admin_module/pages/parameters_page'
 require 'admin_module/pages/parameter_page'
+require 'admin_module/pages/dc_definitions_page'
+require 'admin_module/pages/dc_detail_page'
 
 module AdminModule::Pages
 

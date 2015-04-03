@@ -15,6 +15,7 @@ require 'admin_module/cli/ruleset'
 require 'admin_module/cli/rule'
 require 'admin_module/cli/lock'
 require 'admin_module/cli/stage'
+require 'admin_module/cli/dc'
 
 
 module AdminModule
@@ -47,6 +48,9 @@ module AdminModule
 
     desc "stage [COMMAND]", "run a stage command"
     subcommand "stage", AdminModule::Stage
+
+    desc "dc [COMMAND]", "run a data clearing command"
+    subcommand "dc", AdminModule::Dc
   end # CLI
 end # AdminModule
 
