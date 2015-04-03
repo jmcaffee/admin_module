@@ -1,8 +1,8 @@
 ##############################################################################
-# File::    lock_tasks.rb
-# Purpose:: LockTasks definition
+# File::    dc_tasks.rb
+# Purpose:: DcTasks definition
 #
-# Author::    Jeff McAffee 2015-03-12
+# Author::    Jeff McAffee 04/02/2015
 #
 ##############################################################################
 
@@ -11,25 +11,22 @@ require 'rake/dsl_definition'
 require 'rake'
 
 module AdminModule::Rake
-
-  class LockTasks
+  class DcTasks
     include ::Rake::DSL if defined?(::Rake::DSL)
 
     attr_accessor :env
     attr_accessor :name
     attr_accessor :to
     attr_accessor :path
-    attr_accessor :allow_create
     attr_reader   :action
     attr_reader   :valid_actions
     attr_reader   :stop_on_exception
 
-    def initialize(task_name = 'locks_task', desc = "Modify a lock or locks")
+    def initialize(task_name = 'dcs_task', desc = "Modify DC definition(s)")
       @valid_actions = ['import', 'export', 'read', 'list', 'rename']
       @task_name, @desc = task_name, desc
 
       @stop_on_exception = true
-      @allow_create = false
 
       yield self if block_given?
 
@@ -82,26 +79,26 @@ module AdminModule::Rake
     end
 
     def list client
-      $stdout << client.locks.list.join("\n")
+      $stdout << client.dcs.list.join("\n")
       $stdout << "\n"
     end
 
     def read client
       result = {}
-      result[name] = client.locks.read(name)
+      result[name] = client.dcs.read(name)
       $stdout << result.to_yaml
     end
 
     def import client
-      $stdout << client.locks.import(path, allow_create)
+      $stdout << client.dcs.import(path)
     end
 
     def export client
-      $stdout << client.locks.export(path)
+      $stdout << client.dcs.export(path)
     end
 
     def rename client
-      $stdout << client.locks.rename(name, to)
+      $stdout << client.dcs.rename(name, to)
     end
 
     def validate_params
@@ -154,7 +151,6 @@ module AdminModule::Rake
 
       when 'import'
         args << :path
-        args << :allow_create
 
       when 'export'
         args << :path
@@ -175,7 +171,7 @@ module AdminModule::Rake
     def install
       AdminModule.configuration.credentials.keys.each do |e|
         valid_actions.each do |action|
-          AdminModule::Rake::LockTasks.new("am:#{e}:lock:#{action}", "#{action} #{e} lock(s)") do |t|
+          AdminModule::Rake::DcTasks.new("am:#{e}:dc:#{action}", "#{action} #{e} DC defn(s)") do |t|
             t.env = e
             t.action = action
           end
@@ -185,5 +181,5 @@ module AdminModule::Rake
   end # class
 end # module
 
-AdminModule::Rake::LockTasks.install
+AdminModule::Rake::DcTasks.install
 
