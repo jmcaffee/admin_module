@@ -103,7 +103,7 @@ describe AdminModule::Guideline do
 
           expect(page_factory.guidelines_page)
             .to receive(:upload)
-            .with(file_to_upload, default_comment)
+            .with(file_to_upload.expand_path, default_comment)
 
           gdl = AdminModule::Guideline.new(page_factory)
           gdl.deploy_file(file_to_upload)
@@ -131,6 +131,10 @@ describe AdminModule::Guideline do
           expect(page_factory.guidelines_page)
             .to receive(:version)
             .with(gdls, comment)
+
+          allow(page_factory.guidelines_page)
+            .to receive(:get_guidelines)
+            .and_return( gdls )
 
           gdl = AdminModule::Guideline.new(page_factory)
           gdl.version(gdls, comment)

@@ -1,4 +1,5 @@
-require 'spec_helper'
+require 'pathname'
+require Pathname(__FILE__).ascend{|d| h=d+'spec_helper.rb'; break h if h.file?}
 
 describe 'gdl command' do
 
