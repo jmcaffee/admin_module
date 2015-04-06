@@ -57,6 +57,11 @@ module AdminModule
       DC.new page_factory
     end
 
+    def snapshots
+      login
+      Snapshots.new page_factory
+    end
+
     def page_factory
       @page_factory ||= AdminModule::PageFactory.new
     end

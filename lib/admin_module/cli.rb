@@ -43,6 +43,9 @@ module AdminModule
 
     desc "dc [COMMAND]", "run a data clearing command"
     subcommand "dc", AdminModule::Command::Dc
+
+    desc "snapshot [COMMAND]", "run a snapshot command"
+    subcommand "snapshot", AdminModule::Command::Snapshot
   end # CLI
 end # AdminModule
 

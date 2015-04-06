@@ -43,6 +43,10 @@ def mock_dc_definitions_page(nav_to_page = true)
   page = object_double(AdminModule::Pages::DcDefinitionsPage.new(mock_watir_browser, nav_to_page))
 end
 
+def mock_snapshot_definitions_page(nav_to_page = true)
+  page = object_double(AdminModule::Pages::SnapshotDefinitionsPage.new(mock_watir_browser, nav_to_page))
+end
+
 #
 # Page Factory Mocks
 #
@@ -62,6 +66,7 @@ def mock_page_factory
   obj.locks_page = mock_lock_definitions_page
   obj.stages_page = mock_stages_page
   obj.dc_definitions_page = mock_dc_definitions_page
+  obj.snapshot_definitions_page = mock_snapshot_definitions_page
   obj
 end
 
@@ -74,6 +79,7 @@ class MockPageFactory
   attr_writer :locks_page
   attr_writer :stages_page
   attr_writer :dc_definitions_page
+  attr_writer :snapshot_definitions_page
 
   def login_page(nav_to_page = true)
     @login_page ||= mock_login_page(nav_to_page)
@@ -102,6 +108,10 @@ class MockPageFactory
   def dc_definitions_page(nav_to_page = true)
     @dc_definitions_page ||= mock_dc_definitions_page(nav_to_page)
   end
+
+  def snapshot_definitions_page(nav_to_page = true)
+    @snapshot_definitions_page ||= mock_dc_definitions_page(nav_to_page)
+  end
 end
 
 #
@@ -116,11 +126,16 @@ def mock_client()
   allow(mock_client).to receive(:quit).and_return(nil)
   allow(mock_client).to receive(:guideline).and_return(mock_guideline)
   allow(mock_client).to receive(:dc).and_return(mock_dc)
+  allow(mock_client).to receive(:snapshot).and_return(mock_snapshots)
   #allow(mock_client).to receive(:write_layout).with(anything, anything).and_return(true)
   #allow(mock_client).to receive(:write_layout_class).with(anything, anything).and_return(true)
   #allow(mock_client).to receive(:write_delegate_class).with(anything, anything).and_return(true)
 
   mock_client
+end
+
+def mock_snapshots(pg_factory)
+  dc = object_double(AdminModule::Snapshots.new(pg_factory))
 end
 
 def mock_dc(pg_factory)
