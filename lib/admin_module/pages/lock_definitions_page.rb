@@ -22,7 +22,7 @@ module AdminModule::Pages
     page_url(:get_dynamic_url)
 
     def get_dynamic_url
-      AdminModule.configuration.url(LockDefinitionsPage)
+      "/admin/security/ViewDefinitions.aspx?act=2&type=2"
     end
 
     select_list(:locks,

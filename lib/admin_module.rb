@@ -151,19 +151,9 @@ module AdminModule
 
       @aliases      = {}
 
-      @page_urls   = { 'GuidelinesPage'           => "/admin/decision/guidelines.aspx",
-                       'GuidelinesVersionAllPage' => "/admin/decision/versionAllGuideline.aspx",
-                       'GuidelinePage'            => "/admin/decision/guideline.aspx", #?gdl=34
-                       'LockDefinitionsPage'      => "/admin/security/ViewDefinitions.aspx?act=2&type=2",
-                       'WorkflowDetailsPage'      => "/admin/security/workflows.aspx",
-                       'RulesPage'                => "/admin/decision/rules.aspx",
-                       'RulePage'                 => "/admin/decision/rule.aspx",
-                       'RulesetsPage'             => "/admin/decision/rulesets.aspx",
-                       'RulesetPage'              => "/admin/decision/ruleset.aspx",
-                       'ParametersPage'           => "/admin/decision/parameters.aspx",
-                       'ParameterPage'            => "/admin/decision/parameter.aspx",
-                       'DcDefinitionsPage'        => "/admin/security/ViewDefinitions.aspx?type=3",
-                       'SnapshotDefinitionsPage'  => "/admin/security/ViewDefinitions.aspx?type=1&Act=2",
+      @page_urls   = {
+                       'ParametersPage' => "/admin/decision/parameters.aspx",
+                       'ParameterPage'  => "/admin/decision/parameter.aspx",
                     }
 
       @browser_timeout = 360

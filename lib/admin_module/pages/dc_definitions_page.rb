@@ -22,7 +22,7 @@ module AdminModule
       page_url(:get_dynamic_url)
 
       def get_dynamic_url
-        AdminModule.configuration.url(DcDefinitionsPage)
+        "/admin/security/ViewDefinitions.aspx?type=3"
       end
 
       select_list(:definitions,

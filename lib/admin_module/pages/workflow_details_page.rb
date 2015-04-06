@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    workflow_details_page.rb
 # Purpose:: Guidelines page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2013-12-12
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 
@@ -15,7 +14,7 @@ module AdminModule::Pages
     page_url(:get_dynamic_url)
 
     def get_dynamic_url
-      AdminModule.configuration.url(WorkflowDetailsPage)
+      "/admin/security/workflows.aspx"
     end
 
     select_list(:states,

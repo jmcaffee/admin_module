@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    guidelines_page.rb
 # Purpose:: Guidelines page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 11/15/2013
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 
@@ -16,7 +15,7 @@ class GuidelinesPage
   page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    AdminModule.configuration.url(GuidelinesPage)
+    "/admin/decision/guidelines.aspx"
   end
 
   select_list(:guidelines,

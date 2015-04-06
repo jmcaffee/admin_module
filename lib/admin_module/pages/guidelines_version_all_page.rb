@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    guidelines_version_all_page.rb
 # Purpose:: Guidelines Version All page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2014-03-17
-# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 
@@ -18,7 +17,7 @@ class GuidelinesVersionAllPage
   #page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    AdminModule.configuration.url(GuidelinesVersionAllPage)
+    "/admin/decision/versionAllGuideline.aspx"
   end
 
   select_list(:guidelines_available,

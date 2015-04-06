@@ -3,8 +3,7 @@
 # Purpose:: Require all Page classes
 #
 # Author::    Jeff McAffee 11/15/2013
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 
 require 'watir-webdriver'

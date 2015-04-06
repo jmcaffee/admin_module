@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    ruleset_page.rb
 # Purpose:: Ruleset page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2014-03-17
-# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 
@@ -16,7 +15,7 @@ class RulesetPage
   #page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    AdminModule.configuration.url(RulesetPage)
+    "/admin/decision/ruleset.aspx"
   end
 
   text_field(:ruleset_name,

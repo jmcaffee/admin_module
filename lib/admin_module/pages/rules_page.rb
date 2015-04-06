@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    rules_page.rb
 # Purpose:: Rules page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2014-03-17
-# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 require 'nokogiri'
@@ -17,7 +16,7 @@ class RulesPage
   page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    AdminModule.configuration.url(RulesPage)
+    "/admin/decision/rules.aspx"
   end
 
   select_list(:rules,
