@@ -14,7 +14,7 @@ module AdminModule::Pages
     page_url(:get_dynamic_url)
 
     def get_dynamic_url
-      "/admin/security/workflows.aspx"
+      AdminModule.configuration.base_url + "/admin/security/workflows.aspx"
     end
 
     select_list(:states,

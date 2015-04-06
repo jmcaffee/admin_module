@@ -27,23 +27,24 @@ class SnapshotDetailPage
   select_list(:decision_data,
               id: 'ctl00_cntPlh_ddlDecision')
 
-  select_list(:conditions,
-              id: 'ctl00_cntPlh_ddlCondition')
 
-  select_list(:incomes,
-              id: 'ctl00_cntPlh_ddlIncome')
+  # Parameters Tab
+  #
 
-  select_list(:assets,
-              id: 'ctl00_cntPlh_ddlAsset')
+  link(:parameters_tab,
+        text: 'Parameters')
 
-  select_list(:expenses,
-              id: 'ctl00_cntPlh_ddlExpense')
+    select_list(:params_available,
+                id: 'ctl00_cntPlh_tsParams_lstAvailable')
 
-  select_list(:hud1_fields,
-              id: 'ctl00_cntPlh_ddlHUD1')
+    select_list(:params_selected,
+                id: 'ctl00_cntPlh_tsParams_lstSelected')
 
-  select_list(:payment_schedule,
-              id: 'ctl00_cntPlh_ddlPSchedule')
+    button(:add_param_button,
+                id: 'ctl00_cntPlh_tsParams_btnAdd')
+
+    button(:remove_all_params_button,
+                id: 'ctl00_cntPlh_tsParams_btnRemoveAll')
 
 
   # DTS/UDF Tab
@@ -65,6 +66,25 @@ class SnapshotDetailPage
                 id: 'ctl00_cntPlh_tsSnapshotDTS_btnRemoveAll')
 
 
+  # Snapshot Control Fields Tab
+  #
+
+  link(:control_fields_tab,
+        text: 'Snapshot Control Fields')
+
+    select_list(:control_fields_available,
+                id: 'ctl00_cntPlh_tsSnapshotControls_lstAvailable')
+
+    select_list(:control_fields_selected,
+                id: 'ctl00_cntPlh_tsSnapshotControls_lstSelected')
+
+    button(:add_control_field_button,
+                id: 'ctl00_cntPlh_tsSnapshotControls_btnAdd')
+
+    button(:remove_all_control_fields_button,
+                id: 'ctl00_cntPlh_tsSnapshotControls_btnRemoveAll')
+
+
   button(:save_button,
          id: 'ctl00_cntPlh_btnSave')
 
@@ -74,27 +94,19 @@ class SnapshotDetailPage
   def get_definition_data
     data = { name: self.name,
               description: self.description,
-              delete_options: {
-                :decision_data          => false,
-                :conditions_with_images => false,
-                :incomes                => false,
-                :assets                 => false,
-                :expenses               => false,
-                :hud1_fields            => false,
-                :payment_schedule       => false,
-              }
+              parameters: [],
+              dts: [],
+              control_fields: [],
     }
 
-    data[:delete_options][:decision_data]           = true if self.decision_data == "Yes"
-    data[:delete_options][:conditions_with_images]  = true if self.conditions == "Yes"
-    data[:delete_options][:incomes]                 = true if self.incomes == "Yes"
-    data[:delete_options][:assets]                  = true if self.assets == "Yes"
-    data[:delete_options][:expenses]                = true if self.expenses == "Yes"
-    data[:delete_options][:hud1_fields]             = true if self.hud1_fields == "Yes"
-    data[:delete_options][:payment_schedule]        = true if self.payment_schedule == "Yes"
+    self.parameters_tab
+    data[:parameters] = self.params_selected_options
 
     self.dts_tab
     data[:dts] = self.dts_selected_options
+
+    self.control_fields_tab
+    data[:control_fields] = self.control_fields_selected_options
 
     data
   end
@@ -103,22 +115,34 @@ class SnapshotDetailPage
     self.name = data[:name]
     self.description = data[:description]
 
-    opts = data[:delete_options]
-    set_delete_option decision_data_element,    opts[:decision_data]
-    set_delete_option conditions_element,       opts[:conditions_with_images]
-    set_delete_option incomes_element,          opts[:incomes]
-    set_delete_option assets_element,           opts[:assets]
-    set_delete_option expenses_element,         opts[:expenses]
-    set_delete_option hud1_fields_element,      opts[:hud1_fields]
-    set_delete_option payment_schedule_element, opts[:payment_schedule]
+    self.parameters_tab
+
+    self.remove_all_params_button
+    assert_all_fields_removed self.params_selected_options, 'Parameters'
+
+    data[:parameters].each do |p|
+      params_available_element.select(p)
+      self.add_param_button
+    end
 
     self.dts_tab
 
     self.remove_all_dts_button
-    assert_all_dts_fields_removed
+    assert_all_fields_removed self.dts_selected_options, 'DTS'
+
     data[:dts].each do |d|
       dts_available_element.select(d)
       self.add_dts_button
+    end
+
+    self.control_fields_tab
+
+    self.remove_all_control_fields_button
+    assert_all_fields_removed self.control_fields_selected_options, 'Control Fields'
+
+    data[:control_fields].each do |f|
+      control_fields_available_element.select(f)
+      self.add_control_field_button
     end
 
     self
@@ -136,21 +160,8 @@ class SnapshotDetailPage
 
 private
 
-  def assert_all_dts_fields_removed
-    raise "Unable to remove DTS fields" unless self.dts_selected_options.count == 0
-  end
-
-  def set_delete_option elem, value, name = ''
-    if !elem.visible?
-      $stdout << "The #{name} is not available for this definition." unless name.nil? || name.empty?
-      return
-    end
-
-    if value == true
-      elem.select('Yes')
-    else
-      elem.select('No')
-    end
+  def assert_all_fields_removed control, label
+    raise "Unable to remove #{label} fields" unless control.count == 0
   end
 end
 

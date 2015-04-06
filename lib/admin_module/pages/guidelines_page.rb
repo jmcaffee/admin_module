@@ -15,7 +15,7 @@ class GuidelinesPage
   page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    "/admin/decision/guidelines.aspx"
+    AdminModule.configuration.base_url + "/admin/decision/guidelines.aspx"
   end
 
   select_list(:guidelines,

@@ -15,7 +15,7 @@ class RulePage
   #page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    "/admin/decision/rule.aspx"
+    AdminModule.configuration.base_url + "/admin/decision/rule.aspx"
   end
 
   text_field(:rule_name,

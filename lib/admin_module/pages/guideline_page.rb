@@ -14,7 +14,7 @@ module AdminModule::Pages
     #page_url(:get_dynamic_url)
 
     def get_dynamic_url
-      "/admin/decision/guideline.aspx"
+      AdminModule.configuration.base_url + "/admin/decision/guideline.aspx"
     end
 
     link(:versions,
