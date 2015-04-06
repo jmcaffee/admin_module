@@ -15,4 +15,5 @@ require_relative 'rake/gdl_tasks'
 require_relative 'rake/stage_tasks'
 require_relative 'rake/lock_tasks'
 require_relative 'rake/dc_tasks'
+require_relative 'rake/snapshot_tasks'
 

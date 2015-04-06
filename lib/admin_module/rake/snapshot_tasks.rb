@@ -22,7 +22,7 @@ module AdminModule::Rake
     attr_reader   :valid_actions
     attr_reader   :stop_on_exception
 
-    def initialize(task_name = 'snapshots_task', desc = "Modify Snapshot definition(s)")
+    def initialize(task_name = 'snapshots_task', desc = "modify snapshot definition(s)")
       @valid_actions = ['import', 'export', 'read', 'list', 'rename']
       @task_name, @desc = task_name, desc
 
@@ -40,6 +40,10 @@ module AdminModule::Rake
         commit  # Call method to perform when invoked.
       end
     end
+
+    #
+    # Add each arg passed to the task, as an instance variable of the task
+    #
 
     def set_vars args
       args.each do |arg,val|
@@ -59,6 +63,10 @@ module AdminModule::Rake
       @stop_on_exception = do_stop
     end
 
+    #
+    # Execute the task (action)
+    #
+
     def commit
       validate_params
 
@@ -77,6 +85,10 @@ module AdminModule::Rake
     ensure
       client.quit
     end
+
+    #
+    # Actions
+    #
 
     def list client
       $stdout << client.snapshots.list.join("\n")
@@ -100,6 +112,11 @@ module AdminModule::Rake
     def rename client
       $stdout << client.snapshots.rename(name, to)
     end
+
+    #
+    # Verify we have the needed parameters (arguments) to perform
+    # the task action.
+    #
 
     def validate_params
       assert_provided env, 'Missing "env"'
@@ -138,6 +155,11 @@ module AdminModule::Rake
       end
     end
 
+    #
+    # Define the task args, based on the action.
+    # Used when programatically generating the tasks.
+    #
+
     def required_args_for_action
       args = []
 
@@ -162,16 +184,27 @@ module AdminModule::Rake
       args
     end
 
+    #
+    # Class method to create an instance of the task generator,
+    # and call the instance's install method.
+    #
+
     class << self
       def install
         new.install
       end
     end
 
+    #
+    # Instance method to generate the tasks;
+    # For each environment where we have configured credentials,
+    # generate a task for each available action.
+    #
+
     def install
       AdminModule.configuration.credentials.keys.each do |e|
         valid_actions.each do |action|
-          AdminModule::Rake::SnapshotTasks.new("am:#{e}:snapshot:#{action}", "#{action} #{e} Snapshot defn(s)") do |t|
+          AdminModule::Rake::SnapshotTasks.new("am:#{e}:snapshot:#{action}", "#{action} #{e} snapshot defn(s)") do |t|
             t.env = e
             t.action = action
           end
@@ -180,6 +213,11 @@ module AdminModule::Rake
     end
   end # class
 end # module
+
+
+#
+# Install (generate) the tasks
+#
 
 AdminModule::Rake::SnapshotTasks.install
 
