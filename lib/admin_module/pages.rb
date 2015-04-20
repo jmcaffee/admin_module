@@ -27,6 +27,8 @@ require 'admin_module/pages/dc_definitions_page'
 require 'admin_module/pages/dc_detail_page'
 require 'admin_module/pages/snapshot_definitions_page'
 require 'admin_module/pages/snapshot_detail_page'
+require 'admin_module/pages/workflow_task_page'
+require 'admin_module/pages/workflow_tasks_page'
 
 module AdminModule::Pages
 

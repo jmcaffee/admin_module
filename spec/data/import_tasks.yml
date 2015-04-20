@@ -1,0 +1,25 @@
+---
+TstTask1:
+  :name: TstTask1
+  :schedule: To-Do
+  :priority: Normal
+  :due_days: 2
+  :due_hours: 0
+  :due_minutes: 00
+  :followup:
+  :assigned_to: Negotiator
+  :fees_assigned: 0.00
+  :task_description: TstTask1 task description
+  :letter_agreement:
+TstTask2:
+  :name: TstTask2
+  :schedule: To-Do
+  :priority: Normal
+  :due_days: 2
+  :due_hours: 0
+  :due_minutes: 00
+  :followup:
+  :assigned_to: Negotiator
+  :fees_assigned: 0.00
+  :task_description: TstTask2 task description
+  :letter_agreement:

@@ -46,6 +46,9 @@ module AdminModule
 
     desc "snapshot [COMMAND]", "run a snapshot command"
     subcommand "snapshot", AdminModule::Command::Snapshot
+
+    desc "task [COMMAND]", "run a task command"
+    subcommand "task", AdminModule::Command::Task
   end # CLI
 end # AdminModule
 

@@ -43,5 +43,9 @@ module AdminModule
     def snapshot_definitions_page(goto_page = true)
       return Pages::SnapshotDefinitionsPage.new(browser, goto_page)
     end
+
+    def tasks_page(goto_page = true)
+      return Pages::WorkflowTasksPage.new(browser, goto_page)
+    end
   end
 end # AdminModule

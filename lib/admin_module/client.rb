@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    client.rb
 # Purpose:: AdminModule client object
-# 
+#
 # Author::    Jeff McAffee 07/11/2014
-# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 
 module AdminModule
@@ -60,6 +59,11 @@ module AdminModule
     def snapshots
       login
       Snapshots.new page_factory
+    end
+
+    def tasks
+      login
+      Tasks.new page_factory
     end
 
     def page_factory

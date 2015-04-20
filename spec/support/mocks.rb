@@ -47,6 +47,10 @@ def mock_snapshot_definitions_page(nav_to_page = true)
   page = object_double(AdminModule::Pages::SnapshotDefinitionsPage.new(mock_watir_browser, nav_to_page))
 end
 
+def mock_task_definitions_page(nav_to_page = true)
+  object_double(AdminModule::Pages::WorkflowTasksPage.new(mock_watir_browser, nav_to_page))
+end
+
 #
 # Page Factory Mocks
 #
@@ -67,6 +71,7 @@ def mock_page_factory
   obj.stages_page = mock_stages_page
   obj.dc_definitions_page = mock_dc_definitions_page
   obj.snapshot_definitions_page = mock_snapshot_definitions_page
+  obj.tasks_page = mock_task_definitions_page
   obj
 end
 
@@ -77,6 +82,7 @@ class MockPageFactory
   attr_writer :rulesets_page
   attr_writer :rules_page
   attr_writer :locks_page
+  attr_writer :tasks_page
   attr_writer :stages_page
   attr_writer :dc_definitions_page
   attr_writer :snapshot_definitions_page
@@ -99,6 +105,10 @@ class MockPageFactory
 
   def locks_page(nav_to_page = true)
     @locks_page ||= mock_lock_definitions_page(nav_to_page)
+  end
+
+  def tasks_page(nav_to_page = true)
+    @tasks_page ||= mock_task_definitions_page(nav_to_page)
   end
 
   def stages_page(nav_to_page = true)
@@ -127,6 +137,7 @@ def mock_client()
   allow(mock_client).to receive(:guideline).and_return(mock_guideline)
   allow(mock_client).to receive(:dc).and_return(mock_dc)
   allow(mock_client).to receive(:snapshot).and_return(mock_snapshots)
+  allow(mock_client).to receive(:task).and_return(mock_tasks)
   #allow(mock_client).to receive(:write_layout).with(anything, anything).and_return(true)
   #allow(mock_client).to receive(:write_layout_class).with(anything, anything).and_return(true)
   #allow(mock_client).to receive(:write_delegate_class).with(anything, anything).and_return(true)
@@ -179,6 +190,16 @@ def mock_locks(pg_factory)
   #allow(mock_locks).to receive(:delete).and_return(nil)
 
   mock_locks
+end
+
+def mock_tasks(pg_factory)
+  mock_tasks = object_double(AdminModule::Tasks.new(pg_factory))
+
+  allow(mock_tasks).to receive(:list).and_return([])
+  allow(mock_tasks).to receive(:rename).and_return(nil)
+  #allow(mock_tasks).to receive(:delete).and_return(nil)
+
+  mock_tasks
 end
 
 def mock_stages(pg_factory)
