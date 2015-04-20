@@ -19,7 +19,7 @@ describe AdminModule::Guideline do
       obj
     end
 
-    let(:default_comment) { 'no comment' }
+    let(:default_comment) { 'new default comment' }
 
     context "#deploy" do
       context "with comment" do
@@ -59,6 +59,7 @@ describe AdminModule::Guideline do
           AdminModule.configure do |config|
             config.xmlmaps['test1'] = 'Z-TEMP'
             config.xmlmaps['test2'] = 'Z-TEMP'
+            config.default_comment = default_comment
           end
 
           expect(page_factory.guidelines_page)
@@ -88,6 +89,7 @@ describe AdminModule::Guideline do
           AdminModule.configure do |config|
             config.xmlmaps['test1'] = 'Z-TEMP'
             config.xmlmaps['test2'] = 'Z-TEMP'
+            config.default_comment = default_comment
           end
 
           expect(page_factory.guidelines_page)
@@ -148,6 +150,7 @@ describe AdminModule::Guideline do
           AdminModule.configure do |config|
             config.xmlmaps['test1'] = 'Z-TEMP1'
             config.xmlmaps['test2'] = 'Z-TEMP2'
+            config.default_comment = default_comment
 
             gdls = config.xmlmaps.values
           end
