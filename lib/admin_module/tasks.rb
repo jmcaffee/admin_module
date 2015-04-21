@@ -73,6 +73,9 @@ module AdminModule
         f.write export_data.to_yaml
       end
 
+      # Explicitly return (nothing) to avoid polluting stdout (in rake task).
+      return
+
     rescue Exception => e
       if e.message.include? 'No such file or directory'
         raise IOError, "No such directory - #{file_path}"
@@ -107,6 +110,7 @@ module AdminModule
         end
       end
 
+      # Explicitly return (nothing) to avoid polluting stdout (in rake task).
       return
     end
 
