@@ -178,7 +178,8 @@ describe 'command dc' do
         run_with_args %w(dc read -e dev TestDC1), client
       end
 
-      normalized_yaml = create_dc_hash('TestDC1').to_yaml
+      normalized_yaml = create_dc_hash('TestDC1')
+      normalized_yaml = { 'TestDC1' => normalized_yaml }.to_yaml
 
       expect( output ).to include normalized_yaml
     end

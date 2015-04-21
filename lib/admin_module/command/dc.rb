@@ -97,7 +97,9 @@ module AdminModule
       LD
       def read name
         cl = client.dcs
-        output = cl.read name
+        data = cl.read name
+        output = Hash.new
+        output[name] = data
         $stdout << output.to_yaml
 
       ensure

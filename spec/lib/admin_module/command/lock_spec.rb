@@ -183,7 +183,8 @@ describe 'command lock' do
         run_with_args %w(lock read -e dev TestLock1), client
       end
 
-      normalized_yaml = create_lock_hash('TestLock1').to_yaml
+      normalized_yaml = create_lock_hash('TestLock1')
+      normalized_yaml = { 'TestLock1' => normalized_yaml }.to_yaml
 
       expect( output ).to include normalized_yaml
     end

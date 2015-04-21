@@ -178,7 +178,8 @@ describe 'command snapshot' do
         run_with_args %w(snapshot read -e dev TestSnapshot1), client
       end
 
-      normalized_yaml = create_snapshot_hash('TestSnapshot1').to_yaml
+      normalized_yaml = create_snapshot_hash('TestSnapshot1')
+      normalized_yaml = { 'TestSnapshot1' => normalized_yaml }.to_yaml
 
       expect( output ).to include normalized_yaml
     end

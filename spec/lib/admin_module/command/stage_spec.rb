@@ -229,8 +229,14 @@ describe 'command stage' do
         run_with_args %w(stage read -e dev TestStage1), client
       end
 
-      normalized_yaml = create_stage_hash('TestStage1').to_yaml
+      normalized_yaml = create_stage_hash('TestStage1')
+      normalized_yaml = { 'TestStage1' => normalized_yaml }.to_yaml
 
+      #puts '='*20 + ' ACTUAL ' + '='*20
+      #puts output
+      #puts '-'*20 + ' EXPECTED ' + '-'*20
+      #puts normalized_yaml
+      #puts '='*40
       expect( output ).to include normalized_yaml
     end
   end

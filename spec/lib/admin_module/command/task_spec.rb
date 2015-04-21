@@ -183,7 +183,8 @@ describe 'command task' do
         run_with_args %w(task read -e dev TestTask1), client
       end
 
-      normalized_yaml = create_task_hash('TestTask1').to_yaml
+      normalized_yaml = create_task_hash('TestTask1')
+      normalized_yaml = { 'TestTask1' => normalized_yaml }.to_yaml
 
       expect( output ).to include normalized_yaml
     end
