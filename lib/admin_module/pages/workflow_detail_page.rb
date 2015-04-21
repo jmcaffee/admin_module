@@ -1,7 +1,7 @@
 ##############################################################################
 # File::    workflow_detail_page.rb
 # Purpose:: Stage detail page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2013-12-12
 # Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
 # Website::   http://ktechsystems.com
@@ -21,6 +21,7 @@ class WorkflowDetailPage
   end
 
   # Tabs
+
   link(:details_tab,
         text: 'Details')
 
@@ -43,11 +44,14 @@ class WorkflowDetailPage
         text: 'Data Clearing Definitions')
 
   # Controls
+
   # Details Tab
+
   text_field( :name,
               id: 'ctl00_cntPlh_txtStateName')
 
   # Transition To States Tab
+
   select_list(:available_states,
               id: 'ctl00_cntPlh_tsStates_lstAvailable')
 
@@ -67,6 +71,7 @@ class WorkflowDetailPage
          id: 'ctl00_cntPlh_tsStates_btnRemoveAll')
 
   # Groups Tab
+
   select_list(:available_groups,
               id: 'ctl00_cntPlh_tsGroups_lstAvailable')
 
@@ -84,6 +89,49 @@ class WorkflowDetailPage
 
   button(:remove_all_groups_button,
          id: 'ctl00_cntPlh_tsGroups_btnRemoveAll')
+
+  # Tasks Tab
+
+  select_list(:available_tasks,
+              id: 'ctl00_cntPlh_tsTasks_lstAvailable')
+
+  select_list(:selected_tasks,
+              id: 'ctl00_cntPlh_tsTasks_lstSelected')
+
+  button(:add_task_button,
+         id: 'ctl00_cntPlh_tsTasks_btnAdd')
+
+  button(:add_all_task_button,
+         id: 'ctl00_cntPlh_tsTasks_btnAddAll')
+
+  button(:remove_task_button,
+         id: 'ctl00_cntPlh_tsTasks_btnRemove')
+
+  button(:remove_all_tasks_button,
+         id: 'ctl00_cntPlh_tsTasks_btnRemoveAll')
+
+  button(:additional_details_button,
+         text: 'Manage Addl Details')
+
+  button(:screen_mappings_button,
+         text: 'Manage Screen Mappings')
+
+  button(:version_button,
+         text: 'Version')
+
+  # Data Clearing Definitions Tab
+
+  select_list(:data_clearing_definition,
+              id: 'ctl00_cntPlh_ddlDataClearing')
+
+  text_field( :data_clearing_days,
+              id: 'ctl00_cntPlh_txtDays')
+
+  select_list(:data_clearing_days_type,
+              id: 'ctl00_cntPlh_ddlDays')
+
+  button(:version_dc_button,
+         id: 'ctl00_cntPlh_btnDataVersion')
 
   # Save/Cancel buttons
   button(:save_button,
@@ -105,8 +153,16 @@ class WorkflowDetailPage
     self.groups_tab
     stage_data[:groups] = self.selected_groups_options
 
+    stage_data[:tasks] = get_tasks
+
     self.workflow_events_tab
     stage_data[:events] = capture_events
+
+    self.data_clearing_definitions_tab
+    stage_data[:dc] = Hash.new
+    stage_data[:dc][:definition] = self.data_clearing_definition
+    stage_data[:dc][:days] = self.data_clearing_days
+    stage_data[:dc][:days_type] = self.data_clearing_days_type
 
     stage_data
   end
@@ -166,7 +222,11 @@ class WorkflowDetailPage
 
     set_groups data[:groups] if data.key?(:groups)
 
+    set_tasks data[:tasks] if data.key?(:tasks)
+
     set_events data[:events] if data.key?(:events)
+
+    set_data_clearing data[:dc] if data.key?(:dc)
 
     self
   end
@@ -208,6 +268,74 @@ class WorkflowDetailPage
     self
   end
 
+  def get_tasks
+    self.tasks_tab
+
+    tasks = Array.new
+    selected_tasks_options.each do |task_name|
+      tasks << { name: task_name }
+    end
+
+    # Open the Addl Details page and update the settings
+    self.additional_details_button
+    addtl_page = WorkflowDetailTaskAddlDetailPage.new(@browser, false)
+
+    addl_data = addtl_page.get_data
+    addtl_page.cancel
+
+    # Merge addl detail data
+    tasks.collect! do |task|
+      task[:sequence] = addl_data[task[:name]][:sequence]
+      task[:predecessors] = addl_data[task[:name]][:predecessors]
+      task[:regenerate] = addl_data[task[:name]][:regenerate]
+      task
+    end
+
+    # Open the screen mappings page and update the mappings
+    self.screen_mappings_button
+    mappings_page = WorkflowDetailTaskMappingsPage.new(@browser, false)
+
+    mapping_data = mappings_page.get_data
+    mappings_page.back
+
+    tasks.collect! do |task|
+      task[:mapped_screens] = mapping_data[task[:name]][:mapped_screens]
+      task
+    end
+
+    #  Merge mapping data in to the task data structure
+    tasks
+  end
+
+  def set_tasks tasks
+    self.tasks_tab
+
+    # Remove all tasks, then add back the requested tasks.
+    self.remove_all_tasks_button
+    tasks.each do |task|
+      available_tasks_element.select(task[:name])
+    end
+
+    self.add_task_button
+
+    # Open the Addl Details page and update the settings
+    self.additional_details_button
+    addtl_page = WorkflowDetailTaskAddlDetailPage.new(@browser, false)
+
+    addtl_page.set_data tasks
+    addtl_page.save
+
+    # Open the screen mappings page and update the mappings
+    self.screen_mappings_button
+    mappings_page = WorkflowDetailTaskMappingsPage.new(@browser, false)
+
+    mappings_page.set_data tasks
+    mappings_page.back
+
+    # Click the version button to save the changes
+    self.version_button
+  end
+
   def set_events events
     self.workflow_events_tab
 
@@ -234,6 +362,19 @@ class WorkflowDetailPage
     end
 
     self
+  end
+
+  def set_data_clearing dc
+    self.data_clearing_definitions_tab
+
+    # No need to make changes if none need to be made
+    return if dc[:definition].empty? && self.data_clearing_definition.empty?
+
+    self.data_clearing_definition_element.select dc[:definition]
+    self.data_clearing_days = dc[:days]
+    self.data_clearing_days_type_element.select dc[:days_type]
+
+    self.version_dc_button
   end
 end # class WorkflowDetailPage
 
