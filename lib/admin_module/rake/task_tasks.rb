@@ -29,7 +29,7 @@ module AdminModule::Rake
       @task_name, @desc = task_name, desc
 
       @stop_on_exception = true
-      @allow_create = false
+      @allow_create = true
 
       yield self if block_given?
 
