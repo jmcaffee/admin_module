@@ -106,6 +106,8 @@ module AdminModule
           end
         end
       end
+
+      return
     end
 
   private
