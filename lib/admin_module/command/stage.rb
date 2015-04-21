@@ -116,7 +116,9 @@ module AdminModule
       LD
       def read name
         cs = client.stages
-        output = cs.read(name)
+        data = cs.read(name)
+        output = Hash.new
+        output[name] = data
         $stdout << output.to_yaml
 
       ensure
