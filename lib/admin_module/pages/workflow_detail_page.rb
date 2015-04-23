@@ -232,7 +232,7 @@ class WorkflowDetailPage
   end
 
   def save
-    Puts 'WorflowDetailPage:Save'
+    puts 'WorflowDetailPage:Save'
     self.save_button
   end
 
