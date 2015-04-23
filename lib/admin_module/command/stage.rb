@@ -67,6 +67,7 @@ module AdminModule
         cs = client.stages
         cs.import filepath, options[:create]
 
+        return
       ensure
         client.logout
       end
@@ -84,6 +85,7 @@ module AdminModule
         cs = client.stages
         cs.export filepath
 
+        return
       ensure
         client.logout
       end
