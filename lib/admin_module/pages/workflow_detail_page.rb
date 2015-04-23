@@ -232,8 +232,8 @@ class WorkflowDetailPage
   end
 
   def save
-    puts 'WorflowDetailPage:Save'
     self.save_button
+    wait_for_details_page
   end
 
   def set_name name
@@ -376,6 +376,22 @@ class WorkflowDetailPage
     self.data_clearing_days_type_element.select dc[:days_type]
 
     self.version_dc_button
+  end
+
+  def wait_for_details_page
+    wait_until do
+      begin
+        page_title_includes?("Workflow Details")
+      rescue
+        false
+      end
+    end
+  end
+
+  def page_title_includes? txt
+    doc = Nokogiri::HTML(@browser.html)
+    title = doc.css()
+    title.text.include? txt
   end
 end # class WorkflowDetailPage
 
