@@ -216,24 +216,27 @@ class WorkflowDetailPage
   end
 
   def set_stage_data data
+    # Set tasks first - Save button on Addl Details and/or Version button
+    # causes a refresh which discards changes made in other tabs.
+    set_tasks data[:tasks] if data.key?(:tasks)
+
+    # Version button on DC tab may cause a refresh which discards changes
+    # made in other tabs.
+    set_data_clearing data[:dc] if data.key?(:dc)
+
     set_name data[:name] if data.key?(:name)
 
     set_transitions data[:transition_to] if data.key?(:transition_to)
 
     set_groups data[:groups] if data.key?(:groups)
 
-    set_tasks data[:tasks] if data.key?(:tasks)
-
     set_events data[:events] if data.key?(:events)
-
-    set_data_clearing data[:dc] if data.key?(:dc)
 
     self
   end
 
   def save
     self.save_button
-    wait_for_details_page
   end
 
   def set_name name
@@ -311,6 +314,15 @@ class WorkflowDetailPage
   def set_tasks tasks
     self.tasks_tab
 
+    # Open the Addl Details page and clear all settings
+    self.additional_details_button
+    addtl_page = WorkflowDetailTaskAddlDetailPage.new(@browser, false)
+
+    addtl_page.clear_data
+    addtl_page.save
+
+    self.version_button
+
     # Remove all tasks, then add back the requested tasks.
     self.remove_all_tasks_button
     tasks.each do |task|
@@ -376,22 +388,6 @@ class WorkflowDetailPage
     self.data_clearing_days_type_element.select dc[:days_type]
 
     self.version_dc_button
-  end
-
-  def wait_for_details_page
-    wait_until do
-      begin
-        page_title_includes?("Workflow Details")
-      rescue
-        false
-      end
-    end
-  end
-
-  def page_title_includes? txt
-    doc = Nokogiri::HTML(@browser.html)
-    title = doc.css()
-    title.text.include? txt
   end
 end # class WorkflowDetailPage
 

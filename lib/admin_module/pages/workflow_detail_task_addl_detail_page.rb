@@ -40,6 +40,12 @@ class WorkflowDetailTaskAddlDetailPage
     self
   end
 
+  def clear_data
+    clear_tasks_details
+
+    self
+  end
+
   def save
     self.save_button
   end
@@ -85,6 +91,20 @@ class WorkflowDetailTaskAddlDetailPage
           break
         end
       end
+    end
+
+    self
+  end
+
+  def clear_tasks_details
+    capture_details.each do |item|
+      # set the predecessors field to blank
+      txt = text_field_elements(id: item.pred_id)[0]
+      txt.value = ''
+
+      # Clear the checkbox field
+      ck = checkbox_elements(id: item.reg_id)[0]
+      ck.uncheck
     end
 
     self

@@ -53,8 +53,10 @@ class WorkflowDetailTaskScreensPage
     # Remove all screens, then add back the requested sreens.
     self.remove_all_screens_button
     data.each do |t|
-      available_screens_element.select(t)
-      self.add_screen_button
+      unless t.nil? or t.empty?
+        available_screens_element.select(t)
+        self.add_screen_button
+      end
     end
 
     self
