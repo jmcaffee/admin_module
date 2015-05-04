@@ -317,11 +317,12 @@ class WorkflowDetailPage
   end
 
   def set_tasks tasks
+    require 'pry'; binding.pry
     self.tasks_tab
 
     has_existing_tasks = (selected_tasks_options.count > 0)
 
-    unless has_existing_tasks
+    if has_existing_tasks
       # Open the Addl Details page and clear all settings
       self.additional_details_button
       addtl_page = WorkflowDetailTaskAddlDetailPage.new(@browser, false)
@@ -340,6 +341,7 @@ class WorkflowDetailPage
 
     if tasks.count > 0
       self.add_task_button
+      # Version the added tasks before opening Addtl Details screen
       self.version_button
 
       # Open the Addl Details page and update the settings
