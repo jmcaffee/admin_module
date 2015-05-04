@@ -319,7 +319,9 @@ class WorkflowDetailPage
   def set_tasks tasks
     self.tasks_tab
 
-    if selected_tasks_options.count > 0
+    has_existing_tasks = (selected_tasks_options.count > 0)
+
+    unless has_existing_tasks
       # Open the Addl Details page and clear all settings
       self.additional_details_button
       addtl_page = WorkflowDetailTaskAddlDetailPage.new(@browser, false)
@@ -338,24 +340,25 @@ class WorkflowDetailPage
 
     if tasks.count > 0
       self.add_task_button
+      self.version_button
+
+      # Open the Addl Details page and update the settings
+      self.additional_details_button
+      addtl_page = WorkflowDetailTaskAddlDetailPage.new(@browser, false)
+
+      addtl_page.set_data tasks
+      addtl_page.save
+
+      # Open the screen mappings page and update the mappings
+      self.screen_mappings_button
+      mappings_page = WorkflowDetailTaskMappingsPage.new(@browser, false)
+
+      mappings_page.set_data tasks
+      mappings_page.back
+
+      # Click the version button to save the changes
+      self.version_button
     end
-
-    # Open the Addl Details page and update the settings
-    self.additional_details_button
-    addtl_page = WorkflowDetailTaskAddlDetailPage.new(@browser, false)
-
-    addtl_page.set_data tasks
-    addtl_page.save
-
-    # Open the screen mappings page and update the mappings
-    self.screen_mappings_button
-    mappings_page = WorkflowDetailTaskMappingsPage.new(@browser, false)
-
-    mappings_page.set_data tasks
-    mappings_page.back
-
-    # Click the version button to save the changes
-    self.version_button
   end
 
   def set_events events
