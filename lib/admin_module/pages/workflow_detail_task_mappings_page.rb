@@ -54,7 +54,7 @@ class WorkflowDetailTaskMappingsPage
   end
 
   def set_data data
-    if error_span.nil? || !error_span.include? 'No task defined'
+    if error_span.nil? || !error_span.include?('No task defined')
       set_tasks_details data
     end
 

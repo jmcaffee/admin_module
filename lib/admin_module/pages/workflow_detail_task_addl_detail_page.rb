@@ -53,7 +53,7 @@ class WorkflowDetailTaskAddlDetailPage
     # If there are no tasks, the error span will be populated and the Save
     # button will not be available.
     # In this case, click the Cancel button and move on.
-    if error_span.include? 'No task defined'
+    if error_span.include?('No task defined')
       self.cancel_button
       return
     end
