@@ -329,7 +329,9 @@ class WorkflowDetailPage
       available_tasks_element.select(task[:name])
     end
 
-    self.add_task_button
+    if tasks.count > 0
+      self.add_task_button
+    end
 
     # Open the Addl Details page and update the settings
     self.additional_details_button
