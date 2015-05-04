@@ -317,7 +317,6 @@ class WorkflowDetailPage
   end
 
   def set_tasks tasks
-    require 'pry'; binding.pry
     self.tasks_tab
 
     has_existing_tasks = (selected_tasks_options.count > 0)
