@@ -23,6 +23,9 @@ class WorkflowDetailTaskAddlDetailPage
 
   # Controls
 
+  span(:error_span,
+       id: 'ctl00_cntPlh_ctlErrors_lblError')
+
   button(:save_button,
          id: 'ctl00_cntPlh_btnSave')
 
@@ -47,6 +50,14 @@ class WorkflowDetailTaskAddlDetailPage
   end
 
   def save
+    # If there are no tasks, the error span will be populated and the Save
+    # button will not be available.
+    # In this case, click the Cancel button and move on.
+    if error_span.include? 'No task defined'
+      self.cancel_button
+      return
+    end
+
     self.save_button
   end
 

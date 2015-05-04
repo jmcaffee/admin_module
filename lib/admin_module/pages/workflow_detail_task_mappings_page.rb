@@ -23,6 +23,9 @@ class WorkflowDetailTaskMappingsPage
 
   # Controls
 
+  span(:error_span,
+       id: 'ctl00_cntPlh_ctlErrors_lblError')
+
   # Details Tab
 
   text_field( :name,
@@ -51,7 +54,9 @@ class WorkflowDetailTaskMappingsPage
   end
 
   def set_data data
-    set_tasks_details data
+    if error_span.nil? || !error_span.include? 'No task defined'
+      set_tasks_details data
+    end
 
     self
   end
