@@ -133,6 +133,11 @@ class WorkflowDetailPage
   button(:version_dc_button,
          id: 'ctl00_cntPlh_btnDataVersion')
 
+  # Errors Span
+
+  span(:errors_span,
+       id: 'ctl00_cntPlh_ctlErrors_lblError')
+
   # Save/Cancel buttons
   button(:save_button,
          id: 'ctl00_cntPlh_btnSave')
@@ -314,14 +319,16 @@ class WorkflowDetailPage
   def set_tasks tasks
     self.tasks_tab
 
-    # Open the Addl Details page and clear all settings
-    self.additional_details_button
-    addtl_page = WorkflowDetailTaskAddlDetailPage.new(@browser, false)
+    if selected_tasks_options.count > 0
+      # Open the Addl Details page and clear all settings
+      self.additional_details_button
+      addtl_page = WorkflowDetailTaskAddlDetailPage.new(@browser, false)
 
-    addtl_page.clear_data
-    addtl_page.save
+      addtl_page.clear_data
+      addtl_page.save
 
-    self.version_button
+      self.version_button
+    end
 
     # Remove all tasks, then add back the requested tasks.
     self.remove_all_tasks_button
