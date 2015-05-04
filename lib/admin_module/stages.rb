@@ -48,6 +48,16 @@ module AdminModule
     # Create stage configuration data for a new stage
 
     def create data
+      # When creating a stage, we need to set its name and save it so
+      # an ID is created in the database to tie the tasks to.
+      #
+      # Foreign key errors will result otherwise.
+      stages_page
+        .add
+        .set_name(data[:name])
+        .save
+
+      # Now, populate the rest of the data.
       stages_page
         .add
         .set_stage_data(data)
