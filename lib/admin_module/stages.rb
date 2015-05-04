@@ -52,14 +52,16 @@ module AdminModule
       # an ID is created in the database to tie the tasks to.
       #
       # Foreign key errors will result otherwise.
+      name = data[:name]
+
       stages_page
         .add
-        .set_name(data[:name])
+        .set_name(name)
         .save
 
       # Now, populate the rest of the data.
       stages_page
-        .add
+        .modify(name)
         .set_stage_data(data)
         .save
     end
