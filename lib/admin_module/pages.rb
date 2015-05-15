@@ -97,6 +97,12 @@ private
     switches = %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --no-first-run --log-level=3]
     switches << "--user-data-dir=#{user_data_dir}"
 
+    proxy_port = ENV['BROWSER_PROXY_PORT']
+    unless proxy_port.nil? || proxy_port.empty?
+      proxy_connection_string = "socks://localhost:#{proxy_port}"
+      switches << " --proxy-server=#{proxy_connection_string}"
+    end
+
     # Create a client so we can adjust the timeout period.
     client = Selenium::WebDriver::Remote::Http::Default.new
 
