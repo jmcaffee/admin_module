@@ -9,7 +9,8 @@
 module AdminModule
   module Command
     module ClientAccess
-      private def credentials
+      private
+      def credentials
         config = AdminModule.configuration
         user, pass = config.user_credentials
         if user.nil? || pass.nil?
@@ -21,7 +22,7 @@ module AdminModule
         [user, pass]
       end
 
-      private def client
+      def client
         return @client unless @client.nil?
 
         @client = AdminModule.client
