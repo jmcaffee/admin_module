@@ -100,7 +100,7 @@ private
     proxy_port = ENV['BROWSER_PROXY_PORT']
     unless proxy_port.nil? || proxy_port.empty?
       proxy_connection_string = "socks://localhost:#{proxy_port}"
-      switches << " --proxy-server=#{proxy_connection_string}"
+      switches << "--proxy-server=#{proxy_connection_string}"
     end
 
     # Create a client so we can adjust the timeout period.
