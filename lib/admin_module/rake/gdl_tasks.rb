@@ -143,13 +143,17 @@ module AdminModule::Rake
       end
     end
 
+    #
+    # Define the task arguments (and their order) required for a given action
+    #
+
     def required_args_for_action
       args = []
 
       case action
       when 'deploy'
-        args << :path
         args << :comments
+        args << :path
 
       when 'version'
         args << :name
