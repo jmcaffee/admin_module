@@ -54,7 +54,7 @@ module AdminModule::Rake
     end
 
     def action=(task_action)
-      raise "action must be one of #{valid_types.join(', ')}" unless valid_actions.include?(task_action.downcase)
+      raise "action must be one of #{valid_actions.join(', ')}" unless valid_actions.include?(task_action.downcase)
       @action = task_action
     end
 
