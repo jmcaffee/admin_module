@@ -107,6 +107,25 @@ module AdminModule::Rake
         raise msg
       end
     end
-  end # class RuleTasks
+
+    class << self
+      def install
+        new.install
+      end
+    end
+
+    def install
+      AdminModule.configuration.credentials.keys.each do |e|
+        valid_actions.each do |action|
+          AdminModule::Rake::RuleTasks.new("am:#{e}:rule:#{action}", "#{action} #{e} rule(s)") do |t|
+            t.env = e
+            t.action = action
+          end
+        end
+      end
+    end
+  end # class
 end # module AdminModule::Task
+
+AdminModule::Rake::StageTasks.install
 
