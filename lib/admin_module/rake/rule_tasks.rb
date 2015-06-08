@@ -1,10 +1,9 @@
 ##############################################################################
-# File::    rules_task.rb
-# Purpose:: RulesTask definition
-# 
+# File::    rule_tasks.rb
+# Purpose:: RuleTasks definition
+#
 # Author::    Jeff McAffee 2014-04-24
-# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 
 require 'admin_module'
@@ -13,7 +12,7 @@ require 'rake'
 
 module AdminModule::Rake
 
-  class RulesTask
+  class RuleTasks
     include ::Rake::DSL if defined?(::Rake::DSL)
 
     attr_accessor :env
@@ -108,6 +107,6 @@ module AdminModule::Rake
         raise msg
       end
     end
-  end # class RulesTask
+  end # class RuleTasks
 end # module AdminModule::Task
 

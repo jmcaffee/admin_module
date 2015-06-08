@@ -17,4 +17,5 @@ require_relative 'rake/lock_tasks'
 require_relative 'rake/dc_tasks'
 require_relative 'rake/snapshot_tasks'
 require_relative 'rake/task_tasks'
+require_relative 'rake/rule_tasks'
 
