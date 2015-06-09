@@ -61,7 +61,7 @@ module AdminModule::Rake
     def commit
       validate_params
 
-      client = AdminModule::CLI.new
+      client = AdminModule::Client.new
       client.environment = env
 
       if self.respond_to? action
