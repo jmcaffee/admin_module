@@ -62,7 +62,7 @@ module AdminModule::Rake
       validate_params
 
       client = AdminModule::Client.new
-      client.environment = env
+      client.env = env
 
       if self.respond_to? action
         self.send(action, client)
