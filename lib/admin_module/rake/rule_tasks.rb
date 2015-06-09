@@ -127,5 +127,5 @@ module AdminModule::Rake
   end # class
 end # module AdminModule::Task
 
-AdminModule::Rake::StageTasks.install
+AdminModule::Rake::RuleTasks.install
 
