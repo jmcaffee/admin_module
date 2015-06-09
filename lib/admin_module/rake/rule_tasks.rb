@@ -108,6 +108,24 @@ module AdminModule::Rake
       end
     end
 
+    def required_args_for_action
+      args = []
+
+      case action
+      when 'delete'
+        args << :name
+
+      when 'rename'
+        args << :name
+        args << :to
+
+      else
+        # Noop
+      end
+
+      args
+    end
+
     class << self
       def install
         new.install
