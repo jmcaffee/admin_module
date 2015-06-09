@@ -108,6 +108,14 @@ module AdminModule::Rake
       end
     end
 
+    def assert_env_is_configured arg
+      unless AdminModule.configuration.credentials.key? arg
+        init_msg = "Have you initialized your config file?\n Try: admin_module config init <filedir>"
+        env_msg = "Have you configured your environments?\n Try: admin_module config add env <envname> <url>"
+        raise "Unknown environment: #{arg}\n#{init_msg}\n\n#{env_msg}"
+      end
+    end
+
     def required_args_for_action
       args = []
 
