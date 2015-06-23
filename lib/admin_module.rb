@@ -11,6 +11,7 @@ require 'admin_module/locks'
 require 'admin_module/dc'
 require 'admin_module/snapshots'
 require 'admin_module/tasks'
+require 'admin_module/ppms'
 require 'admin_module/client'
 
 if ENV['DEBUG'].nil?

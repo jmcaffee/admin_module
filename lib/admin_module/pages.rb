@@ -32,6 +32,7 @@ require 'admin_module/pages/snapshot_definitions_page'
 require 'admin_module/pages/snapshot_detail_page'
 require 'admin_module/pages/workflow_task_page'
 require 'admin_module/pages/workflow_tasks_page'
+require 'admin_module/pages/ppms_page'
 
 module AdminModule::Pages
 
