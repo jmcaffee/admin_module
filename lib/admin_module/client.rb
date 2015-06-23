@@ -66,6 +66,11 @@ module AdminModule
       Tasks.new page_factory
     end
 
+    def ppms
+      login
+      Ppms.new page_factory
+    end
+
     def page_factory
       @page_factory ||= AdminModule::PageFactory.new
     end
