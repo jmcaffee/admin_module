@@ -47,5 +47,9 @@ module AdminModule
     def tasks_page(goto_page = true)
       return Pages::WorkflowTasksPage.new(browser, goto_page)
     end
+
+    def ppms_page(goto_page = true)
+      return Pages::PpmsPage.new(browser, goto_page)
+    end
   end
 end # AdminModule
