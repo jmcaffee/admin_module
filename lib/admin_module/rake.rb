@@ -18,4 +18,5 @@ require_relative 'rake/dc_tasks'
 require_relative 'rake/snapshot_tasks'
 require_relative 'rake/task_tasks'
 require_relative 'rake/rule_tasks'
+require_relative 'rake/ppm_tasks'
 
