@@ -12,11 +12,11 @@ module AdminModule::Pages
 class PpmsPage
   include PageObject
 
-  #page_url(:get_dynamic_url)
+  page_url(:get_dynamic_url)
 
-  #def get_dynamic_url
-  #  AdminModule.configuration.url(PpmsPage)
-  #end
+  def get_dynamic_url
+    AdminModule.configuration.base_url + "/admin/security/act/parameters.aspx?act=2"
+  end
 
 
   select_list(:parameters_available,
