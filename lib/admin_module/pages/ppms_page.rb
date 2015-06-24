@@ -60,6 +60,23 @@ class PpmsPage
     vars
   end
 
+  def get_ppms_with_ids
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstSelected > option').each do |elem|
+      name = elem.text
+      id = elem.attributes['value'].value
+      vars << { name: name, id: id }
+    end
+
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstAvailable > option').each do |elem|
+      name = elem.text
+      id = elem.attributes['value'].value
+      vars << { name: name, id: id }
+    end
+
+    vars
+  end
+
   def get_ppms_data
     get_active_ppms
   end

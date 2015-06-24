@@ -22,9 +22,21 @@ module AdminModule
     end
 
     def dups
-      actives = ppms_page.get_active_ppms
-      availables = ppms_page.get_available_ppms
-      dup_ppms = available.dup & actives
+      all_ppms = ppms_page.get_ppms_with_ids
+
+      seen = Hash.new
+      duplicates = Array.new
+
+      all_ppms.each do |pdata|
+        if seen.has_key?(pdata[:name])
+          duplicates << pdata
+          duplicates << seen[pdata[:name]]
+        end
+
+        seen[pdata[:name]] = pdata
+      end
+
+      duplicates
     end
 
     def export file_path
