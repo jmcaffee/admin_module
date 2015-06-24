@@ -97,11 +97,11 @@ module AdminModule
         cl = client.ppms
         data = cl.dups
         if data.count > 0
-          $stdout << "        Name                ID"
-          $stdout << '-'*79
+          $stdout << "        Name                ID\n"
+          $stdout << '-'*79 << "\n"
         end
         data.each do |dp|
-          $stdout << "#{dp[:name]}\t#{dp[:id]}"
+          $stdout << "#{dp[:name]}\t#{dp[:id]}\n"
         end
 
       ensure

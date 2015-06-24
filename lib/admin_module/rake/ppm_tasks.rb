@@ -99,11 +99,11 @@ module AdminModule::Rake
       result = Array.new
       result = client.ppms.dups
       if result.count > 0
-        $stdout << "        Name                ID"
-        $stdout << '-'*79
+        $stdout << "        Name                ID\n"
+        $stdout << '-'*79 << "\n"
       end
       result.each do |dp|
-        $stdout << "#{dp[:name]}\t#{dp[:id]}"
+        $stdout << "#{dp[:name]}\t#{dp[:id]}\n"
       end
     end
 
