@@ -96,9 +96,15 @@ module AdminModule::Rake
     end
 
     def dups client
-      result = {}
-      result[name] = client.ppms.dups
-      $stdout << result.to_yaml
+      result = Array.new
+      result = client.ppms.dups
+      if result.count > 0
+        $stdout << "        Name                ID"
+        $stdout << '-'*79
+      end
+      result.each do |dp|
+        $stdout << "#{dp[:name]}\t#{dp[:id]}"
+      end
     end
 
     def import client

@@ -36,7 +36,7 @@ module AdminModule
         seen[pdata[:name]] = pdata
       end
 
-      duplicates
+      duplicates.sort! { |a,b| a[:name] <=> b[:name] }
     end
 
     def export file_path

@@ -93,11 +93,15 @@ module AdminModule
 
         With -e <env>, sets the environment to work with.
       LD
-      def dups name
+      def dups
         cl = client.ppms
         data = cl.dups
-        data.each do |name, id|
-          $stdout << "#{name}\t#{id}"
+        if data.count > 0
+          $stdout << "        Name                ID"
+          $stdout << '-'*79
+        end
+        data.each do |dp|
+          $stdout << "#{dp[:name]}\t#{dp[:id]}"
         end
 
       ensure
