@@ -86,6 +86,7 @@ module AdminModule
         client.logout
       end
 
+      method_option :format, :default => "txt", :aliases => '-f', :banner => "format=FMT", :desc => "output format", :type => :string, :enum => ['txt','csv']
       desc "dups",
         "List duplicate PPMs in the environment"
       long_desc <<-LD
@@ -96,16 +97,45 @@ module AdminModule
       def dups
         cl = client.ppms
         data = cl.dups
-        if data.count > 0
-          $stdout << "        Name                ID\n"
-          $stdout << '-'*79 << "\n"
-        end
-        data.each do |dp|
-          $stdout << "#{dp[:name]}\t#{dp[:id]}\n"
+        output_method = "output_as_#{options[:format]}"
+
+        if self.respond_to? output_method
+          self.send(output_method, data)
+        else
+          $stderr << "Invalid format: #{options[:format]}"
         end
 
       ensure
         client.logout
+      end
+
+      private
+
+      def output_as_txt data
+        if data.count > 0
+          $stdout << "        Name                ID\n"
+          $stdout << '-'*79 << "\n"
+        else
+          $stdout << 'No duplicates found'
+          return
+        end
+
+        data.each do |dp|
+          $stdout << "#{dp[:name]}\t#{dp[:id]}\n"
+        end
+      end
+
+      def output_as_csv data
+        if data.count > 0
+          $stdout << "Name,ID\n"
+        else
+          $stdout << 'No duplicates found'
+          return
+        end
+
+        data.each do |dp|
+          $stdout << "#{dp[:name]},#{dp[:id]}\n"
+        end
       end
     end # Ppm
   end

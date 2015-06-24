@@ -21,6 +21,7 @@ module AdminModule::Rake
     attr_reader   :action
     attr_reader   :valid_actions
     attr_reader   :stop_on_exception
+    attr_reader   :format
 
     def initialize(task_name = '', desc = "")
       @valid_actions = ['import', 'export', 'dups', 'list']
@@ -63,6 +64,13 @@ module AdminModule::Rake
       @stop_on_exception = do_stop
     end
 
+    def format=(output_format)
+      output_format = 'txt' if output_format.nil?
+      valid_formats = %w(txt csv)
+      raise "format must be one of #{valid_formats.join(', ')}" unless valid_formats.include?(output_format.downcase)
+      @format = output_format
+    end
+
     #
     # Execute the task (action)
     #
@@ -98,12 +106,12 @@ module AdminModule::Rake
     def dups client
       result = Array.new
       result = client.ppms.dups
-      if result.count > 0
-        $stdout << "        Name                ID\n"
-        $stdout << '-'*79 << "\n"
-      end
-      result.each do |dp|
-        $stdout << "#{dp[:name]}\t#{dp[:id]}\n"
+      output_method = "output_as_#{@format}"
+
+      if self.respond_to? output_method
+        self.send(output_method, result)
+      else
+        $stderr << "Invalid format: #{@format}"
       end
     end
 
@@ -165,11 +173,42 @@ module AdminModule::Rake
       when 'export'
         args << :path
 
+      when 'dups'
+        args << :format
+
       else
         # Noop
       end
 
       args
+    end
+
+
+    def output_as_txt data
+      if data.count > 0
+        $stdout << "        Name                ID\n"
+        $stdout << '-'*79 << "\n"
+      else
+        $stdout << 'No duplicates found'
+        return
+      end
+
+      data.each do |dp|
+        $stdout << "#{dp[:name]}\t#{dp[:id]}\n"
+      end
+    end
+
+    def output_as_csv data
+      if data.count > 0
+        $stdout << "Name,ID\n"
+      else
+        $stdout << 'No duplicates found'
+        return
+      end
+
+      data.each do |dp|
+        $stdout << "#{dp[:name]},#{dp[:id]}\n"
+      end
     end
 
     #
