@@ -82,7 +82,7 @@ class PpmsPage
   end
 
   def set_ppms_data data
-    self.remove_all_params_button
+    self.remove_all_parameters_button
     assert_all_fields_removed self.parameters_selected_options, 'Parameters'
 
     data.each do |p|
