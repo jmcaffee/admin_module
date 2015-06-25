@@ -189,7 +189,6 @@ module AdminModule::Rake
         $stdout << "        Name                ID\n"
         $stdout << '-'*79 << "\n"
       else
-        $stdout << 'No duplicates found'
         return
       end
 
@@ -202,7 +201,6 @@ module AdminModule::Rake
       if data.count > 0
         $stdout << "Name,ID\n"
       else
-        $stdout << 'No duplicates found'
         return
       end
 
