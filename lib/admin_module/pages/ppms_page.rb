@@ -44,17 +44,17 @@ class PpmsPage
   button(:cancel_button,
          id: 'ctl00_cntPlh_cmdCancel')
 
-  def get_active_ppms
+  def get_available_ppms
     vars = []
-    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstSelected > option').each do |elem|
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstAvailable > option').each do |elem|
       vars << elem.text
     end
     vars
   end
 
-  def get_available_ppms
+  def get_active_ppms
     vars = []
-    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstAvailable > option').each do |elem|
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstSelected > option').each do |elem|
       vars << elem.text
     end
     vars

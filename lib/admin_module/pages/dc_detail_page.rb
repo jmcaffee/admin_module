@@ -137,17 +137,17 @@ class DcDetailPage
 
 private
 
-  def get_selected_dts_options
+  def get_available_dts_options
     vars = []
-    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsSnapshotDTS_lstSelected > option').each do |elem|
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsSnapshotDTS_lstAvailable > option').each do |elem|
       vars << elem.text
     end
     vars
   end
 
-  def get_available_dts_options
+  def get_selected_dts_options
     vars = []
-    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsSnapshotDTS_lstAvailable > option').each do |elem|
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsSnapshotDTS_lstSelected > option').each do |elem|
       vars << elem.text
     end
     vars
