@@ -109,13 +109,13 @@ class PpmsPage
     ppms_to_remove.each do |i|
       parameters_selected_element.options[i].click
     end
-    self.remove_parameters_button
+    self.remove_parameters_button if ppms_to_remove.count > 0
 
     # Select and add all PPMs in the add list
     ppms_to_add.each do |i|
       parameters_available_element.options[i].click
     end
-    self.add_parameters_button
+    self.add_parameters_button if ppms_to_add.count > 0
 
     self
   end
