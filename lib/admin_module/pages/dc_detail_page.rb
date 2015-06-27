@@ -61,6 +61,12 @@ class DcDetailPage
     button(:add_dts_button,
                 id: 'ctl00_cntPlh_tsSnapshotDTS_btnAdd')
 
+    button(:add_all_dts_button,
+                id: 'ctl00_cntPlh_tsSnapshotDTS_btnAddAll')
+
+    button(:remove_dts_button,
+                id: 'ctl00_cntPlh_tsSnapshotDTS_btnRemove')
+
     button(:remove_all_dts_button,
                 id: 'ctl00_cntPlh_tsSnapshotDTS_btnRemoveAll')
 
@@ -94,7 +100,7 @@ class DcDetailPage
     data[:delete_options][:payment_schedule]        = true if self.payment_schedule == "Yes"
 
     self.dts_tab
-    data[:dts] = self.dts_selected_options
+    data[:dts] = get_selected_dts_options
 
     data
   end
@@ -114,12 +120,7 @@ class DcDetailPage
 
     self.dts_tab
 
-    self.remove_all_dts_button
-    assert_all_dts_fields_removed
-    data[:dts].each do |d|
-      dts_available_element.select(d)
-      self.add_dts_button
-    end
+    set_dts_fields data[:dts]
 
     self
   end
@@ -135,6 +136,59 @@ class DcDetailPage
   end
 
 private
+
+  def get_selected_dts_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsSnapshotDTS_lstSelected > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def get_available_dts_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsSnapshotDTS_lstAvailable > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def set_dts_fields data
+    avail_dts = get_available_dts_options
+    active_dts = get_selected_dts_options
+    working_set = data.dup
+    dts_to_remove = Array.new
+    dts_to_add = Array.new
+
+    # Build a list of indices of dts to remove from the selected list
+    active_dts.each_index do |i|
+      if working_set.include? active_dts[i]
+        working_set.delete active_dts[i]
+      else
+        dts_to_remove << i
+      end
+    end
+
+    # Build a list of indices of dts to add from the available list
+    avail_dts.each_index do |i|
+      if working_set.include? avail_dts[i]
+        dts_to_add << i
+        working_set.delete avail_dts[i]
+      end
+    end
+
+    # Select and remove all dts in the removal list
+    dts_to_remove.each do |i|
+      dts_selected_element.options[i].click
+    end
+    self.remove_dts_button if dts_to_remove.count > 0
+
+    # Select and add all dts in the add list
+    dts_to_add.each do |i|
+      dts_available_element.options[i].click
+    end
+    self.add_dts_button if dts_to_add.count > 0
+  end
 
   def assert_all_dts_fields_removed
     raise "Unable to remove DTS fields" unless self.dts_selected_options.count == 0
