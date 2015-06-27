@@ -25,13 +25,13 @@ class PpmsPage
   select_list(:parameters_selected,
               id: 'ctl00_cntPlh_tsParameters_lstSelected')
 
-  button(:add_parameters_button,
+  button(:add_parameter_button,
               id: 'ctl00_cntPlh_tsParameters_btnAdd')
 
   button(:add_all_parameters_button,
               id: 'ctl00_cntPlh_tsParameters_btnAddAll')
 
-  button(:remove_parameters_button,
+  button(:remove_parameter_button,
               id: 'ctl00_cntPlh_tsParameters_btnRemove')
 
   button(:remove_all_parameters_button,
@@ -43,22 +43,6 @@ class PpmsPage
 
   button(:cancel_button,
          id: 'ctl00_cntPlh_cmdCancel')
-
-  def get_available_ppms
-    vars = []
-    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstAvailable > option').each do |elem|
-      vars << elem.text
-    end
-    vars
-  end
-
-  def get_active_ppms
-    vars = []
-    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstSelected > option').each do |elem|
-      vars << elem.text
-    end
-    vars
-  end
 
   def get_ppms_with_ids
     vars = []
@@ -78,44 +62,17 @@ class PpmsPage
   end
 
   def get_ppms_data
-    get_active_ppms
+    get_selected_ppm_options
   end
 
   def set_ppms_data data
-    avail_ppms = get_available_ppms
-    active_ppms = get_active_ppms
-    working_set = data.dup
-    ppms_to_remove = Array.new
-    ppms_to_add = Array.new
-
-    # Build a list of indices of PPMs to remove from the selected list
-    active_ppms.each_index do |i|
-      if working_set.include? active_ppms[i]
-        working_set.delete active_ppms[i]
-      else
-        ppms_to_remove << i
-      end
-    end
-
-    # Build a list of indices of PPMs to add from the available list
-    avail_ppms.each_index do |i|
-      if working_set.include? avail_ppms[i]
-        ppms_to_add << i
-        working_set.delete avail_ppms[i]
-      end
-    end
-
-    # Select and remove all PPMs in the removal list
-    ppms_to_remove.each do |i|
-      parameters_selected_element.options[i].click
-    end
-    self.remove_parameters_button if ppms_to_remove.count > 0
-
-    # Select and add all PPMs in the add list
-    ppms_to_add.each do |i|
-      parameters_available_element.options[i].click
-    end
-    self.add_parameters_button if ppms_to_add.count > 0
+    sync_available_and_selected_lists get_available_ppm_options,
+                                      parameters_available_element,
+                                      get_selected_ppm_options,
+                                      parameters_selected_element,
+                                      add_parameter_button_element,
+                                      remove_parameter_button_element,
+                                      data
 
     self
   end
@@ -125,6 +82,24 @@ class PpmsPage
   end
 
 private
+
+  include SelectListSyncable
+
+  def get_available_ppm_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstAvailable > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def get_selected_ppm_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParameters_lstSelected > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
 
   def assert_all_fields_removed control, label
     raise "Unable to remove #{label}" unless control.count == 0

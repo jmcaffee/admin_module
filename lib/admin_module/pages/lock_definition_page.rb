@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    lock_definition.rb
 # Purpose:: Lock edit page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2013-11-22
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 
@@ -40,7 +39,13 @@ class LockDefinitionPage
     button(:add_param_button,
                 id: 'ctl00_cntPlh_tsParams_btnAdd')
 
-    button(:remove_all_param_button,
+    button(:add_all_params_button,
+                id: 'ctl00_cntPlh_tsParams_btnAddAll')
+
+    button(:remove_param_button,
+                id: 'ctl00_cntPlh_tsParams_btnRemove')
+
+    button(:remove_all_params_button,
                 id: 'ctl00_cntPlh_tsParams_btnRemoveAll')
 
   link(:dts_tab,
@@ -54,6 +59,12 @@ class LockDefinitionPage
 
     button(:add_dts_button,
                 id: 'ctl00_cntPlh_tsSnapshotDTS_btnAdd')
+
+    button(:add_all_dts_button,
+                id: 'ctl00_cntPlh_tsSnapshotDTS_btnAddAll')
+
+    button(:remove_dts_button,
+                id: 'ctl00_cntPlh_tsSnapshotDTS_btnRemove')
 
     button(:remove_all_dts_button,
                 id: 'ctl00_cntPlh_tsSnapshotDTS_btnRemoveAll')
@@ -71,10 +82,10 @@ class LockDefinitionPage
                   is_program_lock: self.is_program_lock_checked? }
 
     self.parameters_tab
-    lock_data[:parameters] = self.params_selected_options
+    lock_data[:parameters] = get_selected_parameter_options
 
     self.dts_tab
-    lock_data[:dts] = self.dts_selected_options
+    lock_data[:dts] = get_selected_dts_options
 
     lock_data
   end
@@ -86,21 +97,10 @@ class LockDefinitionPage
     self.uncheck_is_program_lock if lock_data[:is_program_lock] == false
 
     self.parameters_tab
-
-    self.remove_all_param_button
-    assert_all_params_removed
-    lock_data[:parameters].each do |p|
-      params_available_element.select(p)
-      self.add_param_button
-    end
+    set_parameter_fields lock_data[:parameters]
 
     self.dts_tab
-    self.remove_all_dts_button
-    assert_all_dts_fields_removed
-    lock_data[:dts].each do |d|
-      dts_available_element.select(d)
-      self.add_dts_button
-    end
+    set_dts_fields lock_data[:dts]
 
     self
   end
@@ -111,12 +111,66 @@ class LockDefinitionPage
 
 private
 
+  include SelectListSyncable
+
+  def get_available_parameter_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParams_lstAvailable > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def get_selected_parameter_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParams_lstSelected > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def get_available_dts_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsSnapshotDTS_lstAvailable > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def get_selected_dts_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsSnapshotDTS_lstSelected > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def set_parameter_fields data
+    sync_available_and_selected_lists get_available_parameter_options,
+                                      params_available_element,
+                                      get_selected_parameter_options,
+                                      params_selected_element,
+                                      add_param_button_element,
+                                      remove_param_button_element,
+                                      data
+  end
+
+  def set_dts_fields data
+    sync_available_and_selected_lists get_available_dts_options,
+                                      dts_available_element,
+                                      get_selected_dts_options,
+                                      dts_selected_element,
+                                      add_dts_button_element,
+                                      remove_dts_button_element,
+                                      data
+  end
+
   def assert_all_params_removed
-    raise "Unable to remove parameters" unless self.params_selected_options.count == 0
+    raise "Unable to remove parameters" unless get_selected_parameter_options.count == 0
   end
 
   def assert_all_dts_fields_removed
-    raise "Unable to remove DTS fields" unless self.dts_selected_options.count == 0
+    raise "Unable to remove DTS fields" unless get_selected_dts_options.count == 0
   end
 end
 

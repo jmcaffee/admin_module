@@ -18,7 +18,7 @@ module AdminModule
     end
 
     def list
-      ppms_page.get_active_ppms
+      ppms_page.get_ppms_data
     end
 
     def dups

@@ -137,6 +137,8 @@ class DcDetailPage
 
 private
 
+  include SelectListSyncable
+
   def get_available_dts_options
     vars = []
     Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsSnapshotDTS_lstAvailable > option').each do |elem|
@@ -154,40 +156,13 @@ private
   end
 
   def set_dts_fields data
-    avail_dts = get_available_dts_options
-    active_dts = get_selected_dts_options
-    working_set = data.dup
-    dts_to_remove = Array.new
-    dts_to_add = Array.new
-
-    # Build a list of indices of dts to remove from the selected list
-    active_dts.each_index do |i|
-      if working_set.include? active_dts[i]
-        working_set.delete active_dts[i]
-      else
-        dts_to_remove << i
-      end
-    end
-
-    # Build a list of indices of dts to add from the available list
-    avail_dts.each_index do |i|
-      if working_set.include? avail_dts[i]
-        dts_to_add << i
-        working_set.delete avail_dts[i]
-      end
-    end
-
-    # Select and remove all dts in the removal list
-    dts_to_remove.each do |i|
-      dts_selected_element.options[i].click
-    end
-    self.remove_dts_button if dts_to_remove.count > 0
-
-    # Select and add all dts in the add list
-    dts_to_add.each do |i|
-      dts_available_element.options[i].click
-    end
-    self.add_dts_button if dts_to_add.count > 0
+    sync_available_and_selected_lists get_available_dts_options,
+                                      dts_available_element,
+                                      get_selected_dts_options,
+                                      dts_selected_element,
+                                      add_dts_button_element,
+                                      remove_dts_button_element,
+                                      data
   end
 
   def assert_all_dts_fields_removed

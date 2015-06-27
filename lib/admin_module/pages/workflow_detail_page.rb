@@ -3,8 +3,7 @@
 # Purpose:: Stage detail page for AdminModule
 #
 # Author::    Jeff McAffee 2013-12-12
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 require 'nokogiri'
@@ -153,10 +152,10 @@ class WorkflowDetailPage
     stage_data[:name] = self.name
 
     self.transition_to_states_tab
-    stage_data[:transition_to] = self.selected_states_options
+    stage_data[:transition_to] = get_selected_state_options
 
     self.groups_tab
-    stage_data[:groups] = self.selected_groups_options
+    stage_data[:groups] = get_selected_group_options
 
     stage_data[:tasks] = get_tasks
 
@@ -253,26 +252,14 @@ class WorkflowDetailPage
 
   def set_transitions trans
     self.transition_to_states_tab
-
-    # Remove all states, then add back the requested states.
-    self.remove_all_states_button
-    trans.each do |t|
-      available_states_element.select(t)
-      self.add_state_button
-    end
+    set_transition_states trans
 
     self
   end
 
   def set_groups groups
     self.groups_tab
-
-    # Remove all groups, then add back the requested groups.
-    self.remove_all_groups_button
-    groups.each do |item|
-      available_groups_element.select(item)
-      self.add_group_button
-    end
+    set_group_data groups
 
     self
   end
@@ -401,6 +388,62 @@ class WorkflowDetailPage
     self.data_clearing_days_type_element.select dc[:days_type]
 
     self.version_dc_button
+  end
+
+private
+
+  include SelectListSyncable
+
+  def get_available_state_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsStates_lstAvailable > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def get_selected_state_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsStates_lstSelected > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def set_transition_states data
+    sync_available_and_selected_lists get_available_state_options,
+                                      available_states_element,
+                                      get_selected_state_options,
+                                      selected_states_element,
+                                      add_state_button_element,
+                                      remove_state_button_element,
+                                      data
+  end
+
+  def get_available_group_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsGroups_lstAvailable > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def get_selected_group_options
+    vars = []
+    Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsGroups_lstSelected > option').each do |elem|
+      vars << elem.text
+    end
+    vars
+  end
+
+  def set_group_data data
+    sync_available_and_selected_lists get_available_group_options,
+                                      available_groups_element,
+                                      get_selected_group_options,
+                                      selected_groups_element,
+                                      add_group_button_element,
+                                      remove_group_button_element,
+                                      data
   end
 end # class WorkflowDetailPage
 
