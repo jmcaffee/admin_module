@@ -245,8 +245,8 @@ private
                                       params_available_element,
                                       get_selected_parameter_options,
                                       params_selected_element,
-                                      add_params_button_element,
-                                      remove_params_button_element,
+                                      add_param_button_element,
+                                      remove_param_button_element,
                                       data
   end
 
