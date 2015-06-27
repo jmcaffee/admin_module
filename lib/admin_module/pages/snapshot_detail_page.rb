@@ -157,6 +157,8 @@ class SnapshotDetailPage
 
 private
 
+  include SelectListSyncable
+
   def get_available_parameter_options
     vars = []
     Nokogiri::HTML(@browser.html).css('#ctl00_cntPlh_tsParams_lstAvailable > option').each do |elem|
@@ -205,41 +207,6 @@ private
     vars
   end
 
-  def sync_available_and_selected_lists available_items, available_element, selected_items, selected_element, add_btn, remove_btn, items_to_select
-    working_set = items_to_select.dup
-    items_to_remove = Array.new
-    items_to_add = Array.new
-
-    # Build a list of indices of items to remove from the selected list
-    selected_items.each_index do |i|
-      if working_set.include? selected_items[i]
-        working_set.delete selected_items[i]
-      else
-        items_to_remove << i
-      end
-    end
-
-    # Build a list of indices of items to add from the available list
-    available_items.each_index do |i|
-      if working_set.include? available_items[i]
-        items_to_add << i
-        working_set.delete available_items[i]
-      end
-    end
-
-    # Select and remove all params in the removal list
-    items_to_remove.each do |i|
-      selected_element.options[i].click
-    end
-    remove_btn.click if items_to_remove.count > 0
-
-    # Select and add all params in the add list
-    items_to_add.each do |i|
-      available_element.options[i].click
-    end
-    add_btn.click if items_to_add.count > 0
-  end
-
   def set_parameter_fields data
     sync_available_and_selected_lists get_available_parameter_options,
                                       params_available_element,
@@ -268,80 +235,6 @@ private
                                       add_control_field_button_element,
                                       remove_control_field_button_element,
                                       data
-  end
-
-  def depset_parameter_fields data
-    avail_params = get_available_parameter_options
-    selected_params = get_selected_parameter_options
-    working_set = data.dup
-    params_to_remove = Array.new
-    params_to_add = Array.new
-
-    # Build a list of indices of params to remove from the selected list
-    selected_params.each_index do |i|
-      if working_set.include? selected_params[i]
-        working_set.delete selected_params[i]
-      else
-        params_to_remove << i
-      end
-    end
-
-    # Build a list of indices of params to add from the available list
-    avail_params.each_index do |i|
-      if working_set.include? avail_params[i]
-        params_to_add << i
-        working_set.delete avail_params[i]
-      end
-    end
-
-    # Select and remove all params in the removal list
-    params_to_remove.each do |i|
-      params_selected_element.options[i].click
-    end
-    self.remove_params_button if params_to_remove.count > 0
-
-    # Select and add all params in the add list
-    params_to_add.each do |i|
-      params_available_element.options[i].click
-    end
-    self.add_params_button if params_to_add.count > 0
-  end
-
-  def depset_dts_fields data
-    avail_dts = get_available_dts_options
-    selected_dts = get_selected_dts_options
-    working_set = data.dup
-    dts_to_remove = Array.new
-    dts_to_add = Array.new
-
-    # Build a list of indices of dts to remove from the selected list
-    selected_dts.each_index do |i|
-      if working_set.include? selected_dts[i]
-        working_set.delete selected_dts[i]
-      else
-        dts_to_remove << i
-      end
-    end
-
-    # Build a list of indices of dts to add from the available list
-    avail_dts.each_index do |i|
-      if working_set.include? avail_dts[i]
-        dts_to_add << i
-        working_set.delete avail_dts[i]
-      end
-    end
-
-    # Select and remove all dts in the removal list
-    dts_to_remove.each do |i|
-      dts_selected_element.options[i].click
-    end
-    self.remove_dts_button if dts_to_remove.count > 0
-
-    # Select and add all dts in the add list
-    dts_to_add.each do |i|
-      dts_available_element.options[i].click
-    end
-    self.add_dts_button if dts_to_add.count > 0
   end
 
   def assert_all_fields_removed control, label

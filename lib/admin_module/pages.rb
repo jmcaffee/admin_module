@@ -8,6 +8,7 @@
 
 require 'watir-webdriver'
 require 'ktutils/os'
+require 'admin_module/pages/select_list_syncable'
 require 'admin_module/pages/login_page'
 require 'admin_module/pages/guidelines_page'
 require 'admin_module/pages/guidelines_version_all_page'
