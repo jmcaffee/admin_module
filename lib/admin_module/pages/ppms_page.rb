@@ -104,7 +104,7 @@ class PpmsPage
     end
 
     ppms_to_remove.each do |i|
-      paramters_selected_element.options[i].click
+      parameters_selected_element.options[i].click
     end
     self.remove_parameters_button
 
