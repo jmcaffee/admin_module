@@ -1,10 +1,9 @@
 ##############################################################################
-# File::    guidelines_page.rb
+# File::    parameters_page.rb
 # Purpose:: Parameters page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2014-03-19
-# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 require 'nokogiri'

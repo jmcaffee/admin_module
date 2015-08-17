@@ -1,0 +1,35 @@
+---
+TstDefn1:
+  :name: TstDefn1
+  :description: ''
+  :parameters:
+  - Active Ch13 BK
+  - Active Ch7 BK
+  - Agency Flag
+  - Agency Type
+  - Amortization Term After Modification
+  - App Date
+  :dts:
+  - Account
+  - Additional Days to Submit Docs
+  - All Documents Received
+  - Ancillary Amount
+  - Appeal Decision Expiration Date
+  :control_fields: []
+TstDefn2:
+  :name: TstDefn2
+  :description: ''
+  :parameters:
+  - 1st Trial Payment Due Amount
+  - App Date
+  - Customer Qualifies For 60 Month
+  :dts:
+  - Account
+  - All Documents Received
+  - Approval
+  - Borrower First Name
+  :control_fields:
+  - Expenses Monthly Total
+  - Total Assets
+  - Total Stated Income
+  - Total Verified Income

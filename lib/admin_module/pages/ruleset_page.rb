@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    ruleset_page.rb
 # Purpose:: Ruleset page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2014-03-17
-# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 
@@ -16,7 +15,7 @@ class RulesetPage
   #page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    AdminModule.configuration.url(RulesetPage)
+    AdminModule.configuration.base_url + "/admin/decision/ruleset.aspx"
   end
 
   text_field(:ruleset_name,
@@ -32,18 +31,22 @@ class RulesetPage
     clear_browser_alert
 
     self.ruleset_name = new_name
+
+    self
   end
 
   def save
     clear_browser_alert
 
     self.save_button
+    RulesetsPage.new(@browser, false)
   end
 
   def cancel
     clear_browser_alert
 
     self.cancel_button
+    RulesetsPage.new(@browser, false)
   end
 
 private

@@ -3,12 +3,12 @@
 # Purpose:: Require all Page classes
 #
 # Author::    Jeff McAffee 11/15/2013
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 
 require 'watir-webdriver'
 require 'ktutils/os'
+require 'admin_module/pages/select_list_syncable'
 require 'admin_module/pages/login_page'
 require 'admin_module/pages/guidelines_page'
 require 'admin_module/pages/guidelines_version_all_page'
@@ -18,12 +18,22 @@ require 'admin_module/pages/lock_definitions_page'
 require 'admin_module/pages/lock_definition_page'
 require 'admin_module/pages/workflow_details_page'
 require 'admin_module/pages/workflow_detail_page'
+require 'admin_module/pages/workflow_detail_task_addl_detail_page'
+require 'admin_module/pages/workflow_detail_task_screens_page'
+require 'admin_module/pages/workflow_detail_task_mappings_page'
 require 'admin_module/pages/rules_page'
 require 'admin_module/pages/rule_page'
 require 'admin_module/pages/rulesets_page'
 require 'admin_module/pages/ruleset_page'
 require 'admin_module/pages/parameters_page'
 require 'admin_module/pages/parameter_page'
+require 'admin_module/pages/dc_definitions_page'
+require 'admin_module/pages/dc_detail_page'
+require 'admin_module/pages/snapshot_definitions_page'
+require 'admin_module/pages/snapshot_detail_page'
+require 'admin_module/pages/workflow_task_page'
+require 'admin_module/pages/workflow_tasks_page'
+require 'admin_module/pages/ppms_page'
 
 module AdminModule::Pages
 
@@ -88,6 +98,12 @@ private
     # log-level:                  Sets the minimum log level. Valid values are from 0 to 3: INFO = 0, WARNING = 1, LOG_ERROR = 2, LOG_FATAL = 3.
     switches = %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --no-first-run --log-level=3]
     switches << "--user-data-dir=#{user_data_dir}"
+
+    proxy_port = ENV['BROWSER_PROXY_PORT']
+    unless proxy_port.nil? || proxy_port.empty?
+      proxy_connection_string = "socks://localhost:#{proxy_port}"
+      switches << "--proxy-server=#{proxy_connection_string}"
+    end
 
     # Create a client so we can adjust the timeout period.
     client = Selenium::WebDriver::Remote::Http::Default.new

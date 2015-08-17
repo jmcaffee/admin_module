@@ -1,69 +1,67 @@
 ##############################################################################
 # File::    workflow_details_page.rb
 # Purpose:: Guidelines page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2013-12-12
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 
 module AdminModule::Pages
+  class WorkflowDetailsPage
+    include PageObject
 
-class WorkflowDetailsPage
-  include PageObject
+    page_url(:get_dynamic_url)
 
-  page_url(:get_dynamic_url)
+    def get_dynamic_url
+      AdminModule.configuration.base_url + "/admin/security/workflows.aspx"
+    end
 
-  def get_dynamic_url
-    AdminModule.configuration.url(WorkflowDetailsPage)
-  end
+    select_list(:states,
+                id: 'ctl00_cntPlh_elStates_lstItems')
 
-  select_list(:states,
-              id: 'ctl00_cntPlh_elStates_lstItems')
+    button(:add_button,
+          id: 'ctl00_cntPlh_elStates_btnAdd')
 
-  button(:add,
-         id: 'ctl00_cntPlh_elStates_btnAdd')
+    button(:modify_button,
+          id: 'ctl00_cntPlh_elStates_btnModify')
 
-  button(:modify,
-         id: 'ctl00_cntPlh_elStates_btnModify')
+    button(:delete_button,
+          id: 'ctl00_cntPlh_elStates_btnDelete')
 
-  button(:delete_button,
-         id: 'ctl00_cntPlh_elStates_btnDelete')
+    def get_stages
+      stage_list = []
+      Nokogiri::HTML(@browser.html).css("select#ctl00_cntPlh_elStates_lstItems>option").each do |elem|
+        stage_list << elem.text
+      end
 
-  def modify_stage stage_name
-    #states_options # List of option text
-    states_element.select stage_name
-    self.modify
+      stage_list
+    end
 
-    # Return the url of the landing page.
-    current_url
-  end
+    def modify stage_name
+      states_element.select stage_name
+      self.modify_button
 
-  def create_stage data
-    name = data[:name]
-    raise ArgumentError, "Missing stage name" if name.nil? || name.empty?
-    raise ArgumentError, "Stage name [#{name}] already exists" if states_options.include? name
+      # Return the page object of the next page.
+      WorkflowDetailPage.new(@browser, false)
+    end
 
-    self.add
+    def delete stage_name
+      raise ArgumentError, "Missing stage name" if stage_name.nil? || stage_name.empty?
+      raise ArgumentError, "Stage name '#{name}' does not exist" if !states_options.include?(stage_name)
 
-    # Return the url of the landing page.
-    current_url
-  end
+      states_element.select stage_name
+      self.delete_button
 
-  def delete_stage data
-    name = data
-    name = data[:name] if data.class == Hash
-    raise ArgumentError, "Missing stage name" if name.nil? || name.empty?
-    raise ArgumentError, "Stage name [#{name}] does not exist" if !states_options.include?(name)
+      self
+    end
 
-    self.states_element.select name
-    self.delete_button
+    def add
+      self.add_button
 
-    # Return the url of the landing page.
-    current_url
-  end
-end # class WorkflowDetailsPage
-
-end # module Pages
+      # Return the page object of the next page.
+      WorkflowDetailPage.new(@browser, false)
+    end
+  end # class
+end # module
 

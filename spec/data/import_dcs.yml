@@ -1,0 +1,31 @@
+---
+TstDefn1:
+  :name: TstDefn1
+  :description: TstDefn1 Description
+  :delete_options:
+    :decision_data: true
+    :conditions_with_images: true
+    :incomes: true
+    :assets: true
+    :expenses: true
+    :hud1_fields: false
+    :payment_schedule: true
+  :dts:
+  - All Documents Received
+  - Approval
+  - Denial Reason
+TstDefn2:
+  :name: TstDefn2
+  :description: TstDefn2 Description
+  :delete_options:
+    :decision_data: true
+    :conditions_with_images: true
+    :incomes: true
+    :assets: true
+    :expenses: true
+    :hud1_fields: false
+    :payment_schedule: true
+  :dts:
+  - All Documents Received
+  - Approval
+  - Denial Reason

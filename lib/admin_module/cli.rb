@@ -1,93 +1,54 @@
 ##############################################################################
 # File::    cli.rb
-# Purpose:: filedescription
-# 
-# Author::    Jeff McAffee 11/15/2013
-# Copyright:: Copyright (c) 2013, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+# Purpose:: Admin Module command line interface
+#
+# Author::    Jeff McAffee 06/28/2014
+#
 ##############################################################################
 
-require 'admin_module/pages'
-require_relative 'cli/cli_parameter'
-require_relative 'cli/cli_rule'
-require_relative 'cli/cli_ruleset'
-require_relative 'cli/cli_guideline'
-require_relative 'cli/cli_lock'
-require_relative 'cli/cli_stage'
-require_relative 'cli/cli_task'
+require 'thor'
+require 'admin_module/command'
 
 
-class AdminModule::CLI
-  include AdminModule::Pages
+module AdminModule
+  class CLI < Thor
 
-
-  def initialize
-    # Make sure the configuration has been initialized.
-    AdminModule.configure
-  end
-
-  ##
-  # Set the current environment
-
-  def environment=(env)
-    raise "Unknown environment [#{env}]" unless AdminModule.configuration.credentials.key?(env)
-    @env = env
-    AdminModule.configure do |config|
-      config.default_environment = env
-    end
-  end
-
-  ##
-  # Return the current environment
-
-  def environment
-    @env ||= AdminModule.configuration.default_environment
-    @env
-  end
-
-  ##
-  # Return the credentials for the current environment
-
-  def credentials
-    return AdminModule.configuration.credentials[environment]
-  end
-
-  ##
-  # Return the base url for the current environment
-
-  def base_url
-    return AdminModule.configuration.base_urls[environment]
-  end
-
-  ##
-  # Login to the Admin Module
-  #
-  # If we're already logged in, do nothing unless the +force+ flag is true.
-  #
-  # +force+ force a re-login if we've already logged in
-
-  def login(force = false)
-    if force || @login_page.nil?
-      @login_page = LoginPage.new(browser, base_url)
-      @login_page.login_as(*credentials)
+    def self.start(*)
+      super
+    rescue Exception => e
+      raise e
     end
 
-    @login_page
-  end
-
-  def logout
-    @login_page.logout
-    @login_page = nil
-  end
-
-  ##
-  # Close the browser
-
-  def quit
-    unless @browser.nil?
-      logout
-      @browser.close
-      @browser = nil
+    def initialize(*args)
+      super
     end
-  end
-end
+
+    desc "gdl [COMMAND]", "run a guideline command"
+    subcommand "gdl", AdminModule::Command::Gdl
+
+    desc "config [COMMAND]", "modify configuration values"
+    subcommand "config", AdminModule::Command::Config
+
+    desc "ruleset [COMMAND]", "run a ruleset command"
+    subcommand "ruleset", AdminModule::Command::Ruleset
+
+    desc "rule [COMMAND]", "run a rule command"
+    subcommand "rule", AdminModule::Command::Rule
+
+    desc "lock [COMMAND]", "run a lock command"
+    subcommand "lock", AdminModule::Command::Lock
+
+    desc "stage [COMMAND]", "run a stage command"
+    subcommand "stage", AdminModule::Command::Stage
+
+    desc "dc [COMMAND]", "run a data clearing command"
+    subcommand "dc", AdminModule::Command::Dc
+
+    desc "snapshot [COMMAND]", "run a snapshot command"
+    subcommand "snapshot", AdminModule::Command::Snapshot
+
+    desc "task [COMMAND]", "run a task command"
+    subcommand "task", AdminModule::Command::Task
+  end # CLI
+end # AdminModule
+

@@ -1,0 +1,4 @@
+---
+TstStage1:
+  :name: TstStage1
+  :transition_to:

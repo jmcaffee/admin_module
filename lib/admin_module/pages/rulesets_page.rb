@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    rulesets_page.rb
 # Purpose:: Rulesets page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2014-03-17
-# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 require 'nokogiri'
@@ -17,7 +16,7 @@ class RulesetsPage
   page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    AdminModule.configuration.url(RulesetsPage)
+    AdminModule.configuration.base_url + "/admin/decision/rulesets.aspx"
   end
 
   select_list(:rulesets,
@@ -42,8 +41,8 @@ class RulesetsPage
 
     clear_browser_alert
 
-    # Return the url of the landing page.
-    current_url
+    # Return the next page object
+    RulesetPage.new(@browser, false)
   end
 
 private

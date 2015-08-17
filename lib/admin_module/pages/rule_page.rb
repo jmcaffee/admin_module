@@ -1,10 +1,9 @@
 ##############################################################################
 # File::    rule_page.rb
 # Purpose:: Rule page for AdminModule
-# 
+#
 # Author::    Jeff McAffee 2014-03-17
-# Copyright:: Copyright (c) 2014, kTech Systems LLC. All rights reserved.
-# Website::   http://ktechsystems.com
+#
 ##############################################################################
 require 'page-object'
 
@@ -16,7 +15,7 @@ class RulePage
   #page_url(:get_dynamic_url)
 
   def get_dynamic_url
-    AdminModule.configuration.url(RulePage)
+    AdminModule.configuration.base_url + "/admin/decision/rule.aspx"
   end
 
   text_field(:rule_name,
@@ -32,18 +31,26 @@ class RulePage
     clear_browser_alert
 
     self.rule_name = new_name
+    # Return self as page object.
+    self
   end
 
   def save
     clear_browser_alert
 
     self.save_button
+
+    # Return the next page object.
+    RulesPage.new(@browser, false)
   end
 
   def cancel
     clear_browser_alert
 
     self.cancel_button
+
+    # Return the next page object.
+    RulesPage.new(@browser, false)
   end
 
 private
