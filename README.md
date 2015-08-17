@@ -203,15 +203,16 @@ You can use the Client for scripting.
 
 ## Contributing
 
-1. Fork it
+1. Fork it ( https://github.com/jmcaffee/admin_module/fork )
+1. Clone it (`git clone git@github.com:[my-github-username]/admin_module.git`)
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+3. Create tests for your feature branch
+4. Commit your changes (`git commit -am 'Add some feature'`)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create a new Pull Request
 
 ## ToDo
 
-* document CLI
 * complete conversion to `thor`
 * snapshot configuration
 * add tasks to stage config
@@ -268,4 +269,10 @@ interface to the actual Guideline page object.
   page, select a guideline, then go to the _GuidelineDetails_ page before it can
   manipulate a guideline, say, to change its name.
 
+## LICENSE
+
+AdminModule is licensed under the MIT license.
+
+See [LICENSE](https://github.com/jmcaffee/admin_module/blob/master/LICENSE) for
+details.
 
