@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["jeff@ktechsystems.com"]
   spec.description   = %q{Command line interface for Admin Module}
   spec.summary       = %q{Admin Module CLI}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/jmcaffee/admin_module"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
