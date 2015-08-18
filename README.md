@@ -214,10 +214,13 @@ You can use the Client for scripting.
 ## ToDo
 
 * complete conversion to `thor`
-* snapshot configuration
-* add tasks to stage config
-* tasks configuration
-* PPM configuration
+* PPM configuration specs
+* clean up (remove) old `cli` files
+* document new commands in README
+  + PPMs
+  + Tasks
+  + Snapshots
+
 
 ## Process Flow (CLI)
 
