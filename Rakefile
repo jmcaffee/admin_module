@@ -1,6 +1,20 @@
 require "bundler/gem_tasks"
 require 'ktutils/os'
 
+require 'rake/clean'
+require 'rspec/core/rake_task'
+
+# Windows Locations
+
+CHROME_PATH = '"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"'
+
+# Setup common clean and clobber targets
+
+CLEAN.include("pkg")
+CLOBBER.include("pkg")
+
+##############################################################################
+
 desc 'start a console'
 task :console do
   require 'pry'
@@ -60,17 +74,25 @@ CONSOLE_HELP
   Pry.start
 end
 
+##############################################################################
+
 desc 'Start chrome with data dir'
 task :start_chrome do
+  user_data_dir = File.expand_path('test/chrome-data')
+  mkdirs user_data_dir unless File.exists?(user_data_dir) and File.directory?(user_data_dir)
+
   if Ktutils::OS.windows?
-    sh('"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --user-data-dir=C:\Users\Jeff\ams\hsbc\test\chrome-data')
+    user_data_dir = user_data_dir.gsub('/', '\\')
+    sh("#{CHROME_PATH} --user-data-dir=#{user_data_dir}")
   else
     chrome = `which chromium-browser`.chomp
-
-    user_data_dir = File.expand_path('test/chrome-data')
-    mkdirs user_data_dir unless File.exists?(user_data_dir) and File.directory?(user_data_dir)
-
     sh("#{chrome} --user-data-dir=#{user_data_dir}")
   end
+end
+
+#############################################################################
+desc "Run all specs"
+RSpec::Core::RakeTask.new do |t|
+  #t.rcov = true
 end
 
