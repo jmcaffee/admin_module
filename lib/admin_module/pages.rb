@@ -62,7 +62,12 @@ private
       # Downloaded from http://chromium.woolyss.com/
       # Package: Chromium Package (32-bit)
       # Version: 37.0.2011.0 (272392)
-      chromium_exe = File.absolute_path(File.join(__FILE__, '../../../bin/chrome-win32/chrome.exe'))
+      chromium_exe = ENV["chrome_browser_path"]
+      unless (! chromium_exe.nil? && ! chromium_exe.empty? && File.exist?(chromium_exe))
+        raise "chrome_browser_path environment variable not set"
+      end
+      #chromium_exe = File.absolute_path(File.join(__FILE__, '../../../bin/chrome-win32/chrome.exe'))
+      chromium_exe
     else
       chromium_exe = `which chromium-browser`.chomp
     end
