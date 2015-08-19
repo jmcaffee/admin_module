@@ -74,6 +74,10 @@ private
   end
 
   def configure_browser
+    # We must clear out any environmental proxy or Selenium fails
+    # to connect to the local application.
+    ENV['http_proxy'] = nil
+
     # Specify chrome browser capabilities.
     caps = Selenium::WebDriver::Remote::Capabilities.chrome
     caps['chromeOptions'] = {'binary' => chromium_exe }
