@@ -1,0 +1,11 @@
+--- !ruby/object:AdminModule::Configuration
+default_environment: :dev
+default_comment: no comment
+credentials: {}
+base_urls: {}
+xmlmaps: {}
+aliases: {}
+page_urls:
+  ParametersPage: "/admin/decision/parameters.aspx"
+  ParameterPage: "/admin/decision/parameter.aspx"
+browser_timeout: 360

@@ -48,6 +48,7 @@ is listed here.
       admin_module config help [COMMAND]          # Describe subcommands or one specific subcommand
       admin_module config defcomment '<comment>'  # show or set the default comment
       admin_module config defenv <envname>        # show or set the default environment
+      admin_module config amsversion <version>    # show or set the AMS admin module version
       admin_module config init <filedir>          # create a configuration file
       admin_module config timeout <seconds>       # show or set the browser timeout period
       admin_module config show [CATEGORY]         # display configuration values for [CATEGORY]
@@ -271,6 +272,12 @@ interface to the actual Guideline page object.
 - The API object also hides the fact that the app needs to go to a _Guidelines_
   page, select a guideline, then go to the _GuidelineDetails_ page before it can
   manipulate a guideline, say, to change its name.
+
+## Testing
+
+The specs are tested with the latest version of Chromium (44.0.2403.89) and
+[chromedriver](http://chromedriver.storage.googleapis.com/index.html?path=2.19/)] (2.19)
+at this time.
 
 ## LICENSE
 

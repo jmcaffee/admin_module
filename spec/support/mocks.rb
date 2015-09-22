@@ -1,11 +1,32 @@
 
 def mock_watir_browser
+  # Mock the driver to prevent the browser from opening.
+  # Swiped from https://searchcode.com/codesearch/view/74054921/
+  allow_any_instance_of(Selenium::WebDriver::Driver).to receive(:===).and_return(true)
+
   watir_browser = instance_double('Watir::Browser')
   allow(watir_browser).to receive(:is_a?).with(anything()).and_return(false)
   allow(watir_browser).to receive(:is_a?).with(Watir::Browser).and_return(true)
   allow(watir_browser).to receive(:goto).with(anything()).and_return(true)
   allow(watir_browser).to receive(:text_field).with(anything()).and_return(nil)
   watir_browser
+end
+
+class HardBrowserMock; end
+
+#
+# To prevent a browser from opening AT ALL, use this method passing
+# .mock_watir_browser as the mock to use.
+#
+# Idea swiped from http://stackoverflow.com/questions/24408717/is-there-a-way-to-stub-a-method-of-an-included-module-with-rspec
+#
+
+def mock_browser_at_creation mock_browser = nil
+  if mock_browser.nil?
+    allow_any_instance_of(AdminModule::Pages).to receive(:browser).and_return(HardBrowserMock.new)
+  else
+    allow_any_instance_of(AdminModule::Pages).to receive(:browser).and_return(mock_browser)
+  end
 end
 
 #

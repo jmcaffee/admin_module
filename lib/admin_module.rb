@@ -123,6 +123,7 @@ module AdminModule
     attr_accessor :xmlmaps
     attr_accessor :aliases
     attr_accessor :page_urls
+    attr_accessor :ams_version
 
     # Browser timeout in seconds. Default: 360 (6 mins).
     attr_accessor :browser_timeout
@@ -157,6 +158,8 @@ module AdminModule
                        'ParametersPage' => "/admin/decision/parameters.aspx",
                        'ParameterPage'  => "/admin/decision/parameter.aspx",
                     }
+
+      @ams_version = "4.4.0"
 
       @browser_timeout = 360
     end

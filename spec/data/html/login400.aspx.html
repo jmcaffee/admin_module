@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0055)http://207.38.22.217/VericrestDev/Admin/user/login.aspx -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Decision Suite: Sign-In</title>
+		<meta content="Microsoft Visual Studio.NET 7.0" name="GENERATOR">
+		<meta content="Visual Basic 7.0" name="CODE_LANGUAGE">
+		<meta content="JavaScript" name="vs_defaultClientScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<link href="./login400.aspx_files/styles.css" type="text/css" rel="stylesheet">
+    <script language="javascript" type="text/javascript">
+    function redirect()
+    {   
+	
+        var Browser = {  Version: function() 
+        {    
+            var version = 999; 
+            if (navigator.appVersion.indexOf("MSIE") != -1)      
+                version = parseFloat(navigator.appVersion.split("MSIE")[1]);    
+                return version;  
+            }
+        }
+		
+        if (Browser.Version() >= 8) {
+            document.getElementById("btnLogin").disabled =true;
+            document.getElementById("btnLogin").style.visibility ='hidden';
+            lblBrowserCheck.innerText ="This browser currently not supported";
+        }
+        
+        if(window.parent != null && window.parent.parent != null)
+        {
+            if(window.parent.location.pathname.indexOf('MainFrame.aspx') > 0)
+            {
+                window.parent.parent.location.href = "AppLogin.aspx";
+            }
+        }
+     }
+	</script>
+	<script type="text/javascript">(function MyRedirect() {
+
+    var Browser = {  Version: function()
+    {
+        var version = 999;
+        if (navigator.appVersion.indexOf("MSIE") != -1)
+            version = parseFloat(navigator.appVersion.split("MSIE")[1]);
+            return version;
+        }
+    }
+
+    if (Browser.Version() >= 8) {
+        //document.getElementById("btnLogin").disabled =true;
+        //document.getElementById("btnLogin").style.visibility ='hidden';
+        lblBrowserCheck.innerText ="This browser supported via TM";
+    }
+
+    if(window.parent != null && window.parent.parent != null)
+    {
+        if(window.parent.location.pathname.indexOf('MainFrame.aspx') > 0)
+        {
+            window.parent.parent.location.href = "AppLogin.aspx";
+        }
+    }
+})()</script></head>
+	<body onload="redirect();document.getElementById(&#39;txtUsername&#39;).focus()">
+		<!-- BEGIN TABLE 1 -->
+		<form name="frmlogin" method="post" action="./login400.aspx.html" onsubmit="javascript:return WebForm_OnSubmit();" id="frmlogin">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJMzUxOTU1ODE1ZGTjO1PqTvt5yOqRULLGIgur6dvQOy6au44uMWlh0omA1g==">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['frmlogin'];
+if (!theForm) {
+    theForm = document.frmlogin;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="./login400.aspx_files/WebResource.axd" type="text/javascript"></script>
+
+
+<script src="./login400.aspx_files/WebResource(1).axd" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+			<table width="100%" border="0">
+				<tbody><tr>
+					<td valign="top" width="14%">&nbsp;</td>
+					<td align="center">
+					<label id="lblBrowserCheck" style="font-size:medium;color:Red;font-weight:bold;">This browser supported via TM</label>
+						<!--<div style="BACKGROUND-IMAGE:url(../Images/login.jpg);WIDTH:auto;BACKGROUND-REPEAT:no-repeat;HEIGHT:525px">-->
+						<div style="BACKGROUND-IMAGE: url(../img/login.jpg); WIDTH: auto; BACKGROUND-REPEAT: no-repeat; HEIGHT: 525px">
+							<div style="LEFT: 660px; WIDTH: auto; POSITION: absolute; TOP: 140px">
+								<div id="ctlErrors_vsmErrors" class="error" style="color:Red;display:none;">
+
+</div><table>
+									<tbody><tr>
+										
+
+
+									</tr>
+									<tr>
+										<td style="WIDTH: 64px; TEXT-ALIGN: left">User Name:</td>
+										<td style="WIDTH: 133px"><input name="txtUserName" type="text" id="txtUserName"></td>
+										<td style="WIDTH: 68px"><span id="rfvUserName" style="color:Red;visibility:hidden;">*</span></td>
+										<td style="WIDTH: 47px"></td>
+									</tr>
+									<tr>
+										<td style="WIDTH: 64px; TEXT-ALIGN: left">Password:</td>
+										<td style="WIDTH: 133px"><input name="txtPassword" type="password" id="txtPassword"></td>
+										<td style="WIDTH: 68px"><span id="rfvPassword" style="color:Red;visibility:hidden;">*</span></td>
+										<td style="WIDTH: 47px"><input type="submit" name="btnLogin" value="Login" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnLogin&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="btnLogin" class="login" style="width:44px;"></td>
+									</tr>
+								</tbody></table>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" colspan="2">
+						<div id="Footer1_divUser" class="footer" style="background-color:#204B68;PADDING-RIGHT:5px; PADDING-LEFT:5px; PADDING-BOTTOM:5px;PADDING-TOP:5px; height:10px;vertical-align:middle;"></div>
+					</td>
+				</tr>
+			</tbody></table>
+		
+<script type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("ctlErrors_vsmErrors"));
+var Page_Validators =  new Array(document.getElementById("rfvUserName"), document.getElementById("rfvPassword"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var ctlErrors_vsmErrors = document.all ? document.all["ctlErrors_vsmErrors"] : document.getElementById("ctlErrors_vsmErrors");
+ctlErrors_vsmErrors.headertext = "Please correct the following errors before continuing.";
+ctlErrors_vsmErrors.showmessagebox = "True";
+ctlErrors_vsmErrors.showsummary = "False";
+var rfvUserName = document.all ? document.all["rfvUserName"] : document.getElementById("rfvUserName");
+rfvUserName.controltovalidate = "txtUserName";
+rfvUserName.errormessage = "Enter User name";
+rfvUserName.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+rfvUserName.initialvalue = "";
+var rfvPassword = document.all ? document.all["rfvPassword"] : document.getElementById("rfvPassword");
+rfvPassword.controltovalidate = "txtPassword";
+rfvPassword.errormessage = "Enter password";
+rfvPassword.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+rfvPassword.initialvalue = "";
+//]]>
+</script>
+
+<script language="javascript">document.forms[0].txtUserName.focus();</script>
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        //]]>
+</script>
+</form>
+		<!-- END TABLE 1 -->
+	
+
+</body></html>

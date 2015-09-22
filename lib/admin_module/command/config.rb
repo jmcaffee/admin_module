@@ -290,6 +290,26 @@ module AdminModule
         end
       end
 
+
+      desc "amsversion <version>", "show or set the admin module version"
+      long_desc <<-LD
+        Show or set the AMS Admin Module version being used.
+
+        The default version will be 4.4.0 when no version is configured.
+      LD
+      def amsversion(version=nil)
+        if version.nil?
+          with_loaded_config do
+            say "ams version: #{AdminModule.configuration.ams_version}"
+          end
+          return
+        end
+
+        with_loaded_config(true) do
+          AdminModule.configuration.ams_version = version
+        end
+      end
+
     private
 
       def with_loaded_config save = false

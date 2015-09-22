@@ -12,8 +12,22 @@ module AdminModule
   class PageFactory
     include AdminModule::Pages
 
+    def default_ams_version
+      "4.4.0"
+    end
+
+    def ams_version
+      AdminModule.configuration.ams_version
+    end
+
     def login_page(goto_page = true)
-      return Pages::LoginPage.new(browser, goto_page)
+
+      case Gem::Version.new(ams_version) < Gem::Version.new(default_ams_version)
+      when true
+        return Pages::LoginPage400.new(browser, goto_page)
+      else
+        return Pages::LoginPage.new(browser, goto_page)
+      end
     end
 
     def guidelines_page(goto_page = true)

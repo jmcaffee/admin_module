@@ -31,9 +31,9 @@ class LoginPage
       return
     end
 
-    raise ArgumentError.new("Missing username for login.\nHave you set the HSBC_envname_USER environment variable?") if username.nil?
+    raise ArgumentError.new("Missing username for login.\nHave you set the $CLIENT_envname_USER environment variable?") if username.nil?
 
-    raise ArgumentError.new("Missing password for login.\nHave you set the HSBC_envname_PASSWORD environment variable?") if password.nil?
+    raise ArgumentError.new("Missing password for login.\nHave you set the $CLIENT_envname_PASSWORD environment variable?") if password.nil?
 
     unless current_url.downcase.include? get_dynamic_url.downcase
       navigate_to get_dynamic_url

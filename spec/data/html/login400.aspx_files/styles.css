@@ -1,0 +1,444 @@
+/* Default CSS Stylesheet for a new Web Application project */
+
+BODY, TD, TH, SPAN, DIV, A, P, INPUT, BUTTON, SELECT, TEXTAREA, LABEL, OPTION
+{
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	letter-spacing: normal;
+	text-transform: none;
+	word-spacing: normal;
+}
+INPUT, BUTTON, SELECT
+{
+	font-size: 1em;
+}
+
+
+BODY
+{
+	background-color: #FFFFFF;
+	margin-top: 0px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 0px;
+}
+
+A
+{
+	text-decoration: none;
+}
+
+A:hover
+{
+	text-decoration: underline;
+}
+
+H1, H2, H3, H4, H5
+/* Sriparna Removed text text-transform: lowercase for issue 1540,1541*/
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+}
+TR.Theader
+{
+	font-weight: bold;
+	font-size: 8pt;
+	word-spacing: normal;
+	vertical-align: baseline;
+	text-transform: none;
+	color: Black;
+	font-family: Verdana;
+	letter-spacing: normal;
+	background-color: #AFAF7C;
+	padding-top: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+TR.bgcolor
+{
+	background-color: #dcdcc4;
+}
+TDNumber
+{
+	font-family: Verdana;
+	text-align: right;
+	margin-right: 2px;
+	background-color: #CFDCEF;
+}
+
+TDText
+{
+	font-family: Verdana;
+	text-align: left;
+	margin-left: 2px;
+	background-color: #6690b1;
+}
+H1
+{
+	padding: 0.2em;
+	font-size: 1.5em;
+	font-weight: 700;
+	border-left: 1px solid silver;
+	border-bottom: 1px solid silver;
+	width: 25em;
+}
+td.underline
+{
+	cursor: hand;
+	text-decoration: underline;
+}
+td.strikeout
+{
+	text-decoration: line-through;
+}
+td.hand
+{
+	cursor: hand;
+}
+
+td.decsummary
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: lowercase;
+	padding: 0.2em;
+	font-size: 1.5em;
+	font-weight: 400;
+	border-left: 1px solid black;
+	border-bottom: 1px solid black;
+	width: 15em;
+}
+
+H2
+{
+	font-size: 1.33em;
+	font-weight: 700;
+}
+
+TD H2
+{
+	margin: 0;
+}
+
+
+H3
+{
+	font-size: 1.25em;
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+
+H4
+{
+	font-size: 1em;
+	font-weight: 500;
+	margin-bottom: 0px;
+}
+
+H5, DT
+{
+	font-size: .8em;
+	font-weight: 700;
+	margin-bottom: 0px;
+}
+
+H6
+{
+	font-size: .75em;
+	font-weight: 700;
+	margin-bottom: 0px;
+}
+
+TH
+{
+	vertical-align: baseline;
+	font-weight: bold;
+}
+
+
+SMALL
+{
+	font-size: .7em;
+}
+
+BIG
+{
+	font-size: 1.17em;
+}
+
+BLOCKQUOTE, PRE
+{
+	font-family: Courier New, monospace;
+}
+
+
+BUTTON, .button
+{
+	border: black 1px solid;
+	font-weight: bold;
+	width: 8em;
+	cursor: hand;
+	height: 1.8em;
+	margin-right: 1em;
+}
+
+TD INPUT.button
+{
+	margin: 0;
+}
+
+TABLE.form TR TD, TABLE.form_small TR TD
+{
+	padding-left: 0px;
+	padding-top: 0px;
+	padding-bottom: 0.2em;
+	padding-right: 1.5em;
+}
+
+
+.form_small, TABLE.form_small TR TD, TR.form_small TD
+{
+	font-size: xx-small;
+}
+
+TABLE.form_small TR TD INPUT, TABLE.form_small TR TD SELECT
+{
+	font-size: 8pt;
+}
+
+TABLE.list, TABLE.content
+{
+	border: 1px solid black;
+}
+
+TABLE.list TR TD, TABLE.grid TR TD
+{
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+}
+
+TABLE.content TR TD.header
+{
+	border-bottom: 1px solid black;
+	color: White;
+	text-transform: lowercase;
+	text-align: right;
+	
+}
+
+TABLE.grid
+{
+	border-collapse: collapse;
+}
+
+.menu, .subMenu
+{
+	border: black 1px solid;
+	padding: 0.4em;
+}
+
+.subMenu
+{
+	display: none;
+	position: absolute;
+	border-top: none;
+	padding: 0.2em;
+}
+
+.menu A, .subMenu A
+{
+	margin-top: 0.2em;
+	margin-right: 0.5em;
+	margin-bottom: 0.5em;
+	margin-left: 0.2em;
+}
+
+.menuHover
+{
+	cursor: hand;
+}
+
+.header
+{
+	font-weight: bold;
+	text-align: center;
+	/* Sriparna for issue:1561 */
+	cursor:default;
+}
+
+.leftheader
+{
+	font-weight: bold;
+	text-align: left;
+	/* Sriparna for issue:1561 */
+	cursor:default;
+}
+
+.footer
+{
+	background-color: #DDDDDD;
+}
+
+.listItem
+{
+	background-color: White;
+}
+.altItem
+{
+	background-color: #DDDDDD;
+}
+
+.selectedItem
+{
+	font-weight: bold;
+}
+.required
+{
+	color: Red;
+	font-weight: bold;
+	cursor:default;
+}
+
+.error
+{
+	font-weight: bold;
+	color: Red;
+}
+
+.showhand
+{ 
+	cursor:hand;
+}
+
+SPAN.expand
+{
+	font-weight: bold;
+	font-size: 1.2em;
+	cursor: hand;
+	margin-right: 10px;
+}
+
+SPAN.ppm
+{
+	color: blue;
+}
+SPAN.dpm
+{
+	color: red;
+}
+SPAN.constant
+{
+	color: green;
+}
+SPAN.lookup
+{
+	color: Maroon;
+}
+BLOCKQUOTE.message
+{
+	color: brown;
+}
+
+A.tab_on
+{
+	font-weight: bold;
+}
+
+.form, .list
+{
+	background: #EEEEEE;
+	border: 1px solid silver;
+}
+A.liabstat
+{
+	font-size:8pt;
+	color: Black;
+	cursor: hand;
+}
+A.actions
+{
+	font-size:8pt;
+	cursor: hand;
+}
+
+.divOrgs
+{
+	background-color: #99CCCC;
+	border-width: thin;
+}
+
+
+/* sriparna for issue:1546,1543 */
+
+.tdimage
+{
+	cursor:default;
+}
+
+.tdhand
+{
+	cursor: hand;
+}
+.dgItem 
+{
+	 
+	 background-color: #DDDDDD;
+}
+.dgHeader 
+{ 
+	font-weight: bold;
+	text-align: center;
+		cursor:default;
+		background-color: #DDDDDD;
+		border: black 1px solid;
+}
+.lbl 
+{ 
+	FONT-SIZE: 8pt;
+	 WIDTH: 130px;
+}
+
+.Duration { FONT-SIZE: 8pt; FONT-FAMILY: tahoma; TEXT-ALIGN: center }
+	.LTV { FONT-SIZE: 8pt; WIDTH: 35px; FONT-FAMILY: tahoma; TEXT-ALIGN: center }
+	.PType { FONT-SIZE: 8pt; WIDTH: 75px; FONT-FAMILY: tahoma }
+
+.login
+{
+	color:#FFFFC0;
+	background-color:#C04000;
+	border-color:Maroon;
+	border-width:2px;
+	border-style:Solid;
+	font-family:Tahoma,Verdana,Arial;
+	font-size:8pt;
+}
+.GridItem {
+	FONT-SIZE: 9px;BACKGROUND-COLOR: #f5fafa
+}
+.GridAltItem {
+	FONT-SIZE: 9px;BACKGROUND-COLOR: white}
+.GridHeader {
+	FONT-WEIGHT: bold; BACKGROUND-COLOR: #99CCCC
+	
+.hyperLinkButton:link, .hyperLinkButton:Normal, .hyperLinkButton:Active, .hyperLinkButton:Visited, .hyperLinkButton:Hover
+{	
+	border: black 1px solid;
+	font-weight: bold;
+	width: 8em;
+	cursor: hand;
+	height: 1.8em;
+	margin-right: 1em;
+	text-align: center;
+	text-decoration: none;
+	color: #EBFFC0;
+	padding: 2px;
+}

@@ -28,6 +28,7 @@ describe 'config command' do
     expect( output ).to include "config timeout <seconds>"
     expect( output ).to include "config defcomment '<comment>'"
     expect( output ).to include "config defenv <envname>"
+    expect( output ).to include "config amsversion <version>"
   end
 
   context 'config init' do
@@ -163,6 +164,32 @@ describe 'config command' do
         run_with_args %W(config defcomment #{cmt})
 
         expect( AdminModule.configuration.default_comment ).to eq 'new default comment'
+      end
+    end
+  end
+
+  context 'config amsversion' do
+
+    it "returns the current AMS version when no argument provided" do
+      with_target_dir('config/amsversion') do
+        run_with_args %w(config init -q)
+
+        output = capture_output do
+          run_with_args %w(config amsversion)
+        end
+
+        expect( output ).to include 'ams version: 4.4.0'
+      end
+    end
+
+    it "sets the ams version when an argument is provided" do
+      with_target_dir('config/amsversion') do
+        run_with_args %w(config init -q)
+
+        ver = "3.1.10"
+        run_with_args %W(config amsversion #{ver})
+
+        expect( AdminModule.configuration.ams_version ).to eq ver
       end
     end
   end

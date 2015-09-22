@@ -16,7 +16,9 @@ describe 'gdl command' do
 
   before do
     AdminModule.configure do |config|
+      config.credentials.clear
       config.credentials[:dev] = ['user', 'pass']
+      config.xmlmaps.clear
       config.xmlmaps['test1'] = 'Z-TEMP'
       config.xmlmaps['test2'] = 'Z-TEMP2'
     end
