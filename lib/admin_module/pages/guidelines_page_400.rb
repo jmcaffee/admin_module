@@ -1,14 +1,14 @@
 ##############################################################################
-# File::    guidelines_page.rb
+# File::    guidelines_page_400.rb
 # Purpose:: Guidelines page for AdminModule
 #
-# Author::    Jeff McAffee 11/15/2013
+# Author::    Jeff McAffee 2015-10-08
 #
 ##############################################################################
 require 'page-object'
 
 module AdminModule::Pages
-  class GuidelinesPage
+  class GuidelinesPage400
     include PageObject
 
     page_url(:get_dynamic_url)
@@ -22,21 +22,21 @@ module AdminModule::Pages
     #
 
     def self.gdls_id
-      'ctl00_cntPlh_ctlGuidelines_lstItems'
+      'ctlGuidelines_lstItems'
     end
 
     select_list(:guidelines,
                 id: gdls_id)
 
     button(:modify,
-          id: 'ctl00_cntPlh_ctlGuidelines_btnModify')
+          id: 'ctlGuidelines_btnModify')
 
     button(:version_all_button,
           text: 'Version All')
 
     def get_guidelines
       gdl_list = []
-      Nokogiri::HTML(@browser.html).css("select##{GuidelinesPage.gdls_id}>option").each do |elem|
+      Nokogiri::HTML(@browser.html).css("select##{GuidelinesPage400.gdls_id}>option").each do |elem|
         gdl_list << elem.text
       end
 

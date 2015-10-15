@@ -1,15 +1,14 @@
 ##############################################################################
-# File::    guidelines_version_all_page.rb
-# Purpose:: Guidelines Version All page for AdminModule
+# File::    guidelines_version_all_page_400.rb
+# Purpose:: Guidelines Version All page for AdminModule (v 4.0.0)
 #
-# Author::    Jeff McAffee 2014-03-17
+# Author::    Jeff McAffee 2015-09-24
 #
 ##############################################################################
 require 'page-object'
 
 module AdminModule::Pages
-
-  class GuidelinesVersionAllPage
+  class GuidelinesVersionAllPage400
     include PageObject
 
     attr_reader :errors
@@ -25,29 +24,29 @@ module AdminModule::Pages
     #
 
     def self.available_gdls_id
-      'ctl00_cntPlh_tsGuidelines_lstAvailable'
+      'tsGuidelines_lstAvailable'
     end
 
     select_list(:guidelines_available,
-                id: 'ctl00_cntPlh_tsGuidelines_lstAvailable' )
+                id: available_gdls_id )
 
     select_list(:guidelines_selected,
-                id: 'ctl00_cntPlh_tsGuidelines_lstSelected' )
+                id: 'tsGuidelines_lstSelected' )
 
     button(:add_guideline_button,
-          id: 'ctl00_cntPlh_tsGuidelines_btnAdd' )
+          id: 'tsGuidelines_btnAdd' )
 
     text_area(:version_notes,
-          id: 'ctl00_cntPlh_txtVersionAllNotes')
+          id: 'txtVersionAllNotes')
 
     button(:save_button,
-          id: 'ctl00_cntPlh_cmdSave')
+          id: 'cmdSave')
 
     button(:cancel_button,
-          id: 'ctl00_cntPlh_cmdCancel')
+          id: 'cmdCancel')
 
     div(:version_errors,
-          id: 'ctl00_cntPlh_ctlErrors_vsmErrors')
+          id: 'ctlErrors_vsmErrors')
 
     def errors
       @errors ||= []
@@ -55,7 +54,7 @@ module AdminModule::Pages
 
     def get_guidelines
       gdl_list = []
-      Nokogiri::HTML(@browser.html).css("select##{GuidelinesVersionAllPage.available_gdls_id}>option").each do |elem|
+      Nokogiri::HTML(@browser.html).css("select##{GuidelinesVersionAllPage400.available_gdls_id}>option").each do |elem|
         gdl_list << elem.text
       end
 
@@ -118,6 +117,6 @@ module AdminModule::Pages
         raise error
       end
     end
-  end # class GuidelinesVersionAllPage
-end # module Pages
+  end # class
+end # module
 

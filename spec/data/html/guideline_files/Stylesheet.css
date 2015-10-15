@@ -1,0 +1,1545 @@
+﻿/* Global Defaults
+=====================================================================*/
+HTML, BODY, DIV, P, H1, H3, H4, TABLE
+{
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+BODY
+{
+    font-family: Verdana,Arial,sans-serif;
+    margin-left: 0px 10px 0px 10px;
+    background-color: #FFFFFF;
+    padding: 0px 10px 0px 10px;
+}
+
+BODY, SELECT, INPUT
+{
+    font-size: 12px;
+}
+
+SELECT
+{
+    border: 1px solid #ccc;
+}
+
+H1
+{
+    font-size: 13px;
+    font-weight: bold;
+    color: #3b466e;
+    text-align: left;
+}
+H2
+{
+    font-size: 12px;
+    font-weight: bold;
+    color: #3b466e;
+    text-align: left;
+}
+P
+{
+    letter-spacing: normal;
+    text-transform: none;
+    word-spacing: normal;
+}
+
+A:link, A:visited
+{
+    color: #3B466E;
+    text-decoration: underline;
+}
+
+A:active
+{
+    color: #4D4D4D;
+    text-decoration: underline;
+}
+
+A:hover
+{
+    color: #D9D9D9;
+    text-decoration: underline;
+}
+
+UL
+{
+    list-style-position: outside;
+    list-style-type: disc;
+}
+
+OL
+{
+    list-style-position: outside;
+    list-style-type: upper-roman;
+}
+
+
+IMG
+{
+    border: 0;
+}
+
+SPAN
+{
+    padding: 1px;
+}
+
+HR
+{
+    width: 100%;
+    background-color: #000;
+    color: #000;
+    height: 1px;
+    border: 0px;
+}
+
+.button
+{
+    background-color: #3b466f;
+    color: White;
+    font-weight: 600;
+    border: 1px solid gray;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-family: Tahoma;
+}
+.bottombuttons
+{
+    float: left;
+    padding-right: 10px;
+}
+.alignButton .button
+{
+    width: 80px;
+    margin-bottom: 5px;
+    display: block;
+    clear: both;
+}
+/* Common Styles
+=====================================================================*/
+/* Tabs */
+
+.ajax_tab_blue .ajax__tab_header a
+{
+    color: #000000;
+    font-weight: bold;
+}
+
+.ajax_tab_blue .ajax__tab_header SPAN
+{
+    padding: 0;
+    padding-right: 1px;
+}
+
+.ajax_tab_blue .ajax__tab_disabled
+{
+    cursor: default;
+    color: #A0A0A0;
+}
+
+.ajax_tab_blue .ajax__tab_header
+{
+    background-color: #FFFFFF;
+}
+.ajax_tab_blue .ajax__tab_header .ajax__tab_outer
+{
+    background-color: #D9D9D9;
+    height: 21px;
+}
+.ajax_tab_blue .ajax__tab_header .ajax__tab_inner
+{
+    background-color: #D9D9D9;
+}
+.ajax_tab_blue .ajax__tab_header .ajax__tab_tab
+{
+    height: 13px;
+    padding: 4px;
+    padding-top: 3px;
+    margin: 0px;
+    background-color: #D9D9D9;
+}
+.ajax_tab_blue .ajax__tab_header .ajax__tab_hover .ajax__tab_outer
+{
+    cursor: pointer;
+    background-color: #D9D9D9;
+}
+.ajax_tab_blue .ajax__tab_header .ajax__tab_hover .ajax__tab_inner
+{
+    cursor: pointer;
+    background-color: #D9D9D9;
+}
+.ajax_tab_blue .ajax__tab_header .ajax__tab_hover .ajax__tab_tab
+{
+    cursor: pointer;
+    background-color: #D9D9D9;
+}
+/*.ajax_tab_blue .ajax__tab_header .ajax__tab_active { margin-top: 1px; } */
+.ajax_tab_blue .ajax__tab_header .ajax__tab_active .ajax__tab_outer
+{
+    border: 1px solid #3B466E;
+    background-color: #FFFFFF;
+    position: relative;
+    top: 2px;
+}
+.ajax_tab_blue .ajax__tab_header .ajax__tab_active .ajax__tab_inner
+{
+    border: 1px solid #FFFFFF;
+    background-color: #FFFFFF;
+}
+.ajax_tab_blue .ajax__tab_header .ajax__tab_active .ajax__tab_tab
+{
+    background-color: #FFFFFF;
+}
+.ajax_tab_blue .ajax__tab_body
+{
+    border: 1px solid #3B466E;
+    padding: 8px;
+    background-color: #ffffff;
+    height: auto !important;
+}
+
+/* scrolling */
+.ajax__scroll_horiz
+{
+    overflow-x: scroll;
+}
+.ajax__scroll_vert
+{
+    overflow-y: scroll;
+}
+.ajax__scroll_both
+{
+    overflow: scroll;
+}
+.ajax__scroll_auto
+{
+    overflow: auto;
+}
+.ajax__scroll_none
+{
+    overflow: hidden;
+}
+
+
+.dynamic-tab-pane-control.tab-pane
+{
+    position: relative;
+    width: 100%;
+}
+
+.dynamic-tab-pane-control .tab-row .tab
+{
+    cursor: Default;
+    display: inline;
+    margin: 1px -1px 1px 0px;
+    float: left;
+    padding: 2px 5px 3px 5px;
+    border: 0; /* 1px solid; */
+    border-color: black;
+    border-bottom: 0;
+    z-index: 1;
+    white-space: nowrap;
+    position: relative;
+    top: 0;
+    background-color: #D9D9D9;
+}
+
+.dynamic-tab-pane-control .tab-row .tab.selected
+{
+    border: 1px solid #3B466E;
+    border-bottom: 0;
+    z-index: 3;
+    padding: 2px 6px 4px 6px;
+    margin: 1px -3px -3px 0px;
+    top: -2px;
+    background-color: #FFFFFF;
+}
+
+.dynamic-tab-pane-control .tab-row .tab a
+{
+    text-decoration: none;
+    cursor: pointer;
+    color: #000000;
+}
+
+.dynamic-tab-pane-control .tab-row .tab a:hover
+{
+    text-decoration: none;
+    cursor: pointer;
+    color: #000000;
+}
+
+.dynamic-tab-pane-control .tab-page
+{
+    clear: both;
+    border: 1px solid #3B466E;
+    z-index: 2;
+    position: relative;
+    top: -2px;
+    padding: 10px;
+    min-height: 300px;
+}
+
+.dynamic-tab-pane-control .tab-row
+{
+    z-index: 1;
+    white-space: nowrap;
+}
+
+/* End Tabs */
+
+.content
+{
+    width: 100%;
+    vertical-align: top;
+    position: relative;
+}
+.TopBorder
+{
+    border-top: 1px silver solid;
+}
+
+.BorderBottom
+{
+    border-bottom: 1px silver solid;
+}
+
+.BorderRight
+{
+    border-right: 1px silver solid;
+}
+
+.BorderBottomRight
+{
+    border-bottom: 1px silver solid;
+    border-right: 1px silver solid;
+}
+
+.NoBorder
+{
+    border: 0px;
+}
+
+.LeftBorder
+{
+    border-left: 1px silver solid;
+}
+
+.LeftBottomBorder
+{
+    border-left: 1px silver solid;
+    border-bottom: 1px silver solid;
+}
+
+.alignleft
+{
+    text-align: left;
+}
+.aligncenter
+{
+    text-align: center;
+}
+
+.alignright
+{
+    text-align: right;
+}
+
+.valign_top
+{
+    vertical-align: text-top;
+}
+
+.valign_middle
+{
+    vertical-align: middle;
+}
+
+.nowrap
+{
+    white-space: nowrap;
+}
+.ErrorLabel, .required, .error
+{
+    color: #993333;
+}
+
+.error
+{
+    font-weight: bold;
+}
+
+.sectionheader
+{
+    letter-spacing: 1px;
+    font-weight: bold;
+    background-color: #3B466E;
+    color: #FFFFFF;
+    padding: 3px;
+    padding-left: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.popup_header
+{
+    letter-spacing: 1px;
+    font-weight: bold;
+    background-color: #3B466E;
+    color: #FFFFFF;
+    padding: 3px;
+}
+
+.sectionheaderimage
+{
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.labelheader
+{
+    font-weight: bold;
+}
+
+.whitelabel
+{
+    color: #ffffff;
+}
+
+.form
+{
+    background: #EBEBEB;
+    border: 1px solid #3B466E;
+}
+
+.modalBackground
+{
+    background-color: #4D4D4D;
+    filter: alpha(opacity=70);
+    opacity: 0.7;
+}
+
+.pageheader
+{
+    position: fixed;
+    width: 98%;
+    background-color: #ffffff;
+    z-index: 1000;
+}
+
+.pageheaderbutton
+{
+    text-align: center;
+    background-color: #ffffff;
+    padding: 10px 5px 5px 5px;
+}
+
+.pagetitle
+{
+    width: 100%;
+    background-image: url(images/titleBarBkg.gif);
+    background-attachment: scroll;
+    background-repeat: repeat;
+    background-position: 0% 0%;
+    height: 20px;
+    font-weight: bold;
+    background-color: transparent;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    clear: both;
+}
+
+.pagetitle .title
+{
+    float: left;
+    text-transform: uppercase;
+    color: #3b466e;
+    font-size: 13px;
+    font-weight: bold;
+    background-image: inherit;
+}
+
+.pagetitle .pageheadbuttons
+{
+    float: right; /* top:-4px;     position:relative;*/
+    padding: 0;
+    margin: 0;
+    padding-top: 3px;
+    text-align: right;
+    background-color: #ffffff;
+}
+
+.watermark
+{
+    color: gray !important;
+}
+
+.blackfont
+{
+    color: #000000 !important;
+}
+.emptycell
+{
+    background-color: orange;
+}
+
+.hidden
+{
+    display: none;
+}
+
+.visible
+{
+    display: inline;
+}
+
+.greenmsg
+{
+    font-weight: bold;
+    color: Green;
+}
+.sortasc
+{
+    background-image: url(Images/up_arrow.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.sortdesc
+{
+    background-image: url(Images/dn_arrow.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.datepicker
+{
+    width: 65px;
+}
+
+.smalltext
+{
+    font-size: 10px;
+}
+
+.clearfloat
+{
+    clear: both;
+}
+
+.floatleft
+{
+    float: left;
+}
+
+.floatright
+{
+    float: right;
+}
+
+.align_center
+{
+    text-align: center;
+}
+/* End Common Styles */
+
+/* Top Menu 
+===================================================================== */
+
+.header_banner
+{
+    height: 20px;
+}
+
+.header_menu
+{
+    clear: both;
+    background-image: url('../../img/menubg.png');
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: bolder;
+    height: 25px;
+    z-index: 9999;
+}
+
+.menu_panel
+{
+    float: left;
+    height: 25px;
+}
+
+.menu_home
+{
+    float: left;
+    width: 70px;
+    cursor: pointer;
+    height: 25px;
+    border-right: 1px solid #ffffff;
+}
+
+.topmenu
+{
+    border: 0px none #ffffff;
+    width: 77% !important;
+    padding: 0;
+    margin: 0;
+}
+.right_menu
+{
+    float: right;
+    height: 25px;
+    width: 30% !important;
+    margin-right: 5px;
+}
+
+.right_menu UL
+{
+    float: right !important;
+}
+
+.right_menu UL .dynamic
+{
+    border: 1px solid #969696;
+}
+
+.topmenu .static, .right_menu .static
+{
+    height: 25px;
+    text-decoration: none;
+    background-color: transparent;
+    color: #ffffff;
+    border: 0px none #ffffff;
+    margin: 0px 12px 0px 3px;
+    cursor: pointer;
+}
+
+.topmenu .static a, .right_menu .static a
+{
+    border: 0px none #ffffff;
+    vertical-align: middle;
+    height: 15px;
+    margin-top: 4px;
+}
+
+.topmenu .icon, .right_menu .icon
+{
+    position: relative;
+    height: 16px;
+    width: 16px;
+}
+
+.topmenu .dynamic li, .right_menu .dynamic li
+{
+    background-color: #eeeeee;
+    border-width: 0px;
+    min-width: 100px;
+    width: auto;
+}
+
+.topmenu .dynamic, .right_menu .dynamic
+{
+    padding: 0;
+    background-color: #ffffff;
+    border-color: #969696;
+    color: #000000;
+}
+
+.topmenu .dynamic a, .right_menu .dynamic a
+{
+    margin-top: 0px !important;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+    border-bottom: 1px solid #CCCCCC;
+    font-weight: normal;
+    height: auto;
+}
+
+
+.dynamic .selected
+{
+    margin-top: 0px !important;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+    border-bottom: 1px solid #CCCCCC;
+    font-weight: normal;
+    height: auto;
+    background-color: #969696;
+    color: #FFFFFF;
+}
+
+.last_menu_item
+{
+    border-right: 0px none #000000 !important;
+    text-align: right;
+}
+
+.last_menu_item ul
+{
+    text-align: left;
+}
+
+.last_submenu_item
+{
+    border-bottom: 0px none #000000 !important;
+}
+
+.topmenu .dynamic a:hover, .right_menu .dynamic a:hover
+{
+    background-color: #D9D9D9 !important;
+    color: #000000;
+}
+
+.static_hover, .topmenu .static a:hover, .right_menu .static a:hover
+{
+}
+
+.dynamic_menu
+{
+    border: 1px solid #4D4D4D;
+}
+
+.menu_remove_clear
+{
+    clear: none !important;
+    display: none;
+}
+
+
+/*End Top Menu */
+
+/* Left Menu 
+===================================================================== */
+
+.dvLeftMenuBorder
+{
+    border-right: 2px solid gray;
+    background-color: Red;
+}
+
+.leftmenubody
+{
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.leftmenu_node, .treeAdmin, .treeAdmin table
+{
+    width: 100%;
+    border: 1px;
+}
+
+.treeAdmin a
+{
+    text-decoration: none;
+    display: block;
+}
+
+.leftMenuHover
+{
+    background-color: #D9D9D9;
+}
+
+.leftMenuHover a
+{
+    color: #ffffff;
+}
+
+.leftMenuActive
+{
+    background-color: #969696;
+}
+
+.leftMenuActive a
+{
+    color: #000000;
+}
+
+.NodeURLs
+{
+    width: 100%;
+    color: #000000;
+}
+/* End Left Menu */
+
+/* Grid : Start */
+
+
+.Grid
+{
+    border: 1px solid #3B466E;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.Grid TD
+{
+    border: 0px none #CCCCCC;
+    padding: 2px;
+    padding-left: 5px;
+}
+
+.Grid TH
+{
+    border: 0px none #CCCCCC;
+    padding: 2px;
+    text-align: center;
+    background-color: #D9D9D9;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.GridHeader
+{
+    border: 0px none #CCCCCC;
+    font-weight: bold;
+    background-color: #D9D9D9;
+    text-align: center;
+}
+
+.GridHeader A
+{
+    font-weight: bold;
+    color: #000000;
+    text-decoration: none;
+}
+
+.GridItem
+{
+    background-color: #ffffff;
+}
+
+.GridAltItem
+{
+    background-color: #E8EAF2;
+}
+
+/* Grid : End */
+
+/* Login Page Styles
+===================================================================== */
+.loginpage
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginheader
+{
+    background-image: url(images/CVLogoSml.JPG);
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 175px;
+    height: 100px;
+}
+
+.loginfooter
+{
+    padding-left: 20px;
+    height: 20px;
+}
+
+.logincontrol
+{
+    float: left;
+    background-image: url(Images/Optimizer.png);
+    background-repeat: no-repeat;
+    background-position: top left;
+    height: 450px;
+    display: block; /*set the div in the center of the screen*/
+    position: relative;
+    width: 900px;
+    margin-left: 3%;
+    margin-right: auto;
+}
+
+
+.logincontrol .txtusername
+{
+    width: 177px;
+    height: 20px;
+    border: 0px none #FFFFFF;
+    float: left;
+    position: absolute;
+    margin: 2px;
+}
+.logincontrol .username
+{
+    position: relative;
+    margin-top: 120px;
+    left: 430px;
+    background-color: #3B466E;
+    border: 0px solid #3B466E;
+    width: 182px;
+    height: 26px;
+    color: #000000;
+}
+.logincontrol .dvpassword
+{
+    position: relative;
+    margin-top: 20px;
+    left: 430px;
+    background-color: #3B466E;
+    border: 0px solid #3B466E;
+    width: 182px;
+    height: 26px;
+}
+
+.logincontrol .dvpassword span
+{
+    height: 20px;
+    background-color: #FFFFFF;
+}
+
+
+.logincontrol .password, .logincontrol .passwordmask
+{
+    width: 177px;
+    height: 20px;
+    border: 0px none #FFFFFF;
+    float: left;
+    position: absolute;
+    margin: 2px;
+}
+
+
+.logincontrol .loginbutton
+{
+    background-color: #FFFFFF;
+    background-image: url(Images/round_right_arrow.png);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    border: 0px;
+    position: relative;
+    left: 155px;
+    height: 22px;
+    width: 24px;
+    margin-top: 2px;
+}
+
+.logincontrol .dvErrorControl
+{
+    margin-top: 20px;
+    margin-left: 160px;
+    width: 150%;
+}
+
+.logincontrol .ErrorDetails
+{
+    margin-top: 20px;
+    margin-left: 160px;
+    width: 150%;
+}
+
+/* End - Login Page Styles*/
+
+/* Footer Control 
+===================================================================== */
+.footer_logo
+{
+    background-image: url(images/CVLogoSml.JPG);
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 175px;
+    height: 40px;
+    float: left;
+}
+
+
+.footer_loggedin_user
+{
+    display: none;
+}
+
+.footertext
+{
+    font-size: 9px;
+    text-align: center;
+    padding-top: 15px;
+}
+/* End Footer Control */
+/*Guidelines view 
+===============================================================================*/
+.altItem
+{
+    background-color: #E8EAF2;
+}
+SPAN.expand
+{
+    font-weight: bold;
+    font-size: 1.2em;
+    cursor: hand;
+    margin-right: 10px;
+}
+
+SPAN.ppm
+{
+    color: blue;
+}
+SPAN.dpm
+{
+    color: red;
+}
+SPAN.constant
+{
+    color: green;
+}
+SPAN.lookup
+{
+    color: Maroon;
+}
+BLOCKQUOTE.message
+{
+    color: brown;
+}
+/*End */
+.SelectedOrg
+{
+    color: Black;
+    font-weight: bold;
+}
+.OrgUnitsCMD input
+{
+    width: 90px;
+}
+.NoTextDecoration a
+{
+    text-decoration: none;
+}
+.InputWithColor
+{
+    background-color: #3c476d;
+    color: white;
+    font-weight: bold;
+}
+.CustomGrid
+{
+    border-collapse: collapse;
+    width: 100%;
+}
+.CustomGridheader th
+{
+    border: 1px solid white;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.CustomGrid .whiteRow
+{
+    background-color: White;
+}
+.CustomGridBody
+{
+    background-color: #EFF0E6;
+}
+.BottomPlaceHolder
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+/******
+=========================Start Calendar control============================================*/
+.cal_calendar
+{
+    padding: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: auto;
+}
+.cal_header
+{
+    background-color: #CCCCCC;
+    padding: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: auto;
+}
+
+.cal_headerEvent
+{
+    background-color: #CCCCCC;
+    padding: 0px;
+    border-collapse: collapse;
+    cursor: hand;
+    text-align: center;
+    font-weight: bold;
+    border: 2px;
+}
+
+.cal_cell
+{
+    padding: 2px;
+    border: 2px;
+    text-align: center;
+    cursor: auto;
+}
+.cal_labelcell
+{
+    padding: 2px;
+    border: 2px;
+    text-align: center;
+    cursor: auto;
+}
+.cal_oddweek
+{
+    background-color: #AAAACC;
+    padding: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: auto;
+}
+.cal_evenweek
+{
+    background-color: #CCCCEE;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: auto;
+}
+.cal_day
+{
+    width: 3ex;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: auto;
+}
+
+.cal_today
+{
+    color: black;
+    font-weight: bold;
+    width: 3ex;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: hand;
+}
+.cal_disabled
+{
+    color: #999999;
+    width: 3ex;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: auto;
+}
+.cal_common
+{
+    color: black;
+    width: 3ex;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: hand;
+}
+.cal_holiday
+{
+    color: red;
+    width: 3ex;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: hand;
+}
+.cal_event
+{
+    background-color: yellow;
+    color: red;
+    width: 3ex;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    border-collapse: collapse;
+    cursor: auto;
+}
+.calTextBox
+{
+    padding: 2px;
+    border: 2px;
+    border-style: groove;
+    text-align: center;
+    cursor: auto;
+}
+
+.calTextBox1
+{
+    padding: 2px;
+    border: 1px;
+    border-style: groove;
+    text-align: center;
+    cursor: auto;
+}
+/*==================End Calendar Control====================================*/
+.npvdataversiontable .label
+{
+    width: 100px;
+}
+
+.npvmodelversiondetails
+{
+    height: 320px;
+    overflow: auto;
+}
+
+div .buttons
+{
+    margin: 10px 0px 10px 0px;
+}
+
+.OrgLinks a:link
+{
+    text-decoration: none;
+    color: Black;
+}
+
+.OrgLinks a:hover
+{
+    color: Gray !important;
+}
+
+
+#dvLoading
+{
+    position: absolute;
+    top: 40px;
+    font-size: 15px !important;
+    color: Green;
+    font-weight: bold;
+    left: 30%;
+    vertical-align: middle;
+}
+
+.PermNodes a:hover
+{
+    color: darkgray;
+}
+
+
+
+.group_permissions
+{
+    border-right: 1px solid;
+    border-top: 1px solid;
+    overflow-x: auto;
+    overflow-y: scroll;
+    border-left: 1px solid;
+    width: 99%;
+    border-bottom: 1px solid;
+    height: 350px;
+    text-align: left;
+}
+
+.group_assetx_static_container
+{
+    text-align: left;
+    width: 220px;
+    background-color: #CCCCCC;
+    vertical-align: top;
+}
+
+.group_assetx_top_container
+{
+    background-color: #CCCCCC;
+    text-align: left;
+    vertical-align: top;
+    width: 100%;
+}
+
+.group_assetx_top_scrollarea
+{
+    overflow: hidden;
+    text-align: left;
+}
+
+.group_assetx_top_header
+{
+    border-collapse: collapse;
+    text-align: left;
+    background-color: #CCCCCC;
+    width: 100%;
+}
+
+.group_assetx_top_header td
+{
+    vertical-align: top;
+    text-align: center;
+}
+.group_assetx_left_container
+{
+    text-align: left;
+    vertical-align: top;
+    width: 220px;
+    background-color: #CCCCCC;
+}
+.group_assetx_left_scrollarea
+{
+    overflow: hidden;
+    width: 100%;
+}
+
+.group_assetx_left_columns
+{
+    text-align: left;
+    background-color: #cccccc;
+    border-collapse: collapse;
+    width: 100%;
+    border-color: #cccccc;
+}
+
+.group_assetx_left_columns td
+{
+    white-space: nowrap;
+}
+
+.group_assetx_left_columns tr, .group_assetx_right_values tr
+{
+    height: 25px;
+}
+
+.group_assetx_right_scrollarea
+{
+    overflow-x: scroll;
+    overflow-y: scroll;
+    text-align: left;
+}
+
+.group_assetx_right_values
+{
+    border-color: #cccccc;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+.group_assetx_right_values td
+{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.group_assetx_static
+{
+    border-collapse: collapse;
+    background-color: #CCCCCC;
+    border-color: #CCCCCC;
+    height: 70px;
+    width: 100%;
+    text-align: left;
+}
+.group_optimizer_rights, .group_assetx_rights, .group_bp_rights
+{
+    width: 100%;
+    table-layout: fixed;
+    text-align: left;
+}
+
+.group_left_part, .group_bp_left_part
+{
+    background-color: #cccccc;
+    text-align: left;
+    vertical-align: top;
+    width: 260px;
+}
+
+.group_left_columns, .group_bp_left_columns
+{
+    text-align: left;
+    background-color: #cccccc;
+    border-collapse: collapse;
+    width: 100%;
+    border-color: #cccccc;
+}
+
+.group_left_columns td
+{
+    white-space: nowrap;
+}
+
+.group_left_columns tr, .group_right_values tr, .group_bp_right_values tr
+{
+    height: 25px;
+}
+
+.group_left_scrollarea, .group_bp_left_scrollarea
+{
+    overflow: hidden;
+    width: 100%;
+}
+
+.group_right_scrollarea, .group_bp_right_scrollarea
+{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    text-align: left;
+}
+
+.group_right_values, .group_bp_right_values
+{
+    border-collapse: collapse;
+    border-color: #cccccc;
+    text-align: left;
+}
+
+.group_right_values td, .group_bp_right_values td
+{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.group_top_part, .group_bp_top_part
+{
+    background-color: #cccccc;
+    text-align: left;
+    vertical-align: top;
+    width: 100%;
+}
+
+.group_top_scrollarea, .group_bp_top_scrollarea
+{
+    overflow: hidden;
+    text-align: left;
+}
+
+.group_top_header, .group_bp_top_header
+{
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #cccccc;
+    text-align: left;
+}
+
+.group_top_header td, .group_bp_top_header td
+{
+    vertical-align: top;
+    text-align: center;
+}
+
+.group_top_static, .group_bp_top_static
+{
+    border-collapse: collapse;
+    height: 70px;
+    border-color: #cccccc;
+    text-align: left;
+    background-color: #cccccc;
+    width: 100%;
+}
+
+.lookup_fields
+{
+    font-weight: bolder;
+    width: 100%;
+    height: 114px;
+    border-width: 0;
+}
+.lookup_scroll_area
+{
+    border: #3B466E 1px solid;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.lookup_scroll_area1
+{
+    border: #3B466E 1px solid;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: 320px;
+}
+
+.lookup_table
+{
+    border: 0px;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+.pwrlookup_scroll_area
+{
+    border: #3B466E 1px solid;
+    overflow: auto;
+    height: 260px;
+}
+
+.pwrlookup_table
+{
+    border: 0px;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+.pwrlkpexp_scroll_area
+{
+    overflow: auto;
+    height: 500px;
+    display: block;
+    border: #3B466E 1px solid;
+}
+
+.pwrlkpexp_scroll_area .Grid
+{
+    border-style: none !important;
+}
+
+.pwrlkpexp_scroll_area .Grid td:first-child
+{
+    width: 30px;
+}
+.pwrlkpexp_scroll_area .Grid td
+{
+    text-align: left !important;
+}
+
+#cover
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    display: none;
+    background-color: #CCCCCC;
+    opacity: .3;
+    filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=.3);
+    overflow: hidden;
+}
+.TaskGrid TD
+{
+    padding-left: 15px;
+}
+
+a.viewlog
+{
+    margin-top: 10px;
+    text-decoration: none;
+    color: #993333;
+}
+
+div.viewlogdetail
+{
+    width: 60%;
+    border: 1px solid #3B466E;
+    margin-top: 10px;
+    padding: 10px 0 10px 5px;
+}
+
+.copybutton
+{
+    width: 60%;
+    margin-top: 10px;
+    text-align:center;
+}

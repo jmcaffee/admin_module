@@ -37,5 +37,36 @@ describe AdminModule::PageFactory do
       end
     end
   end
+
+  context "#guidelines_version_all_page" do
+
+    context "with default ams version" do
+
+      it 'returns GuidelinesVersionAllPage object' do
+        mock_browser
+
+        AdminModule.configure do |config|
+          config.ams_version = "4.4.0"
+        end
+
+        factory = AdminModule::PageFactory.new
+        expect( factory.guidelines_version_all_page(false).class ).to eq AdminModule::Pages::GuidelinesVersionAllPage
+      end
+    end
+
+    context "with ams version < 4.4.0" do
+
+      it 'returns GuidelinesVersionAllPage400 object' do
+        mock_browser
+
+        AdminModule.configure do |config|
+          config.ams_version = "4.0.0"
+        end
+
+        factory = AdminModule::PageFactory.new
+        expect( factory.guidelines_version_all_page(false).class ).to eq AdminModule::Pages::GuidelinesVersionAllPage400
+      end
+    end
+  end
 end
 

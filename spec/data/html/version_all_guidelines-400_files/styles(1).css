@@ -1,0 +1,134 @@
+.cal_calendar 
+{
+	font-size:8pt;
+	font-family:verdana;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+    cursor:auto;
+}
+.cal_header 
+{
+	background-color:#CCCCCC;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+	cursor:auto;
+}
+
+.cal_headerEvent 
+{
+	background-color:#CCCCCC;
+	padding:0px;
+	margin:0px;
+	border-width:2px;
+	border-collapse:collapse;
+	cursor:hand;
+	text-align:center;
+	font-weight:bold;
+	border:2px groove;
+}
+
+.cal_cell 
+{
+	padding:2px;
+	margin:1px;
+	border:2px groove;
+	text-align:center;
+	width:3ex;
+	cursor:auto;
+}
+.cal_labelcell 
+{
+	padding:2px;
+	margin:1px;
+	border:2px groove;
+	text-align:center;
+	font-family:verdana;
+	cursor:auto;
+}
+.cal_oddweek 
+{
+	background-color:#AAAACC;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+	cursor:auto;
+}
+.cal_evenweek 
+{
+	background-color:#CCCCEE;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+	cursor:auto;
+}
+.cal_day 
+{
+	width:3ex;
+	text-align:center;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+	cursor:auto;
+	
+}
+
+.cal_today 
+{
+	color:black;
+	font-weight:bold;
+	width:3ex;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+	cursor:hand;
+}
+.cal_disabled 
+{
+	color:#999999;
+	width:3ex;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+	cursor:auto;
+}
+.cal_common 
+{
+	color:black;
+	width:3ex;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+	cursor:hand;
+
+}
+.cal_holiday 
+{
+	color:red;
+	width:3ex;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+	cursor:hand;
+}
+.cal_event 
+{
+	background-color:yellow;
+	color:red;
+	width:3ex;
+	padding:0px;
+	margin:0px;
+	border:none;
+	border-collapse:collapse;
+	cursor:auto;
+}

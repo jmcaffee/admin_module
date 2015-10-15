@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0070)version_all_guidelines-400_files/admin/decision/guidelines.aspx -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Decision Suite: Guidelines</title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio.NET 7.0">
+		<meta name="CODE_LANGUAGE" content="Visual Basic 7.0">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<link href="./guidelines-400_files/styles.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript">(function MyRedirect() {
+
+    var Browser = {  Version: function()
+    {
+        var version = 999;
+        if (navigator.appVersion.indexOf("MSIE") != -1)
+            version = parseFloat(navigator.appVersion.split("MSIE")[1]);
+            return version;
+        }
+    }
+
+    if (Browser.Version() >= 8) {
+        //document.getElementById("btnLogin").disabled =true;
+        //document.getElementById("btnLogin").style.visibility ='hidden';
+        lblBrowserCheck.innerText ="This browser supported via TM";
+    }
+
+    if(window.parent != null && window.parent.parent != null)
+    {
+        if(window.parent.location.pathname.indexOf('MainFrame.aspx') > 0)
+        {
+            window.parent.parent.location.href = "AppLogin.aspx";
+        }
+    }
+})()</script></head>
+	<body>
+		
+<link type="text/css" rel="stylesheet" href="./guidelines-400_files/styles2.css">
+
+<table width="100%" cellpadding="0" cellspacing="0" id="tblLogos" style="display:block;visibility:visible">
+	<tbody><tr>
+		<td class="tdimage">
+			
+		</td>
+		<td valign="top" style="background-image: url(/VericrestDev/Admin/theme//img/Investor_01.gif);
+				width: 763px; background-repeat: no-repeat; height: 85px" align="right" id="tdBanner">
+			&nbsp;</td>
+		<td valign="bottom" style="background-image: url(/VericrestDev/Admin/theme//img/untitled.bmp);
+				height: 85px; background-repeat: repeat-x; background-position: top" align="center">
+			<img id="pageHeader_Image1" src="./guidelines-400_files/OptimalOutcome.png" style="border-width:0px;">
+		</td>
+	</tr>
+</tbody></table>
+
+		
+<link id="lnkStyle" type="text/css" rel="stylesheet" href="./guidelines-400_files/menu.css">
+<script language="javascript" src="./guidelines-400_files/menu.js"></script>
+
+<div class="menu" style="position:relative;">&nbsp;
+	<span>		
+		<a id="pageMenu_lnkAdmin" onmouseover="showMenu(&#39;divAdmin&#39;, this);" href="version_all_guidelines-400_files/" target="_top">Administration</a>
+	</span>
+	<span style="position:absolute; top:0.4em; right:2em;">
+		<a target="_top" href="version_all_guidelines-400_files/default.aspx">Home</a>
+		| <a id="pageMenu_lnkUser" onmouseover="showMenu(&#39;divUser&#39;, this);" href="version_all_guidelines-400_files/user/" target="_top">User</a>
+	</span>
+</div>
+<img id="pageMenu_Image1" src="./guidelines-400_files/shadow.gif" style="height:18px;width:100%;border-width:0px;WIDTH:100%; POSITION:absolute;">
+<div id="divClear" onmouseout="return clearMenus(this);" style="WIDTH:100%; POSITION:absolute; HEIGHT:2em;">
+	<div id="tblApplication" class="subMenu">
+		
+		
+		
+	</div>	
+	<div id="divAdmin" class="subMenu">
+		<a id="pageMenu_lnkSecurity" href="version_all_guidelines-400_files/admin/security/" target="_top">Security Setup</a>
+		|
+		<a id="pageMenu_lnkDecision" href="version_all_guidelines-400_files/admin/decision/" target="_top">Decision Setup</a>
+		|
+		<a id="pageMenu_lnkProduct" href="version_all_guidelines-400_files/admin/product/" target="_top">Product Setup</a>
+		
+		
+		
+		
+	
+		
+	</div>
+	<div id="divReports" class="subMenu">
+		<a id="pageMenu_lnkReportsLeads" href="version_all_guidelines-400_files/reports/leads/" target="_top">Lead Management |</a>
+		<a id="pageMenu_lnkReportsWorkList" href="version_all_guidelines-400_files/default.aspx" target="_top">Work List</a>
+	</div>	
+	<div id="divUser" class="subMenu" align="right" style="right:0">
+		<a id="pageMenu_lnkPassword" href="version_all_guidelines-400_files/user/password.aspx" target="_top">Password</a>
+		|
+		<a id="pageMenu_lnkPreferences" href="version_all_guidelines-400_files/theme/default.aspx" target="_top">Preferences</a>
+		|<a id="pageMenu_lnkLogout" href="version_all_guidelines-400_files/user/logout.aspx" target="_top"> Log Out</a>
+	</div>
+</div>
+
+		<form name="Form1" method="post" action="./guidelines-400_files/guidelines-400.html" onsubmit="javascript:return WebForm_OnSubmit();" id="Form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE1NjQ4MTMxMTcPZBYGAgMPZBYWZg8VAiIvVmVyaWNyZXN0RGV2L0FkbWluL3RoZW1lL21lbnUuY3NzIS9WZXJpY3Jlc3REZXYvQWRtaW4vdGhlbWUvbWVudS5qc2QCAg8VASAvVmVyaWNyZXN0RGV2L0FkbWluL2RlZmF1bHQuYXNweGQCBQ8PFgIeB1Zpc2libGVoZGQCBg8WAh8AaGQCBw8PFgIfAGhkZAINDxYCHwBoZAIODw8WAh8AaGRkAg8PFgIfAGhkAhAPDxYCHwBoZGQCEQ8WAh8AaGQCEg8PFgIfAGhkZAIFD2QWBAIBD2QWDAIBDw8WAh8AZ2QWBgIBDxBkDxYCZgIBFgIQBQNBbGwFA2FsbGcQBQpHdWlkZWxpbmVzBQpHdWlkZWxpbmVzZ2RkAgUPFgIeB29uY2xpY2sFCVNlYXJjaCgpO2QCBw8WAh8BBRJDbGVhclNlYXJjaCh0cnVlKTtkAgMPFgIeBFRleHQFEFNldHVwIEd1aWRlbGluZXNkAgUPEA8WCh4GSGVpZ2h0GwAAAAAAwGJAAQAAAB4NRGF0YVRleHRGaWVsZAUIR0RMX05BTUUeDkRhdGFWYWx1ZUZpZWxkBQZHRExfSUQeC18hRGF0YUJvdW5kZx4EXyFTQgKAARYCHgpvbmRibGNsaWNrBRhyZXR1cm4gTW9kaWZ5U2VsZWN0ZWQoKTsQFTwWX0FNUyBQcm9ncmFtIEd1aWRlbGluZRpfQ3JlZGl0IFdvcmtmbG93IEd1aWRlbGluZStfRkhMTUNGTk1BIENhcCBhbmQgRXh0ZW5kIFByb2dyYW0gR3VpZGVsaW5lMV9GSExNQ0ZOTUEgRGlzYXN0ZXIgRm9yYmVhcmFuY2UgUHJvZ3JhbSBHdWlkZWxpbmUoX0ZITE1DRk5NQSBGb3JiZWFyYW5jZSBQcm9ncmFtIEd1aWRlbGluZSFfRkhMTUNGTk1BIEhBTVAgUHJvZ3JhbSBHdWlkZWxpbmUuX0ZITE1DRk5NQSBMb2FuIE1vZGlmaWNhdGlvbiBQcm9ncmFtIEd1aWRlbGluZSVfRkhMTUNGTk1BIFBpcGVsaW5lIFNlcnZpY2UgR3VpZGVsaW5lMl9GSExNQ0ZOTUEgVW5lbXBsb3ltZW50IEZvcmJlYXJhbmNlIFByb2dyYW0gR3VpZGVsH19GSExNQ0ZOTUEgVmFsaWRhdGlvbiBHdWlkZWxpbmUnX0ZOTUEgSFNTTiBQcmUgRXZlbnQgV29ya2Zsb3cgR3VpZGVsaW5lHl9Gb3JnaXZlbmVzcyBQcm9ncmFtIEd1aWRlbGluZRdfSEFNUCBQcm9ncmFtIEd1aWRlbGluZRdfSEFVUCBQcm9ncmFtIEd1aWRlbGluZSBfSW50ZXJlc3QgT25seSBQcm9ncmFtIEd1aWRlbGluZRxfUG9zdCBNb2QgVGVybSBWYWxpZGF0aW9uIEdMH19TaG9ydFRlcm1Nb2QgUHJvZ3JhbSBHdWlkZWxpbmUWX1NTTSBQcm9ncmFtIEd1aWRlbGluZRtfU3RlcCBNb2QgUHJvZ3JhbSBHdWlkZWxpbmUeX1dGIEF1dG9tYXRpYyBTdGFnZSBUcmFuc2l0aW9uEV9XRiBDaGVjayBGQiBUZXJtHF9XRiBDaGVja2luZyBPcGVuIENvbmRpdGlvbnMXX1dGIENoZWNraW5nIE9wZW4gVGFza3MiX1dGIEZIQSBBdXRvbWF0aWMgU3RhZ2UgVHJhbnNpdGlvbiBfV0YgRkhBIENoZWNraW5nIE9wZW4gQ29uZGl0aW9ucxtfV0YgRkhBIENoZWNraW5nIE9wZW4gVGFza3MWX1dGIEdMIExvY2sgVFBQIFZhbHVlcx9fV0YgR0wgVW5sb2NrIE1UTUxUViBUUFAgVmFsdWVzGF9XRiBHTCBVbmxvY2sgVFBQIFZhbHVlcxdfV0YgUG9zdCBNb2QgVGVybSBDaGVjayNfV0YgVVNEQSBBdXRvbWF0aWMgU3RhZ2UgVHJhbnNpdGlvbiFfV0YgVVNEQSBDaGVja2luZyBPcGVuIENvbmRpdGlvbnMcX1dGIFVTREEgQ2hlY2tpbmcgT3BlbiBUYXNrcyFfV0YgVkEgQXV0b21hdGljIFN0YWdlIFRyYW5zaXRpb24fX1dGIFZBIENoZWNraW5nIE9wZW4gQ29uZGl0aW9ucxpfV0YgVkEgQ2hlY2tpbmcgT3BlbiBUYXNrcx9CYXRjaCBGbG93IFZhbGlkYXRpb24gR3VpZGVsaW5lJUNPUFkgRkhMTUMgU3RhbmRhcmQgTG9hbiBNb2RpZmljYXRpb24LRkFLX1Rlc3RfR0wQRkhBIEZvcm1hbCBGQiBHTAhGSEEgSEFNUA9GSEEgTG9hbiBNb2QgR0wRRkhBIFNwZWNpYWwgRkIgR0wlSEFNUCBDZXJ0aWZpY2F0aW9uIFBpcGVsaW5lIEd1aWRlbGluZSJIQU1QIE5vbiBIQU1QIFZhbGlkYXRpb24gR3VpZGVsaW5lCUhBTVAgVGllch1Ob24gSEFNUCBWYWxpZGF0aW9uIEd1aWRlbGluZSNPcGVuIFRhc2tzIENoZWNrIFdvcmtmbG93IEd1aWRlbGluZRJQaXBlbGluZSBHdWlkZWxpbmUEVGVtcAd0ZXN0IEdMHFVTREEgRXh0ZW5kZWQgTW9kIFByb2dyYW0gR0waVVNEQSBTcGVjaWFsIEZCIFByb2dyYW0gR0wdVVNEQSBTcGVjaWFsIEZCIFVQIFByb2dyYW0gR0wXVVNEQSBTdGQgTW9kIFByb2dyYW0gR0wSVkEgSEFNUCBQcm9ncmFtIEdMFlZBIExvYW4gTW9kIFByb2dyYW0gR0wYVkEgU3BlY2lhbCBGQiBQcm9ncmFtIEdMMlpDb3B5IG9mIEZITE1DIFVuZW1wbG95bWVudCBGb3JiZWFyYW5jZSBQcm9ncmFtIEd1JFpaWlpBIFNob3J0VGVybU1vZCBQcm9ncmFtIEd1aWRlbGluZRU8AjE4AjM1AjgxAjgwAjQyAjQwAjM3AjQzAjM5AjM4AjQ5AjMzAjIxAjI3AjMyAjc5AjI1AjUxAjU2AjQ0AjQ3AjQ2AjQ1AjU4AjU5AjYwAjYyAjc4AjYxAjc3AjczAjc0Ajc1AjYzAjY0AjY1ATkCNDgCODICNTICNTcCNTQCNTMCMjQCMjICMzYCMTACMzACMzQCMTkCNzYCNzICNjkCNzACNzECNjYCNjcCNjgCNDECODMUKwM8Z2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZGQCCw8PZBYCHwEFF3JldHVybiBEZWxldGVDb25maXJtKCk7ZAIPDw8WAh8AaGRkAhMPZBYGAgMPD2QWAh8BBRZyZXR1cm4gc2VhcmNoKCdjdXJyJyk7ZAIFDw9kFgIfAQUWcmV0dXJuIHNlYXJjaCgnbmV4dCcpO2QCBw8PZBYCHwEFFnJldHVybiBzZWFyY2goJ3ByZXYnKTtkAgcPZBYSZg8PFgIeC05hdmlnYXRlVXJsBRF+L2FkbWluL2RlY2lzaW9uL2RkAgIPDxYCHwkFIH4vYWRtaW4vZGVjaXNpb24vcGFyYW1ldGVycy5hc3B4ZGQCBA8PFgIfCQUgfi9hZG1pbi9kZWNpc2lvbi9jb25kaXRpb25zLmFzcHhkZAIGDw8WAh8JBR1+L2FkbWluL2RlY2lzaW9uL2xvb2t1cHMuYXNweGRkAggPDxYCHwkFIn4vYWRtaW4vZGVjaXNpb24vcG93ZXJsb29rdXBzLmFzcHhkZAIKDw8WAh8JBR9+L2FkbWluL2RlY2lzaW9uL0RCTG9va3Vwcy5hc3B4ZGQCDA8PFgIfCQUbfi9hZG1pbi9kZWNpc2lvbi9ydWxlcy5hc3B4ZGQCDg8PFgIfCQUefi9hZG1pbi9kZWNpc2lvbi9ydWxlc2V0cy5hc3B4ZGQCEA8PFgYfCWUeCUZvbnRfQm9sZGcfBwKAEGRkAgcPZBYGZg8WAh4FU3R5bGUFamRpc3BsYXk6YmxvY2s7dmlzaWJpbGl0eTp2aXNpYmxlO1BBRERJTkctUklHSFQ6NXB4OyBQQURESU5HLUxFRlQ6NXB4OyBQQURESU5HLUJPVFRPTTo1cHg7IFBBRERJTkctVE9QOjVweDsWAmYPFQIYQ2FsaWJlciBIb21lIExvYW5zLCBJbmMuCkFkbWluIFVzZXJkAgEPFQczZGlzcGxheTpibG9jazt2aXNpYmlsaXR5OnZpc2libGU7Rk9OVC1TSVpFOnh4LXNtYWxsM2Rpc3BsYXk6YmxvY2s7dmlzaWJpbGl0eTp2aXNpYmxlO0ZPTlQtU0laRTp4eC1zbWFsbBNDUUFkbWluIFI0LjAuMC4xMTEyIi9WZXJpY3Jlc3REZXYvQWRtaW4vVXNlcm1hbnVhbC5wZGYiL1ZlcmljcmVzdERldi9BZG1pbi9Vc2VybWFudWFsLnBkZiYvVmVyaWNyZXN0RGV2L0FkbWluL2hlbHAvc2VjdXJpdHkuaHRtbCYvVmVyaWNyZXN0RGV2L0FkbWluL2hlbHAvc2VjdXJpdHkuaHRtbGQCAg8PFgIeCEltYWdlVXJsBSgvVmVyaWNyZXN0RGV2L0FkbWluL3RoZW1lL2ltZy9DVmxvZ28uanBnZGRk7vBMFtbXJriD3A0VHMgNuJpcAID/JUxZKXfFqwJ0QUA=">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="./guidelines-400_files/WebResource.axd" type="text/javascript"></script>
+
+<script language="javascript">function ModifySelected() {try { document.getElementById('ctlGuidelines_btnModify').click();} catch(e) { return false; }return true; } </script><script src="./guidelines-400_files/EditListSearchHelper.js"></script><script language="javascript">function search(pos){var searchValue;var searchLength;var i,j;var count;var found=false;searchValue=document.getElementById('ctlGuidelines_txtSearch1').value.trim();searchLength=searchValue.length;var objRef = document.getElementById('ctlGuidelines_lstItems');count=objRef.options.length-1;val=objRef.options.selectedIndex;if(document.getElementById('ctlGuidelines_txtSearch1').value.length == 0) {alert('Please enter some valid text.');return false;}for(i=0;i<=count;i++){objRef.options[i].selected=false;}if(val>count){	val = count;}if(val<0){ val = 0;}if(pos=='curr')val=0;if(pos=='next') val++;if(pos=='prev')	{ val--;}if(pos=='curr' || pos=='next'){for(i=val;i<=count;i++){var idx=objRef.options[i].text.indexOf(','); var fstName=objRef.options[i].text.substring(0,idx).toUpperCase();var lstName=objRef.options[i].text.substring(idx+1,objRef.options[i].text.length).toUpperCase(); if(fstName.match(searchValue.toUpperCase())||lstName.match(searchValue.toUpperCase())){	objRef.options[i].selected=true;found=true; break;	}}}if(pos=='prev'){for(i=val;i>=0;i--){var idx=objRef.options[i].text.indexOf(','); var fstName=objRef.options[i].text.substring(0,idx).toUpperCase();var lstName=objRef.options[i].text.substring(idx+1,objRef.options[i].text.length).toUpperCase();if(fstName.match(searchValue.toUpperCase())||lstName.match(searchValue.toUpperCase())){	objRef.options[i].selected=true;found=true; break;	}}}if(!found){alert('Search not found.');}return false;}function HideSearch(){if(document.getElementById('ctlGuidelines_pnlSearch1')!= null){document.getElementById('ctlGuidelines_pnlSearch1').style.visibility= "hidden";}}String.prototype.trim = function(){var x=this;x=x.replace(/^\s*(.*)/, "$1");x=x.replace(/(.*?)\s*$/, "$1");return x;}</script><script language="javascript">function DeleteConfirm() {Page_ClientValidate(); if (Page_IsValid == false) return false;var lst = document.getElementById('ctlGuidelines_lstItems');var nIndex = lst.selectedIndex; if (nIndex >= 0){var strSelectedItem = lst.options(nIndex).text; var strMsg = 'Are you sure you want to delete "'+ strSelectedItem  + '"?';return confirm(strMsg);}} </script>
+<script src="./guidelines-400_files/WebResource(1).axd" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+			<h1>Guidelines</h1>
+			
+			<p>
+<table class="input">
+	<tbody><tr>
+		<td colspan="2"><div id="ctlGuidelines_pnlSearch">
+	
+<select name="ctlGuidelines$ddlSearchItem" id="ctlGuidelines_ddlSearchItem">
+		<option value="all">All</option>
+		<option selected="selected" value="Guidelines">Guidelines</option>
+
+	</select>&nbsp;&nbsp; 
+<input name="ctlGuidelines$txtSearch" type="text" maxlength="50" id="ctlGuidelines_txtSearch" style="width:150px;">&nbsp;&nbsp; 
+<input name="ctlGuidelines$cmdSearch" type="button" id="ctlGuidelines_cmdSearch" class="button" value="Search" onclick="Search();">&nbsp; 
+<input name="ctlGuidelines$cmdReset" type="button" id="ctlGuidelines_cmdReset" class="button" value="Reset" onclick="ClearSearch(true);"> 
+      
+</div></td>
+	</tr>
+	<tr>
+		<td class="header" align="center" colspan="2">Setup Guidelines</td>
+	</tr>
+	<tr>
+		<td class="tdimage"><select size="4" name="ctlGuidelines$lstItems" id="ctlGuidelines_lstItems" ondblclick="return ModifySelected();" style="height:150px;width:360px;">
+	<option value="18">_AMS Program Guideline</option>
+	<option value="35">_Credit Workflow Guideline</option>
+	<option value="81">_FHLMCFNMA Cap and Extend Program Guideline</option>
+	<option value="80">_FHLMCFNMA Disaster Forbearance Program Guideline</option>
+	<option value="42">_FHLMCFNMA Forbearance Program Guideline</option>
+	<option value="40">_FHLMCFNMA HAMP Program Guideline</option>
+	<option value="37">_FHLMCFNMA Loan Modification Program Guideline</option>
+	<option value="43">_FHLMCFNMA Pipeline Service Guideline</option>
+	<option value="39">_FHLMCFNMA Unemployment Forbearance Program Guidel</option>
+	<option value="38">_FHLMCFNMA Validation Guideline</option>
+	<option value="49">_FNMA HSSN Pre Event Workflow Guideline</option>
+	<option value="33">_Forgiveness Program Guideline</option>
+	<option value="21">_HAMP Program Guideline</option>
+	<option value="27">_HAUP Program Guideline</option>
+	<option value="32">_Interest Only Program Guideline</option>
+	<option value="79">_Post Mod Term Validation GL</option>
+	<option value="25">_ShortTermMod Program Guideline</option>
+	<option value="51">_SSM Program Guideline</option>
+	<option value="56">_Step Mod Program Guideline</option>
+	<option value="44">_WF Automatic Stage Transition</option>
+	<option value="47">_WF Check FB Term</option>
+	<option value="46">_WF Checking Open Conditions</option>
+	<option value="45">_WF Checking Open Tasks</option>
+	<option value="58">_WF FHA Automatic Stage Transition</option>
+	<option value="59">_WF FHA Checking Open Conditions</option>
+	<option value="60">_WF FHA Checking Open Tasks</option>
+	<option value="62">_WF GL Lock TPP Values</option>
+	<option value="78">_WF GL Unlock MTMLTV TPP Values</option>
+	<option value="61">_WF GL Unlock TPP Values</option>
+	<option value="77">_WF Post Mod Term Check</option>
+	<option value="73">_WF USDA Automatic Stage Transition</option>
+	<option value="74">_WF USDA Checking Open Conditions</option>
+	<option value="75">_WF USDA Checking Open Tasks</option>
+	<option value="63">_WF VA Automatic Stage Transition</option>
+	<option value="64">_WF VA Checking Open Conditions</option>
+	<option value="65">_WF VA Checking Open Tasks</option>
+	<option value="9">Batch Flow Validation Guideline</option>
+	<option value="48">COPY FHLMC Standard Loan Modification</option>
+	<option value="82">FAK_Test_GL</option>
+	<option value="52">FHA Formal FB GL</option>
+	<option value="57">FHA HAMP</option>
+	<option value="54">FHA Loan Mod GL</option>
+	<option value="53">FHA Special FB GL</option>
+	<option value="24">HAMP Certification Pipeline Guideline</option>
+	<option value="22">HAMP Non HAMP Validation Guideline</option>
+	<option value="36">HAMP Tier</option>
+	<option value="10">Non HAMP Validation Guideline</option>
+	<option value="30">Open Tasks Check Workflow Guideline</option>
+	<option value="34">Pipeline Guideline</option>
+	<option value="19">Temp</option>
+	<option value="76">test GL</option>
+	<option value="72">USDA Extended Mod Program GL</option>
+	<option value="69">USDA Special FB Program GL</option>
+	<option value="70">USDA Special FB UP Program GL</option>
+	<option value="71">USDA Std Mod Program GL</option>
+	<option value="66">VA HAMP Program GL</option>
+	<option value="67">VA Loan Mod Program GL</option>
+	<option value="68">VA Special FB Program GL</option>
+	<option value="41">ZCopy of FHLMC Unemployment Forbearance Program Gu</option>
+	<option value="83">ZZZZA ShortTermMod Program Guideline</option>
+
+</select></td>
+		<td class="tdimage">
+			<p><input type="submit" name="ctlGuidelines$btnAdd" value="Add" id="ctlGuidelines_btnAdd" class="button"></p>
+			<p><input type="submit" name="ctlGuidelines$btnModify" value="Modify" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctlGuidelines$btnModify&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="ctlGuidelines_btnModify" class="button"></p>
+			<p><input type="submit" name="ctlGuidelines$btnDelete" value="Delete" onclick="return DeleteConfirm();" id="ctlGuidelines_btnDelete" class="button"></p>
+			<p></p>
+			<p></p>
+			<p></p><p><input type="submit" name="ctlGuidelines$ctl01" value="Save As..." onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctlGuidelines$ctl01&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" class="button"></p><p><input type="submit" name="ctlGuidelines$ctl03" value="Version All" class="button"></p><p></p>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+</tbody></table>
+<span id="ctlGuidelines_rfvItem" class="error" style="color:Red;display:none;">
+		Please select an item from the list to edit.
+	</span>
+</p>
+			
+			<div id="ctlErrors_vsmErrors" class="error" style="color:Red;display:none;">
+
+</div>
+
+<p>
+			<a id="ctlLinks_lnkDecision" href="version_all_guidelines-400_files/admin/decision/">Decision Setup</a>
+|
+<a id="ctlLinks_lnkParameters" href="version_all_guidelines-400_files/admin/decision/parameters.aspx">Parameters</a>
+|
+<a id="ctlLinks_lnkConditions" href="version_all_guidelines-400_files/admin/decision/conditions.aspx">Conditions</a>
+|
+<a id="ctlLinks_lnkLookups" href="version_all_guidelines-400_files/admin/decision/lookups.aspx">Lookups</a>|
+<a id="ctlLinks_lnkPowerLookups" href="version_all_guidelines-400_files/admin/decision/powerlookups.aspx">Power Lookups</a>
+|
+<a id="ctlLinks_lnkDBLookups" href="version_all_guidelines-400_files/admin/decision/DBLookups.aspx">DB Lookups</a>
+|
+<a id="ctlLinks_lnkRules" href="version_all_guidelines-400_files/admin/decision/rules.aspx">Rules</a>
+|
+<a id="ctlLinks_lnkRulesets" href="version_all_guidelines-400_files/admin/decision/rulesets.aspx">Rulesets</a>
+|
+<a id="ctlLinks_lnkGuidelines" style="font-weight:bold;">Guidelines</a>
+|
+<a id="ctlLinks_lnkCompFactors" href="version_all_guidelines-400_files/admin/decision/compfactors.aspx">Compensating Factors</a>
+|
+<a id="ctlLinks_lnkRuleManager" href="version_all_guidelines-400_files/admin/decision/rulemanager/index.aspx">Rule Manager</a>
+|
+<a id="ctlLinks_lnkNPVVersion" href="version_all_guidelines-400_files/admin/decision/npv/NPVVersion.aspx">NPV Version</a>
+		
+<script type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("ctlErrors_vsmErrors"));
+var Page_Validators =  new Array(document.getElementById("ctlGuidelines_rfvItem"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var ctlGuidelines_rfvItem = document.all ? document.all["ctlGuidelines_rfvItem"] : document.getElementById("ctlGuidelines_rfvItem");
+ctlGuidelines_rfvItem.controltovalidate = "ctlGuidelines_lstItems";
+ctlGuidelines_rfvItem.display = "Dynamic";
+ctlGuidelines_rfvItem.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctlGuidelines_rfvItem.initialvalue = "";
+var ctlErrors_vsmErrors = document.all ? document.all["ctlErrors_vsmErrors"] : document.getElementById("ctlErrors_vsmErrors");
+ctlErrors_vsmErrors.headertext = "Please correct the following errors before continuing.";
+ctlErrors_vsmErrors.showmessagebox = "True";
+ctlErrors_vsmErrors.showsummary = "False";
+//]]>
+</script>
+
+<script language="javascript">CreateSearchParams('ctlGuidelines_ddlSearchItem','ctlGuidelines_txtSearch','ctlGuidelines_lstItems','');</script>
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        //]]>
+</script>
+</p></form>
+		<div id="pageFooter_divUser" class="footer" align="right" style="display:block;visibility:visible;PADDING-RIGHT:5px; PADDING-LEFT:5px; PADDING-BOTTOM:5px; PADDING-TOP:5px;">
+	<nobr><b>
+			Client, Inc.
+			:</b>
+		Admin User
+	</nobr>
+</div>
+<table width="100%" style="display:block;visibility:visible;FONT-SIZE:xx-small">
+	<tbody><tr>
+		<td class="tdimage">
+			<div style="display:block;visibility:visible;FONT-SIZE:xx-small">
+			<!--Issue 3900: changed by Shakil oncontexmenu event added in the <a> tag for privacy and security policy-->
+				<nobr>
+					CQAdmin R4.0.0.1112 &nbsp; (<a href="version_all_guidelines-400_files/Usermanual.pdf" onclick="JavaScript:openPolicy(&#39;/VericrestDev/Admin/Usermanual.pdf&#39;);return false;" style="FONT-SIZE:xx-small">User Manual</a>)&nbsp;
+					This web site is restricted to authorized personnel only. </nobr><nobr><a href="version_all_guidelines-400_files/help/security.html" onclick="JavaScript:openPolicy(&#39;/VericrestDev/Admin/help/security.html&#39;);return false;" style="FONT-SIZE:xx-small">
+					Please read our policies on Privacy &amp; Security. </a></nobr>
+					 
+			</div>
+		</td>
+		<td align="right">
+			<a href="http://www.cvelocity.com/" target="_blank" style="TEXT-DECORATION: none">
+				<img id="pageFooter_imgCQLogo" src="./guidelines-400_files/CVlogo.jpg" style="border-width:0px;"></a>
+		</td>
+	</tr>
+</tbody></table>
+<script language="javascript">
+	
+	function openPolicy(url) {
+		var w = 480, h = 340;
+		if (document.all || document.layers) {
+			w = screen.availWidth;
+			h = screen.availHeight;
+		}
+
+		var popW = 600, popH = 350;
+		var leftPos = (w-popW)/2, topPos = (h-popH)/2;
+	
+		policyWin = window.open(url,'cq_policy','width=' + popW + ',height=' + popH + ',top=' + topPos + ',left=' + leftPos + ',toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');
+		policyWin.focus();
+	}
+	function OpenUserManual()
+     {
+        //Need to implement the Correspondent Manual.pdf
+        var strURL = '~\UserManual.pdf'
+        var w = 480, h = 340;
+		if (document.all || document.layers) {
+			w = screen.availWidth;
+			h = screen.availHeight;
+		}
+
+		var popW = 600, popH = 350;
+		var leftPos = (w-popW)/2, topPos = (h-popH)/2;
+        policyWin = window.open(strURL,'UserManual','width=' + popW + ',height=' + popH + ',top=' + topPos + ',left=' + leftPos + ',toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');
+		policyWin.focus();
+        
+     }
+</script>
+
+	
+
+</body></html>

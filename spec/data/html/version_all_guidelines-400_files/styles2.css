@@ -1,0 +1,115 @@
+/* 
+Theme 2: Orange, Green, and Grey 
+Dark Color 1 - FF9900
+Dark Color 2 - 006600
+Light Color 1 - FFFF99
+Light Color 2 - 99CC99
+*/
+
+H1, H2, H3, H4, H5
+{
+    color: #FFaa22;
+}
+
+A	
+{
+	color:	#006600;
+}	
+
+		
+A:visited
+{	
+	color:	#666666;
+}
+
+.menu A, .menu A:visited
+{
+	color:Black;
+}
+
+.subMenu, .subMenu A, .subMenu A:visited
+{
+	background-color:Gray;
+	color:White;
+	cursor:hand;
+}
+
+TR.header TD A, TR.header TD A:visited
+{
+	color:Black;
+	text-decoration:underline;
+}
+
+
+BUTTON, .button, .menu, .menuHover, .header, .hyperLinkButton
+{
+    background-color: #FFaa22;
+}
+
+INPUT.InputWithColor
+{
+	background-color: #FFaa22;
+	font-weight:bold;
+}
+TR.subHeader TD
+{
+	background-color:#FFaa22;
+	font-weight:bold;
+}
+DIV.subText
+{
+	color:Green;
+}
+DIV.insideText
+{
+	color:FF9900;
+}
+
+.input 
+{ 
+	background-color: #cccccc;
+}
+
+.content
+{
+	background-color: #FFFF99;
+}
+
+.footer 
+{
+	background-color: #006600;
+	color: #FFFFFF; 
+}
+.listItem 
+{ 
+	background-color: White ;
+}
+.altItem 
+{
+	background-color: #DDDDDD;
+}
+
+.dynamic-tab-pane-control .tab-row .tab {
+	background: #DDDDDD;
+}
+
+.dynamic-tab-pane-control .tab-row .tab.hover {
+	background:	#FFAA22;
+}
+td.decsummary
+{
+	color: #FFaa22;
+}
+.hyperLinkButton:link, .hyperLinkButton:Normal, .hyperLinkButton:Active, .hyperLinkButton:Visited, .hyperLinkButton:Hover
+{	
+	border: black 1px solid;
+	font-weight: bold;
+	width: 8em;
+	cursor: hand;
+	height: 1.8em;
+	margin-right: 1em;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	padding: 2px;
+}

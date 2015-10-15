@@ -20,9 +20,12 @@ module AdminModule
       AdminModule.configuration.ams_version
     end
 
-    def login_page(goto_page = true)
+    def running_older_version?
+      Gem::Version.new(ams_version) < Gem::Version.new(default_ams_version)
+    end
 
-      case Gem::Version.new(ams_version) < Gem::Version.new(default_ams_version)
+    def login_page(goto_page = true)
+      case running_older_version?
       when true
         return Pages::LoginPage400.new(browser, goto_page)
       else
@@ -30,8 +33,32 @@ module AdminModule
       end
     end
 
+    def guidelines_version_all_page(goto_page = true)
+      case running_older_version?
+      when true
+        return Pages::GuidelinesVersionAllPage400.new(browser, goto_page)
+      else
+        return Pages::GuidelinesVersionAllPage.new(browser, goto_page)
+      end
+    end
+
+
     def guidelines_page(goto_page = true)
-      return Pages::GuidelinesPage.new(browser, goto_page)
+      case running_older_version?
+      when true
+        return Pages::GuidelinesPage400.new(browser, goto_page)
+      else
+        return Pages::GuidelinesPage.new(browser, goto_page)
+      end
+    end
+
+    def guideline_page(goto_page = false)
+      case running_older_version?
+      when true
+        return Pages::GuidelinePage400.new(browser, goto_page)
+      else
+        return Pages::GuidelinePage.new(browser, goto_page)
+      end
     end
 
     def rulesets_page(goto_page = true)

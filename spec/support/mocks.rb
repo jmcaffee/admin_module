@@ -1,5 +1,6 @@
 
 def mock_watir_browser
+  puts "MOCKING BROWSER"
   # Mock the driver to prevent the browser from opening.
   # Swiped from https://searchcode.com/codesearch/view/74054921/
   allow_any_instance_of(Selenium::WebDriver::Driver).to receive(:===).and_return(true)
@@ -22,6 +23,7 @@ class HardBrowserMock; end
 #
 
 def mock_browser_at_creation mock_browser = nil
+  puts "MOCKING BROWSER"
   if mock_browser.nil?
     allow_any_instance_of(AdminModule::Pages).to receive(:browser).and_return(HardBrowserMock.new)
   else

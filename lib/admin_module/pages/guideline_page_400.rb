@@ -1,14 +1,14 @@
 ##############################################################################
-# File::    guideline_page.rb
+# File::    guideline_page_400.rb
 # Purpose:: Guideline page for AdminModule
 #
-# Author::    Jeff McAffee 11/15/2013
+# Author::    Jeff McAffee 2015-10-08
 #
 ##############################################################################
 require 'page-object'
 
 module AdminModule::Pages
-  class GuidelinePage
+  class GuidelinePage400
     include PageObject
 
     #page_url(:get_dynamic_url)
@@ -29,7 +29,6 @@ module AdminModule::Pages
 
       # Return the next page object.
       AdminModule::ConfigHelper.page_factory.guideline_version_page(false)
-      #GuidelineVersionPage.new(@browser, false)
     end
   end
 end # module Pages

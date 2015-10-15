@@ -12,8 +12,11 @@ require 'admin_module/pages/select_list_syncable'
 require 'admin_module/pages/login_page'
 require 'admin_module/pages/login_page_400'
 require 'admin_module/pages/guidelines_page'
+require 'admin_module/pages/guidelines_page_400'
 require 'admin_module/pages/guidelines_version_all_page'
+require 'admin_module/pages/guidelines_version_all_page_400'
 require 'admin_module/pages/guideline_page'
+require 'admin_module/pages/guideline_page_400'
 require 'admin_module/pages/guideline_version_page'
 require 'admin_module/pages/lock_definitions_page'
 require 'admin_module/pages/lock_definition_page'
@@ -106,7 +109,7 @@ private
     # disable-translate:          Allows disabling of translate from the command line to assist with automated browser testing
     # no-first-run:               Skip First Run tasks, whether or not it's actually the First Run.
     # log-level:                  Sets the minimum log level. Valid values are from 0 to 3: INFO = 0, WARNING = 1, LOG_ERROR = 2, LOG_FATAL = 3.
-    switches = %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --no-first-run --log-level=3]
+    switches = %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate --no-first-run --log-level=0]
     switches << "--user-data-dir=#{user_data_dir}"
 
     proxy_port = ENV['BROWSER_PROXY_PORT']

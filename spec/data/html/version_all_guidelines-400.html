@@ -1,0 +1,702 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0079)Admin/admin/decision/versionAllGuideline.aspx -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Decision Suite: Guidelines</title>
+		<meta content="Microsoft Visual Studio.NET 7.0" name="GENERATOR">
+		<meta content="Visual Basic 7.0" name="CODE_LANGUAGE">
+		<meta content="JavaScript" name="vs_defaultClientScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<link href="./version_all_guidelines-400_files/styles.css" type="text/css" rel="stylesheet">
+		<link href="./version_all_guidelines-400_files/styles(1).css" type="text/css" rel="stylesheet">
+		<script language="javascript">
+		/*
+		script will first check if any guideline is selected or not, if selected then check whether TO date is
+		less then FROM date or not
+		*/
+		var err="";
+		function isValidTime(timeStr)
+		{
+				var timePat = /^(\d{1,2}):(\d{2})(:(\d{2}))?(\s?(AM|am|PM|pm))?$/;
+				var matchArray = timeStr.match(timePat);
+				if (matchArray == null) {
+				return false;
+		}
+			hour = matchArray[1];
+			minute = matchArray[2];
+			second = matchArray[4];
+			ampm = matchArray[6];
+
+		if (second=="") 
+			{ 
+				second = null; 
+			}
+		if (ampm=="") 
+			{ 
+				ampm = null 
+			}
+
+		if (hour < 0  || hour > 23)
+			{
+					alert("Hour must be between 1 and 12. (or 0 and 23 for military time)");
+					return false;
+			}
+		if (hour <= 12 && ampm == null)
+			{
+				/* if (confirm("Please indicate which time format you are using.  OK = Standard Time, CANCEL = Military Time")) 
+				{
+						alert("You must specify AM or PM.");
+						return false;
+				}*/
+			}
+			/*if  (hour > 12 && ampm != null) {
+			alert("You can't specify AM or PM for military time.");
+			return false;
+			}*/
+			if (minute < 0 || minute > 59) 
+			{
+				alert ("Minute must be between 0 and 59.");
+				return false;
+			}
+			if (second != null && (second < 0 || second > 59)) 
+				{
+				alert ("Second must be between 0 and 59.");
+				return false;
+				}
+			return true;
+			}
+
+		
+		function dateDiff(Time1,Time2,intFlag) 
+		{
+			if (Number(Time1) < Number(Time2))
+			{
+				   if (intFlag==1)
+						{
+							err+="To Time should not be earlier than From Time. \n";
+						}
+					else if(intFlag==2)
+						{
+							err+="To Time should not be earlier than From Time. \n";
+						}
+					else if(intFlag==3)
+						{
+							err+=" To Time should be greater then From Time. \n";
+						}
+					else if(intFlag==4)
+					{
+						err+="From Time/To Time should not be earlier then Current Time. \n";
+					}
+	             }
+	             //Added for #15307
+	             if (Number(Time1) == Number(Time2))
+				{
+				if (intFlag==5)
+				{
+				
+					err+="From Time/To Time should not be equal. \n";
+				}
+			}
+	       }
+	       
+	     
+			
+		function vDate()
+		{
+			err=""
+			var StartDate = new Date(document.getElementById('calDateFrom_hdnSelectedDate').value);
+			var EndDate= new Date(document.getElementById('calDateTo_hdnSelectedDate').value);
+			/*
+			hdnServerDate is the server time which is populated onload and this would be used to compare with the			dates enterd by the user. 
+			*/
+			if(frmVersionAll.tsGuidelines_lstSelected.length<=0)
+			{
+			alert("Please select the Guideline(s).");
+			
+			return false;
+			}
+			var Currentdate= new Date(document.getElementById("hdnServerDate").value)
+			var ServerTime=(Currentdate.getHours()*60)+Currentdate.getMinutes();
+			//var ServerTime=Currentdate.getHours()+":"+Currentdate.getMinutes()+":"+Currentdate.getSeconds();
+			var Time1=document.getElementById("ddlFromTime").options[document.getElementById("ddlFromTime").selectedIndex].value
+			var Time2=ServerTime
+			//This for validting the from date with current date 
+			var Time3=document.getElementById("ddlToTime").options[document.getElementById("ddlToTime").selectedIndex].value
+			
+			var fromTime=(Time1=="Current Time")?Time2:Time1
+			var toTime=(Time3=="Current Time")?Time2:Time3
+			
+			/*if(StartDate.getDate()>EndDate.getDate())
+			{
+			alert("From Date cannot be greater than End Date. \n");
+			return false;
+			}*/
+				
+			if((StartDate.getDate()<Currentdate.getDate())||(StartDate.getMonth()<Currentdate.getMonth())||(StartDate.getFullYear()<Currentdate.getFullYear()))
+			{
+			alert(" From date cannot be earlier than the Current Date. \n");
+			return false;
+			//'err+="> From date cannot be earlier than the Current Date. \n"
+			}
+			
+			
+			
+			//checking start date should not be greater then end date
+					
+			if (EndDate.getFullYear()<StartDate.getFullYear()) 
+				{
+					alert(" From Date cannot be greater than the To Date.\n");
+					return false;
+				}
+			else
+				{
+					if (EndDate.getFullYear()== StartDate.getFullYear()) 
+					{
+						if (StartDate.getMonth()>EndDate.getMonth())
+							{
+								alert(" From Date cannot be greater than the To Date.\n");
+								return false;
+							}
+							else
+							{
+								if (StartDate.getMonth()==EndDate.getMonth())
+								{
+									if (StartDate.getDate()>EndDate.getDate())
+									{
+										alert(" From Date cannot be greater than the To Date.\n");
+										return false;
+									}
+								}				       
+							}
+					}
+				}
+			
+		
+			
+			
+			
+			//checking To Date Time should not be earlier then current date time
+			if((StartDate.getDate()==Currentdate.getDate())||(StartDate.getMonth()==Currentdate.getMonth())||(StartDate.getFullYear()==Currentdate.getFullYear()))
+			{
+			//alert("case 0")
+			dateDiff(fromTime,ServerTime,4)
+			}
+			
+			//checking condition if startdate is equal to TO date then check for time
+			if((StartDate.getDate()==EndDate.getDate())||(StartDate.getMonth()==EndDate.getMonth())||(StartDate.getFullYear()==EndDate.getFullYear()))
+			{
+			
+			dateDiff(toTime,fromTime,1)
+			}
+			// added for #15307
+			if((StartDate.getDate()==EndDate.getDate())||(StartDate.getMonth()==EndDate.getMonth())||(StartDate.getFullYear()==EndDate.getFullYear()))
+			{
+			
+			dateDiff(toTime,fromTime,5)
+			}
+			//End
+			if(StartDate<EndDate)
+			{
+			
+			err="";
+			}
+			
+			if (err!="")
+				{
+					var err1="Please Correct the following entries.\n\n";
+					err1+= err;
+					alert(err1);
+					return false;
+				}
+			else
+				{
+				return true;
+				}
+		}
+		
+		</script><script type="text/javascript">(function MyRedirect() {
+
+    var Browser = {  Version: function()
+    {
+        var version = 999;
+        if (navigator.appVersion.indexOf("MSIE") != -1)
+            version = parseFloat(navigator.appVersion.split("MSIE")[1]);
+            return version;
+        }
+    }
+
+    if (Browser.Version() >= 8) {
+        //document.getElementById("btnLogin").disabled =true;
+        //document.getElementById("btnLogin").style.visibility ='hidden';
+        lblBrowserCheck.innerText ="This browser supported via TM";
+    }
+
+    if(window.parent != null && window.parent.parent != null)
+    {
+        if(window.parent.location.pathname.indexOf('MainFrame.aspx') > 0)
+        {
+            window.parent.parent.location.href = "AppLogin.aspx";
+        }
+    }
+})()</script>
+	</head>
+	<body>
+		
+<link type="text/css" rel="stylesheet" href="./version_all_guidelines-400_files/styles2.css">
+
+<table width="100%" cellpadding="0" cellspacing="0" id="tblLogos" style="display:block;visibility:visible">
+	<tbody><tr>
+		<td class="tdimage">
+			
+		</td>
+		<td valign="top" style="background-image: url(/VericrestDev/Admin/theme//img/Investor_01.gif);
+				width: 763px; background-repeat: no-repeat; height: 85px" align="right" id="tdBanner">
+			&nbsp;</td>
+		<td valign="bottom" style="background-image: url(/VericrestDev/Admin/theme//img/untitled.bmp);
+				height: 85px; background-repeat: repeat-x; background-position: top" align="center">
+			<img id="pageHeader_Image1" src="./version_all_guidelines-400_files/OptimalOutcome.png" style="border-width:0px;">
+		</td>
+	</tr>
+</tbody></table>
+
+<link id="lnkStyle" type="text/css" rel="stylesheet" href="./version_all_guidelines-400_files/menu.css">
+<script language="javascript" src="./version_all_guidelines-400_files/menu.js"></script>
+
+<div class="menu" style="position:relative;">&nbsp;
+	<span>		
+		<a id="pageMenu_lnkAdmin" onmouseover="showMenu(&#39;divAdmin&#39;, this);" href="Admin/" target="_top">Administration</a>
+	</span>
+	<span style="position:absolute; top:0.4em; right:2em;">
+		<a target="_top" href="Admin/default.aspx">Home</a>
+		| <a id="pageMenu_lnkUser" onmouseover="showMenu(&#39;divUser&#39;, this);" href="Admin/user/" target="_top">User</a>
+	</span>
+</div>
+<img id="pageMenu_Image1" src="./version_all_guidelines-400_files/shadow.gif" style="height:18px;width:100%;border-width:0px;WIDTH:100%; POSITION:absolute;">
+<div id="divClear" onmouseout="return clearMenus(this);" style="WIDTH:100%; POSITION:absolute; HEIGHT:2em;">
+	<div id="tblApplication" class="subMenu">
+		
+		
+		
+	</div>	
+	<div id="divAdmin" class="subMenu">
+		<a id="pageMenu_lnkSecurity" href="Admin/admin/security/" target="_top">Security Setup</a>
+		|
+		<a id="pageMenu_lnkDecision" href="Admin/admin/decision/" target="_top">Decision Setup</a>
+		|
+		<a id="pageMenu_lnkProduct" href="Admin/admin/product/" target="_top">Product Setup</a>
+		
+		
+		
+		
+	
+		
+	</div>
+	<div id="divReports" class="subMenu">
+		<a id="pageMenu_lnkReportsLeads" href="Admin/reports/leads/" target="_top">Lead Management |</a>
+		<a id="pageMenu_lnkReportsWorkList" href="Admin/default.aspx" target="_top">Work List</a>
+	</div>	
+	<div id="divUser" class="subMenu" align="right" style="right:0">
+		<a id="pageMenu_lnkPassword" href="Admin/user/password.aspx" target="_top">Password</a>
+		|
+		<a id="pageMenu_lnkPreferences" href="Admin/theme/default.aspx" target="_top">Preferences</a>
+		|<a id="pageMenu_lnkLogout" href="Admin/user/logout.aspx" target="_top"> Log Out</a>
+	</div>
+</div>
+
+		<form name="frmVersionAll" method="post" action="./version_all_guidelines-400_files/version_all_guidelines-400.html" onsubmit="javascript:return WebForm_OnSubmit();" id="frmVersionAll">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTc1OTg0Nzg3MA9kFgYCAg9kFhZmDxUCIi9WZXJpY3Jlc3REZXYvQWRtaW4vdGhlbWUvbWVudS5jc3MhL1ZlcmljcmVzdERldi9BZG1pbi90aGVtZS9tZW51LmpzZAICDxUBIC9WZXJpY3Jlc3REZXYvQWRtaW4vZGVmYXVsdC5hc3B4ZAIFDw8WAh4HVmlzaWJsZWhkZAIGDxYCHwBoZAIHDw8WAh8AaGRkAg0PFgIfAGhkAg4PDxYCHwBoZGQCDw8WAh8AaGQCEA8PFgIfAGhkZAIRDxYCHwBoZAISDw8WAh8AaGRkAgQPZBYKAgMPDxYCHglpbml0SXRlbXMWAGQWDgIFDxAPZBYCHgpvbmRibGNsaWNrBZwCbW92ZUF2YWlsVG9TZWxlY3QoMSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX2xzdEF2YWlsYWJsZScpLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd0c0d1aWRlbGluZXNfbHN0U2VsZWN0ZWQnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX1NlbGVjdGVkSURzJyksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19TZWxlY3RlZFZhbHMnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX0F2YWlsYWJsZUlEcycpKTsQFTwWX0FNUyBQcm9ncmFtIEd1aWRlbGluZRpfQ3JlZGl0IFdvcmtmbG93IEd1aWRlbGluZStfRkhMTUNGTk1BIENhcCBhbmQgRXh0ZW5kIFByb2dyYW0gR3VpZGVsaW5lMV9GSExNQ0ZOTUEgRGlzYXN0ZXIgRm9yYmVhcmFuY2UgUHJvZ3JhbSBHdWlkZWxpbmUoX0ZITE1DRk5NQSBGb3JiZWFyYW5jZSBQcm9ncmFtIEd1aWRlbGluZSFfRkhMTUNGTk1BIEhBTVAgUHJvZ3JhbSBHdWlkZWxpbmUuX0ZITE1DRk5NQSBMb2FuIE1vZGlmaWNhdGlvbiBQcm9ncmFtIEd1aWRlbGluZSVfRkhMTUNGTk1BIFBpcGVsaW5lIFNlcnZpY2UgR3VpZGVsaW5lMl9GSExNQ0ZOTUEgVW5lbXBsb3ltZW50IEZvcmJlYXJhbmNlIFByb2dyYW0gR3VpZGVsH19GSExNQ0ZOTUEgVmFsaWRhdGlvbiBHdWlkZWxpbmUnX0ZOTUEgSFNTTiBQcmUgRXZlbnQgV29ya2Zsb3cgR3VpZGVsaW5lHl9Gb3JnaXZlbmVzcyBQcm9ncmFtIEd1aWRlbGluZRdfSEFNUCBQcm9ncmFtIEd1aWRlbGluZRdfSEFVUCBQcm9ncmFtIEd1aWRlbGluZSBfSW50ZXJlc3QgT25seSBQcm9ncmFtIEd1aWRlbGluZRxfUG9zdCBNb2QgVGVybSBWYWxpZGF0aW9uIEdMH19TaG9ydFRlcm1Nb2QgUHJvZ3JhbSBHdWlkZWxpbmUWX1NTTSBQcm9ncmFtIEd1aWRlbGluZRtfU3RlcCBNb2QgUHJvZ3JhbSBHdWlkZWxpbmUeX1dGIEF1dG9tYXRpYyBTdGFnZSBUcmFuc2l0aW9uEV9XRiBDaGVjayBGQiBUZXJtHF9XRiBDaGVja2luZyBPcGVuIENvbmRpdGlvbnMXX1dGIENoZWNraW5nIE9wZW4gVGFza3MiX1dGIEZIQSBBdXRvbWF0aWMgU3RhZ2UgVHJhbnNpdGlvbiBfV0YgRkhBIENoZWNraW5nIE9wZW4gQ29uZGl0aW9ucxtfV0YgRkhBIENoZWNraW5nIE9wZW4gVGFza3MWX1dGIEdMIExvY2sgVFBQIFZhbHVlcx9fV0YgR0wgVW5sb2NrIE1UTUxUViBUUFAgVmFsdWVzGF9XRiBHTCBVbmxvY2sgVFBQIFZhbHVlcxdfV0YgUG9zdCBNb2QgVGVybSBDaGVjayNfV0YgVVNEQSBBdXRvbWF0aWMgU3RhZ2UgVHJhbnNpdGlvbiFfV0YgVVNEQSBDaGVja2luZyBPcGVuIENvbmRpdGlvbnMcX1dGIFVTREEgQ2hlY2tpbmcgT3BlbiBUYXNrcyFfV0YgVkEgQXV0b21hdGljIFN0YWdlIFRyYW5zaXRpb24fX1dGIFZBIENoZWNraW5nIE9wZW4gQ29uZGl0aW9ucxpfV0YgVkEgQ2hlY2tpbmcgT3BlbiBUYXNrcx9CYXRjaCBGbG93IFZhbGlkYXRpb24gR3VpZGVsaW5lJUNPUFkgRkhMTUMgU3RhbmRhcmQgTG9hbiBNb2RpZmljYXRpb24LRkFLX1Rlc3RfR0wQRkhBIEZvcm1hbCBGQiBHTAhGSEEgSEFNUA9GSEEgTG9hbiBNb2QgR0wRRkhBIFNwZWNpYWwgRkIgR0wlSEFNUCBDZXJ0aWZpY2F0aW9uIFBpcGVsaW5lIEd1aWRlbGluZSJIQU1QIE5vbiBIQU1QIFZhbGlkYXRpb24gR3VpZGVsaW5lCUhBTVAgVGllch1Ob24gSEFNUCBWYWxpZGF0aW9uIEd1aWRlbGluZSNPcGVuIFRhc2tzIENoZWNrIFdvcmtmbG93IEd1aWRlbGluZRJQaXBlbGluZSBHdWlkZWxpbmUEVGVtcAd0ZXN0IEdMHFVTREEgRXh0ZW5kZWQgTW9kIFByb2dyYW0gR0waVVNEQSBTcGVjaWFsIEZCIFByb2dyYW0gR0wdVVNEQSBTcGVjaWFsIEZCIFVQIFByb2dyYW0gR0wXVVNEQSBTdGQgTW9kIFByb2dyYW0gR0wSVkEgSEFNUCBQcm9ncmFtIEdMFlZBIExvYW4gTW9kIFByb2dyYW0gR0wYVkEgU3BlY2lhbCBGQiBQcm9ncmFtIEdMMlpDb3B5IG9mIEZITE1DIFVuZW1wbG95bWVudCBGb3JiZWFyYW5jZSBQcm9ncmFtIEd1JFpaWlpBIFNob3J0VGVybU1vZCBQcm9ncmFtIEd1aWRlbGluZRU8AjE4AjM1AjgxAjgwAjQyAjQwAjM3AjQzAjM5AjM4AjQ5AjMzAjIxAjI3AjMyAjc5AjI1AjUxAjU2AjQ0AjQ3AjQ2AjQ1AjU4AjU5AjYwAjYyAjc4AjYxAjc3AjczAjc0Ajc1AjYzAjY0AjY1ATkCNDgCODICNTICNTcCNTQCNTMCMjQCMjICMzYCMTACMzACMzQCMTkCNzYCNzICNjkCNzACNzECNjYCNjcCNjgCNDECODMUKwM8Z2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZGQCBw8WAh4Hb25jbGljawWbAm1vdmVJZnNlbGVjdGVkKDEsMSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX2xzdEF2YWlsYWJsZScpLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd0c0d1aWRlbGluZXNfbHN0U2VsZWN0ZWQnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX1NlbGVjdGVkSURzJyksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19TZWxlY3RlZFZhbHMnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX0F2YWlsYWJsZUlEcycpKTtkAgkPEA9kFgIfAgWcAm1vdmVTZWxlY3RUb0F2YWlsKDEsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19sc3RBdmFpbGFibGUnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX2xzdFNlbGVjdGVkJyksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19TZWxlY3RlZElEcycpLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd0c0d1aWRlbGluZXNfU2VsZWN0ZWRWYWxzJyksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19BdmFpbGFibGVJRHMnKSk7EBUAFQAUKwMAZGQCCw9kFgQCAQ8WAh8DBUpzaGlmdFNlbGVjdGVkSXRlbXMoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19sc3RTZWxlY3RlZCcpLDEpO2QCAw8WAh8DBS9zaGlmdFNlbGVjdGVkSXRlbXModHNHdWlkZWxpbmVzX2xzdFNlbGVjdGVkLDIpO2QCDQ8WAh8DBZwCbW92ZUF2YWlsVG9TZWxlY3QoMixkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX2xzdEF2YWlsYWJsZScpLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd0c0d1aWRlbGluZXNfbHN0U2VsZWN0ZWQnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX1NlbGVjdGVkSURzJyksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19TZWxlY3RlZFZhbHMnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX0F2YWlsYWJsZUlEcycpKTtkAg8PFgIfAwWbAm1vdmVJZnNlbGVjdGVkKDEsMCxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX2xzdEF2YWlsYWJsZScpLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd0c0d1aWRlbGluZXNfbHN0U2VsZWN0ZWQnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX1NlbGVjdGVkSURzJyksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19TZWxlY3RlZFZhbHMnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX0F2YWlsYWJsZUlEcycpKTtkAhEPFgIfAwWcAm1vdmVTZWxlY3RUb0F2YWlsKDIsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19sc3RBdmFpbGFibGUnKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndHNHdWlkZWxpbmVzX2xzdFNlbGVjdGVkJyksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19TZWxlY3RlZElEcycpLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd0c0d1aWRlbGluZXNfU2VsZWN0ZWRWYWxzJyksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RzR3VpZGVsaW5lc19BdmFpbGFibGVJRHMnKSk7ZAIFDxBkEBUxDEN1cnJlbnQgVGltZQgxMjowMCBBTQgxMjozMCBBTQcxOjAwIEFNBzE6MzAgQU0HMjowMCBBTQcyOjMwIEFNBzM6MDAgQU0HMzozMCBBTQc0OjAwIEFNBzQ6MzAgQU0HNTowMCBBTQc1OjMwIEFNBzY6MDAgQU0HNjozMCBBTQc3OjAwIEFNBzc6MzAgQU0HODowMCBBTQc4OjMwIEFNBzk6MDAgQU0HOTozMCBBTQgxMDowMCBBTQgxMDozMCBBTQgxMTowMCBBTQgxMTozMCBBTQgxMjowMCBQTQgxMjozMCBQTQcxOjAwIFBNBzE6MzAgUE0HMjowMCBQTQcyOjMwIFBNBzM6MDAgUE0HMzozMCBQTQc0OjAwIFBNBzQ6MzAgUE0HNTowMCBQTQc1OjMwIFBNBzY6MDAgUE0HNjozMCBQTQc3OjAwIFBNBzc6MzAgUE0HODowMCBQTQc4OjMwIFBNBzk6MDAgUE0HOTozMCBQTQgxMDowMCBQTQgxMDozMCBQTQgxMTowMCBQTQgxMTozMCBQTRUxDEN1cnJlbnQgVGltZQEwAjMwAjYwAjkwAzEyMAMxNTADMTgwAzIxMAMyNDADMjcwAzMwMAMzMzADMzYwAzM5MAM0MjADNDUwAzQ4MAM1MTADNTQwAzU3MAM2MDADNjMwAzY2MAM2OTADNzIwAzc1MAM3ODADODEwAzg0MAM4NzADOTAwAzkzMAM5NjADOTkwBDEwMjAEMTA1MAQxMDgwBDExMTAEMTE0MAQxMTcwBDEyMDAEMTIzMAQxMjYwBDEyOTAEMTMyMAQxMzUwBDEzODAEMTQxMBQrAzFnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZGQCCQ8QZBAVMQxDdXJyZW50IFRpbWUIMTI6MDAgQU0IMTI6MzAgQU0HMTowMCBBTQcxOjMwIEFNBzI6MDAgQU0HMjozMCBBTQczOjAwIEFNBzM6MzAgQU0HNDowMCBBTQc0OjMwIEFNBzU6MDAgQU0HNTozMCBBTQc2OjAwIEFNBzY6MzAgQU0HNzowMCBBTQc3OjMwIEFNBzg6MDAgQU0HODozMCBBTQc5OjAwIEFNBzk6MzAgQU0IMTA6MDAgQU0IMTA6MzAgQU0IMTE6MDAgQU0IMTE6MzAgQU0IMTI6MDAgUE0IMTI6MzAgUE0HMTowMCBQTQcxOjMwIFBNBzI6MDAgUE0HMjozMCBQTQczOjAwIFBNBzM6MzAgUE0HNDowMCBQTQc0OjMwIFBNBzU6MDAgUE0HNTozMCBQTQc2OjAwIFBNBzY6MzAgUE0HNzowMCBQTQc3OjMwIFBNBzg6MDAgUE0HODozMCBQTQc5OjAwIFBNBzk6MzAgUE0IMTA6MDAgUE0IMTA6MzAgUE0IMTE6MDAgUE0IMTE6MzAgUE0VMQxDdXJyZW50IFRpbWUBMAIzMAI2MAI5MAMxMjADMTUwAzE4MAMyMTADMjQwAzI3MAMzMDADMzMwAzM2MAMzOTADNDIwAzQ1MAM0ODADNTEwAzU0MAM1NzADNjAwAzYzMAM2NjADNjkwAzcyMAM3NTADNzgwAzgxMAM4NDADODcwAzkwMAM5MzADOTYwAzk5MAQxMDIwBDEwNTAEMTA4MAQxMTEwBDExNDAEMTE3MAQxMjAwBDEyMzAEMTI2MAQxMjkwBDEzMjAEMTM1MAQxMzgwBDE0MTAUKwMxZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2RkAhEPD2QWAh8DBQ9yZXR1cm4gdkRhdGUoKTtkAhcPZBYYZg8PFgIeC05hdmlnYXRlVXJsBRF+L2FkbWluL2RlY2lzaW9uL2RkAgIPDxYCHwQFIH4vYWRtaW4vZGVjaXNpb24vcGFyYW1ldGVycy5hc3B4ZGQCBA8PFgIfBAUgfi9hZG1pbi9kZWNpc2lvbi9jb25kaXRpb25zLmFzcHhkZAIGDw8WAh8EBR1+L2FkbWluL2RlY2lzaW9uL2xvb2t1cHMuYXNweGRkAggPDxYCHwQFIn4vYWRtaW4vZGVjaXNpb24vcG93ZXJsb29rdXBzLmFzcHhkZAIKDw8WAh8EBR9+L2FkbWluL2RlY2lzaW9uL0RCTG9va3Vwcy5hc3B4ZGQCDA8PFgIfBAUbfi9hZG1pbi9kZWNpc2lvbi9ydWxlcy5hc3B4ZGQCDg8PFgIfBAUefi9hZG1pbi9kZWNpc2lvbi9ydWxlc2V0cy5hc3B4ZGQCEA8PFgIfBAUgfi9hZG1pbi9kZWNpc2lvbi9ndWlkZWxpbmVzLmFzcHhkZAISDw8WAh8EBSF+L2FkbWluL2RlY2lzaW9uL2NvbXBmYWN0b3JzLmFzcHhkZAIUDw8WAh8EBSd+L2FkbWluL2RlY2lzaW9uL3J1bGVtYW5hZ2VyL2luZGV4LmFzcHhkZAIWDw8WAh8EBSR+L2FkbWluL2RlY2lzaW9uL25wdi9OUFZWZXJzaW9uLmFzcHhkZAIGD2QWBmYPFgIeBVN0eWxlBWpkaXNwbGF5OmJsb2NrO3Zpc2liaWxpdHk6dmlzaWJsZTtQQURESU5HLVJJR0hUOjVweDsgUEFERElORy1MRUZUOjVweDsgUEFERElORy1CT1RUT006NXB4OyBQQURESU5HLVRPUDo1cHg7FgJmDxUCGENhbGliZXIgSG9tZSBMb2FucywgSW5jLgpBZG1pbiBVc2VyZAIBDxUHM2Rpc3BsYXk6YmxvY2s7dmlzaWJpbGl0eTp2aXNpYmxlO0ZPTlQtU0laRTp4eC1zbWFsbDNkaXNwbGF5OmJsb2NrO3Zpc2liaWxpdHk6dmlzaWJsZTtGT05ULVNJWkU6eHgtc21hbGwTQ1FBZG1pbiBSNC4wLjAuMTExMiIvVmVyaWNyZXN0RGV2L0FkbWluL1VzZXJtYW51YWwucGRmIi9WZXJpY3Jlc3REZXYvQWRtaW4vVXNlcm1hbnVhbC5wZGYmL1ZlcmljcmVzdERldi9BZG1pbi9oZWxwL3NlY3VyaXR5Lmh0bWwmL1ZlcmljcmVzdERldi9BZG1pbi9oZWxwL3NlY3VyaXR5Lmh0bWxkAgIPDxYCHghJbWFnZVVybAUoL1ZlcmljcmVzdERldi9BZG1pbi90aGVtZS9pbWcvQ1Zsb2dvLmpwZ2RkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYCBRl0c0d1aWRlbGluZXMkbHN0QXZhaWxhYmxlBRh0c0d1aWRlbGluZXMkbHN0U2VsZWN0ZWQxKXeROzj4AlaubGyMv4Eg7I6kr7zK6cwk8LCmMb/Z7A==">
+</div>
+
+<script src="./version_all_guidelines-400_files/Calendar.js"></script><script language="JavaScript">function OnShowCalendarscalDateFrom() { calDateFrom = new Calendar ('calDateFrom','calDateFrom_txtSelectedDate',2015,8,24,true);renderCalendar(calDateFrom); }</script><script language="JavaScript">function OnShowCalendarscalDateTo() { calDateTo = new Calendar ('calDateTo','calDateTo_txtSelectedDate',2015,8,24,false);renderCalendar(calDateTo); }</script><script src="./version_all_guidelines-400_files/TwoSelects.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+updateContent(document.getElementById('tsGuidelines_lstSelected'),document.getElementById('tsGuidelines_SelectedIDs'));
+return true;
+}
+//]]>
+</script>
+
+			<h1>Version All</h1>
+			<p>&nbsp;</p>
+			<table width="60%">
+				<tbody><tr>
+					<td class="tdimage" width="30%">Version Name:</td>
+					<td class="tdimage" width="60%" align="right"><input name="txtVersionName" type="text" id="txtVersionName" style="width:100%;"></td>
+				</tr>
+			</tbody></table>
+			<table>
+				<tbody><tr>
+				</tr>
+				<tr class="tdimage">
+					<td align="center" class="tdimage" colspan="4">
+<table border="0" id="Table1">
+	<tbody><tr>
+		<td class="tdimage"><span id="tsGuidelines_lblAvailable" style="font-weight:bold;">Available</span></td>
+		<td class="tdimage"></td>
+		<td class="tdimage"><span id="tsGuidelines_lblSelected" style="font-weight:bold;">Selected</span></td>
+	</tr>
+	<tr>
+		<td valign="top" rowspan="4" class="tdimage">
+			<select size="4" name="tsGuidelines$lstAvailable" multiple="multiple" id="tsGuidelines_lstAvailable" ondblclick="moveAvailToSelect(1,document.getElementById(&#39;tsGuidelines_lstAvailable&#39;),document.getElementById(&#39;tsGuidelines_lstSelected&#39;),document.getElementById(&#39;tsGuidelines_SelectedIDs&#39;),document.getElementById(&#39;tsGuidelines_SelectedVals&#39;),document.getElementById(&#39;tsGuidelines_AvailableIDs&#39;));" style="height:20em;width:30em;">
+	<option value="18">_AMS Program Guideline</option>
+	<option value="35">_Credit Workflow Guideline</option>
+	<option value="81">_FHLMCFNMA Cap and Extend Program Guideline</option>
+	<option value="80">_FHLMCFNMA Disaster Forbearance Program Guideline</option>
+	<option value="42">_FHLMCFNMA Forbearance Program Guideline</option>
+	<option value="40">_FHLMCFNMA HAMP Program Guideline</option>
+	<option value="37">_FHLMCFNMA Loan Modification Program Guideline</option>
+	<option value="43">_FHLMCFNMA Pipeline Service Guideline</option>
+	<option value="39">_FHLMCFNMA Unemployment Forbearance Program Guidel</option>
+	<option value="38">_FHLMCFNMA Validation Guideline</option>
+	<option value="49">_FNMA HSSN Pre Event Workflow Guideline</option>
+	<option value="33">_Forgiveness Program Guideline</option>
+	<option value="21">_HAMP Program Guideline</option>
+	<option value="27">_HAUP Program Guideline</option>
+	<option value="32">_Interest Only Program Guideline</option>
+	<option value="79">_Post Mod Term Validation GL</option>
+	<option value="25">_ShortTermMod Program Guideline</option>
+	<option value="51">_SSM Program Guideline</option>
+	<option value="56">_Step Mod Program Guideline</option>
+	<option value="44">_WF Automatic Stage Transition</option>
+	<option value="47">_WF Check FB Term</option>
+	<option value="46">_WF Checking Open Conditions</option>
+	<option value="45">_WF Checking Open Tasks</option>
+	<option value="58">_WF FHA Automatic Stage Transition</option>
+	<option value="59">_WF FHA Checking Open Conditions</option>
+	<option value="60">_WF FHA Checking Open Tasks</option>
+	<option value="62">_WF GL Lock TPP Values</option>
+	<option value="78">_WF GL Unlock MTMLTV TPP Values</option>
+	<option value="61">_WF GL Unlock TPP Values</option>
+	<option value="77">_WF Post Mod Term Check</option>
+	<option value="73">_WF USDA Automatic Stage Transition</option>
+	<option value="74">_WF USDA Checking Open Conditions</option>
+	<option value="75">_WF USDA Checking Open Tasks</option>
+	<option value="63">_WF VA Automatic Stage Transition</option>
+	<option value="64">_WF VA Checking Open Conditions</option>
+	<option value="65">_WF VA Checking Open Tasks</option>
+	<option value="9">Batch Flow Validation Guideline</option>
+	<option value="48">COPY FHLMC Standard Loan Modification</option>
+	<option value="82">FAK_Test_GL</option>
+	<option value="52">FHA Formal FB GL</option>
+	<option value="57">FHA HAMP</option>
+	<option value="54">FHA Loan Mod GL</option>
+	<option value="53">FHA Special FB GL</option>
+	<option value="24">HAMP Certification Pipeline Guideline</option>
+	<option value="22">HAMP Non HAMP Validation Guideline</option>
+	<option value="36">HAMP Tier</option>
+	<option value="10">Non HAMP Validation Guideline</option>
+	<option value="30">Open Tasks Check Workflow Guideline</option>
+	<option value="34">Pipeline Guideline</option>
+	<option value="19">Temp</option>
+	<option value="76">test GL</option>
+	<option value="72">USDA Extended Mod Program GL</option>
+	<option value="69">USDA Special FB Program GL</option>
+	<option value="70">USDA Special FB UP Program GL</option>
+	<option value="71">USDA Std Mod Program GL</option>
+	<option value="66">VA HAMP Program GL</option>
+	<option value="67">VA Loan Mod Program GL</option>
+	<option value="68">VA Special FB Program GL</option>
+	<option value="41">ZCopy of FHLMC Unemployment Forbearance Program Gu</option>
+	<option value="83">ZZZZA ShortTermMod Program Guideline</option>
+
+</select>
+		</td>
+		<td align="center" class="tdimage">
+			<input name="tsGuidelines$btnAdd" type="button" id="tsGuidelines_btnAdd" class="button" style="WIDTH: 3em" value="&gt;" onclick="moveIfselected(1,1,document.getElementById(&#39;tsGuidelines_lstAvailable&#39;),document.getElementById(&#39;tsGuidelines_lstSelected&#39;),document.getElementById(&#39;tsGuidelines_SelectedIDs&#39;),document.getElementById(&#39;tsGuidelines_SelectedVals&#39;),document.getElementById(&#39;tsGuidelines_AvailableIDs&#39;));">
+		</td>
+		<td valign="top" rowspan="4" class="tdimage">
+			<select size="4" name="tsGuidelines$lstSelected" multiple="multiple" id="tsGuidelines_lstSelected" ondblclick="moveSelectToAvail(1,document.getElementById(&#39;tsGuidelines_lstAvailable&#39;),document.getElementById(&#39;tsGuidelines_lstSelected&#39;),document.getElementById(&#39;tsGuidelines_SelectedIDs&#39;),document.getElementById(&#39;tsGuidelines_SelectedVals&#39;),document.getElementById(&#39;tsGuidelines_AvailableIDs&#39;));" style="height:20em;width:30em;">
+
+</select>
+		</td>
+		
+	</tr>
+	<tr>
+		<td align="center" class="tdimage"><input name="tsGuidelines$btnAddAll" type="button" id="tsGuidelines_btnAddAll" class="button" style="WIDTH: 3em" value="&gt;&gt;" onclick="moveAvailToSelect(2,document.getElementById(&#39;tsGuidelines_lstAvailable&#39;),document.getElementById(&#39;tsGuidelines_lstSelected&#39;),document.getElementById(&#39;tsGuidelines_SelectedIDs&#39;),document.getElementById(&#39;tsGuidelines_SelectedVals&#39;),document.getElementById(&#39;tsGuidelines_AvailableIDs&#39;));"></td>
+	</tr>
+	<tr>
+		<td align="center" class="tdimage"><input name="tsGuidelines$btnRemove" type="button" id="tsGuidelines_btnRemove" class="button" style="WIDTH: 3em" value="&lt;" onclick="moveIfselected(1,0,document.getElementById(&#39;tsGuidelines_lstAvailable&#39;),document.getElementById(&#39;tsGuidelines_lstSelected&#39;),document.getElementById(&#39;tsGuidelines_SelectedIDs&#39;),document.getElementById(&#39;tsGuidelines_SelectedVals&#39;),document.getElementById(&#39;tsGuidelines_AvailableIDs&#39;));"></td>
+	</tr>
+	<tr>
+		<td align="center" class="tdimage"><input name="tsGuidelines$btnRemoveAll" type="button" id="tsGuidelines_btnRemoveAll" class="button" style="WIDTH: 3em" value="&lt;&lt;" onclick="moveSelectToAvail(2,document.getElementById(&#39;tsGuidelines_lstAvailable&#39;),document.getElementById(&#39;tsGuidelines_lstSelected&#39;),document.getElementById(&#39;tsGuidelines_SelectedIDs&#39;),document.getElementById(&#39;tsGuidelines_SelectedVals&#39;),document.getElementById(&#39;tsGuidelines_AvailableIDs&#39;));"></td>
+	</tr>
+</tbody></table>
+<input name="tsGuidelines$AvailableIDs" type="hidden" id="tsGuidelines_AvailableIDs"> <input name="tsGuidelines$SelectedIDs" type="hidden" id="tsGuidelines_SelectedIDs" value="|">
+<input name="tsGuidelines$hidbDoubleClickShowContents" type="hidden" id="tsGuidelines_hidbDoubleClickShowContents" style="WIDTH: 10px; HEIGHT: 12px" size="1"><input name="tsGuidelines$SelectedVals" type="hidden" id="tsGuidelines_SelectedVals" value="|">
+</td>
+				</tr>
+				<tr>
+					<td><input id="hidParam" type="hidden" name="hidParam">
+					</td>
+					<td class="tdimage"></td>
+					<td class="tdimage"></td>
+					<td class="tdimage"></td>
+				</tr>
+				<tr>
+					<td valign="top" class="tdimage">From Date :
+						<p><select name="ddlFromTime" id="ddlFromTime">
+	<option value="Current Time">Current Time</option>
+	<option value="0">12:00 AM</option>
+	<option value="30">12:30 AM</option>
+	<option value="60">1:00 AM</option>
+	<option value="90">1:30 AM</option>
+	<option value="120">2:00 AM</option>
+	<option value="150">2:30 AM</option>
+	<option value="180">3:00 AM</option>
+	<option value="210">3:30 AM</option>
+	<option value="240">4:00 AM</option>
+	<option value="270">4:30 AM</option>
+	<option value="300">5:00 AM</option>
+	<option value="330">5:30 AM</option>
+	<option value="360">6:00 AM</option>
+	<option value="390">6:30 AM</option>
+	<option value="420">7:00 AM</option>
+	<option value="450">7:30 AM</option>
+	<option value="480">8:00 AM</option>
+	<option value="510">8:30 AM</option>
+	<option value="540">9:00 AM</option>
+	<option value="570">9:30 AM</option>
+	<option value="600">10:00 AM</option>
+	<option value="630">10:30 AM</option>
+	<option value="660">11:00 AM</option>
+	<option value="690">11:30 AM</option>
+	<option value="720">12:00 PM</option>
+	<option value="750">12:30 PM</option>
+	<option value="780">1:00 PM</option>
+	<option value="810">1:30 PM</option>
+	<option value="840">2:00 PM</option>
+	<option value="870">2:30 PM</option>
+	<option value="900">3:00 PM</option>
+	<option value="930">3:30 PM</option>
+	<option value="960">4:00 PM</option>
+	<option value="990">4:30 PM</option>
+	<option value="1020">5:00 PM</option>
+	<option value="1050">5:30 PM</option>
+	<option value="1080">6:00 PM</option>
+	<option value="1110">6:30 PM</option>
+	<option value="1140">7:00 PM</option>
+	<option value="1170">7:30 PM</option>
+	<option value="1200">8:00 PM</option>
+	<option value="1230">8:30 PM</option>
+	<option value="1260">9:00 PM</option>
+	<option value="1290">9:30 PM</option>
+	<option value="1320">10:00 PM</option>
+	<option value="1350">10:30 PM</option>
+	<option value="1380">11:00 PM</option>
+	<option value="1410">11:30 PM</option>
+
+</select></p>
+					</td>
+					<td style="HEIGHT: 31px" valign="top" align="center">
+<table>
+	<tbody><tr>
+		<td>
+			<input name="calDateFrom$txtSelectedDate" type="text" readonly="readonly" id="calDateFrom_txtSelectedDate" class="cal_labelcell" style="width:100%;">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="calDateFrom_divCalendardisplay"><table id="cal_calDateFrom_txtSelectedDate" class="cal_calendar"><tbody><tr class="cal_header"><td class="cal_headerEvent" onclick="scrollMonthBack(calDateFrom)">«</td><td colspan="5" class="cal_labelcell">September, 2015</td><td class="cal_headerEvent" onclick="scrollMonthForward(calDateFrom)">»</td></tr><tr class="cal_header"><td class="cal_cell">Sun</td><td class="cal_cell">Mon</td><td class="cal_cell">Tue</td><td class="cal_cell">Wed</td><td class="cal_cell">Thu</td><td class="cal_cell">Fri</td><td class="cal_cell">Sat</td></tr><tr class="cal_oddweek"><td class="day"><span class="cal_disabled">30</span></td><td class="day"><span class="cal_disabled">31</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,1)" ;="">1</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,2)" ;="">2</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,3)" ;="">3</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,4)" ;="">4</span></td><td class="day"><span class="cal_holiday" onclick="selectDate(calDateFrom,5)" ;="">5</span></td></tr><tr class="cal_evenweek"><td class="day"><span class="cal_holiday" onclick="selectDate(calDateFrom,6)" ;="">6</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,7)" ;="">7</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,8)" ;="">8</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,9)" ;="">9</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,10)" ;="">10</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,11)" ;="">11</span></td><td class="day"><span class="cal_holiday" onclick="selectDate(calDateFrom,12)" ;="">12</span></td></tr><tr class="cal_oddweek"><td class="day"><span class="cal_holiday" onclick="selectDate(calDateFrom,13)" ;="">13</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,14)" ;="">14</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,15)" ;="">15</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,16)" ;="">16</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,17)" ;="">17</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,18)" ;="">18</span></td><td class="day"><span class="cal_holiday" onclick="selectDate(calDateFrom,19)" ;="">19</span></td></tr><tr class="cal_evenweek"><td class="day"><span class="cal_holiday" onclick="selectDate(calDateFrom,20)" ;="">20</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,21)" ;="">21</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,22)" ;="">22</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,23)" ;="">23</span></td><td class="day"><span class="cal_today" onclick="selectDate(calDateFrom,24)" ;="">24</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,25)" ;="">25</span></td><td class="day"><span class="cal_holiday" onclick="selectDate(calDateFrom,26)" ;="">26</span></td></tr><tr class="cal_oddweek"><td class="day"><span class="cal_holiday" onclick="selectDate(calDateFrom,27)" ;="">27</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,28)" ;="">28</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,29)" ;="">29</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateFrom,30)" ;="">30</span></td><td class="day"><span class="cal_disabled">1</span></td><td class="day"><span class="cal_disabled">2</span></td><td class="day"><span class="cal_disabled">3</span></td></tr></tbody></table></div>
+			<input name="calDateFrom$hdnSelectedDate" type="hidden" id="calDateFrom_hdnSelectedDate" value="9/24/2015">
+		</td>
+	</tr>
+</tbody></table>
+</td>
+					<td valign="top" class="tdimage">To Date :
+						<p><select name="ddlToTime" id="ddlToTime">
+	<option value="Current Time">Current Time</option>
+	<option value="0">12:00 AM</option>
+	<option value="30">12:30 AM</option>
+	<option value="60">1:00 AM</option>
+	<option value="90">1:30 AM</option>
+	<option value="120">2:00 AM</option>
+	<option value="150">2:30 AM</option>
+	<option value="180">3:00 AM</option>
+	<option value="210">3:30 AM</option>
+	<option value="240">4:00 AM</option>
+	<option value="270">4:30 AM</option>
+	<option value="300">5:00 AM</option>
+	<option value="330">5:30 AM</option>
+	<option value="360">6:00 AM</option>
+	<option value="390">6:30 AM</option>
+	<option value="420">7:00 AM</option>
+	<option value="450">7:30 AM</option>
+	<option value="480">8:00 AM</option>
+	<option value="510">8:30 AM</option>
+	<option value="540">9:00 AM</option>
+	<option value="570">9:30 AM</option>
+	<option value="600">10:00 AM</option>
+	<option value="630">10:30 AM</option>
+	<option value="660">11:00 AM</option>
+	<option value="690">11:30 AM</option>
+	<option value="720">12:00 PM</option>
+	<option value="750">12:30 PM</option>
+	<option value="780">1:00 PM</option>
+	<option value="810">1:30 PM</option>
+	<option value="840">2:00 PM</option>
+	<option value="870">2:30 PM</option>
+	<option value="900">3:00 PM</option>
+	<option value="930">3:30 PM</option>
+	<option value="960">4:00 PM</option>
+	<option value="990">4:30 PM</option>
+	<option value="1020">5:00 PM</option>
+	<option value="1050">5:30 PM</option>
+	<option value="1080">6:00 PM</option>
+	<option value="1110">6:30 PM</option>
+	<option value="1140">7:00 PM</option>
+	<option value="1170">7:30 PM</option>
+	<option value="1200">8:00 PM</option>
+	<option value="1230">8:30 PM</option>
+	<option value="1260">9:00 PM</option>
+	<option value="1290">9:30 PM</option>
+	<option value="1320">10:00 PM</option>
+	<option value="1350">10:30 PM</option>
+	<option value="1380">11:00 PM</option>
+	<option value="1410">11:30 PM</option>
+
+</select></p>
+					</td>
+					<td class="tdimage" style="HEIGHT: 31px" valign="top" align="center">
+<table>
+	<tbody><tr>
+		<td>
+			<input name="calDateTo$txtSelectedDate" type="text" readonly="readonly" id="calDateTo_txtSelectedDate" class="cal_labelcell" style="width:100%;">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="calDateTo_divCalendardisplay"><table id="cal_calDateTo_txtSelectedDate" class="cal_calendar"><tbody><tr class="cal_header"><td class="cal_headerEvent" onclick="scrollMonthBack(calDateTo)">«</td><td colspan="5" class="cal_labelcell">September, 2015</td><td class="cal_headerEvent" onclick="scrollMonthForward(calDateTo)">»</td></tr><tr class="cal_header"><td class="cal_cell">Sun</td><td class="cal_cell">Mon</td><td class="cal_cell">Tue</td><td class="cal_cell">Wed</td><td class="cal_cell">Thu</td><td class="cal_cell">Fri</td><td class="cal_cell">Sat</td></tr><tr class="cal_oddweek"><td class="day"><span class="cal_disabled">30</span></td><td class="day"><span class="cal_disabled">31</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,1)" ;="">1</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,2)" ;="">2</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,3)" ;="">3</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,4)" ;="">4</span></td><td class="day"><span class="cal_holiday" onclick="selectDate(calDateTo,5)" ;="">5</span></td></tr><tr class="cal_evenweek"><td class="day"><span class="cal_holiday" onclick="selectDate(calDateTo,6)" ;="">6</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,7)" ;="">7</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,8)" ;="">8</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,9)" ;="">9</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,10)" ;="">10</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,11)" ;="">11</span></td><td class="day"><span class="cal_holiday" onclick="selectDate(calDateTo,12)" ;="">12</span></td></tr><tr class="cal_oddweek"><td class="day"><span class="cal_holiday" onclick="selectDate(calDateTo,13)" ;="">13</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,14)" ;="">14</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,15)" ;="">15</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,16)" ;="">16</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,17)" ;="">17</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,18)" ;="">18</span></td><td class="day"><span class="cal_holiday" onclick="selectDate(calDateTo,19)" ;="">19</span></td></tr><tr class="cal_evenweek"><td class="day"><span class="cal_holiday" onclick="selectDate(calDateTo,20)" ;="">20</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,21)" ;="">21</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,22)" ;="">22</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,23)" ;="">23</span></td><td class="day"><span class="cal_day" onclick="selectDate(calDateTo,24)" ;="">24</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,25)" ;="">25</span></td><td class="day"><span class="cal_holiday" onclick="selectDate(calDateTo,26)" ;="">26</span></td></tr><tr class="cal_oddweek"><td class="day"><span class="cal_holiday" onclick="selectDate(calDateTo,27)" ;="">27</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,28)" ;="">28</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,29)" ;="">29</span></td><td class="day"><span class="cal_common" onclick="selectDate(calDateTo,30)" ;="">30</span></td><td class="day"><span class="cal_disabled">1</span></td><td class="day"><span class="cal_disabled">2</span></td><td class="day"><span class="cal_disabled">3</span></td></tr></tbody></table></div>
+			<input name="calDateTo$hdnSelectedDate" type="hidden" id="calDateTo_hdnSelectedDate" value="">
+		</td>
+	</tr>
+</tbody></table>
+</td>
+				</tr>
+				<tr>
+					<td class="tdimage"><br>
+					</td>
+					<td class="tdimage"><br>
+					</td>
+					<td class="tdimage"><br>
+					</td>
+					<td class="tdimage"><br>
+					</td>
+				</tr>
+				<tr>
+					<td>Version Notes:</td>
+					<td colspan="3"><textarea name="txtVersionAllNotes" rows="10" cols="50" id="txtVersionAllNotes"></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="4"><div id="ctlErrors_vsmErrors" class="error" style="color:Red;display:none;">
+
+</div>
+
+</td>
+				</tr>
+				<tr>
+					<td align="right" class="tdimage"><input type="submit" name="cmdSave" value="Save" onclick="return vDate();" id="cmdSave" class="button"></td>
+					<td class="tdimage"><input type="submit" name="cmdCancel" value="Cancel" id="cmdCancel" class="button"></td>
+					<td align="left" class="tdimage"></td>
+					<td class="tdimage"><input name="hdnServerDate" type="hidden" id="hdnServerDate" value="9/24/2015 8:48:40 AM"></td>
+				</tr>
+			</tbody></table>
+			<p><a id="ctlLinks_lnkDecision" href="Admin/admin/decision/">Decision Setup</a>
+|
+<a id="ctlLinks_lnkParameters" href="Admin/admin/decision/parameters.aspx">Parameters</a>
+|
+<a id="ctlLinks_lnkConditions" href="Admin/admin/decision/conditions.aspx">Conditions</a>
+|
+<a id="ctlLinks_lnkLookups" href="Admin/admin/decision/lookups.aspx">Lookups</a>|
+<a id="ctlLinks_lnkPowerLookups" href="Admin/admin/decision/powerlookups.aspx">Power Lookups</a>
+|
+<a id="ctlLinks_lnkDBLookups" href="Admin/admin/decision/DBLookups.aspx">DB Lookups</a>
+|
+<a id="ctlLinks_lnkRules" href="Admin/admin/decision/rules.aspx">Rules</a>
+|
+<a id="ctlLinks_lnkRulesets" href="Admin/admin/decision/rulesets.aspx">Rulesets</a>
+|
+<a id="ctlLinks_lnkGuidelines" href="Admin/admin/decision/guidelines.aspx">Guidelines</a>
+|
+<a id="ctlLinks_lnkCompFactors" href="Admin/admin/decision/compfactors.aspx">Compensating Factors</a>
+|
+<a id="ctlLinks_lnkRuleManager" href="Admin/admin/decision/rulemanager/index.aspx">Rule Manager</a>
+|
+<a id="ctlLinks_lnkNPVVersion" href="Admin/admin/decision/npv/NPVVersion.aspx">NPV Version</a></p>
+		
+<script type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("ctlErrors_vsmErrors"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var ctlErrors_vsmErrors = document.all ? document.all["ctlErrors_vsmErrors"] : document.getElementById("ctlErrors_vsmErrors");
+ctlErrors_vsmErrors.headertext = "Please correct the following errors before continuing.";
+ctlErrors_vsmErrors.showmessagebox = "True";
+ctlErrors_vsmErrors.showsummary = "False";
+//]]>
+</script>
+
+<script language="JavaScript">OnShowCalendarscalDateFrom();</script><script language="JavaScript">OnShowCalendarscalDateTo();</script></form>
+		<div id="pageFooter_divUser" class="footer" align="right" style="display:block;visibility:visible;PADDING-RIGHT:5px; PADDING-LEFT:5px; PADDING-BOTTOM:5px; PADDING-TOP:5px;">
+	<nobr><b>
+			:</b>
+		Admin User
+	</nobr>
+</div>
+<table width="100%" style="display:block;visibility:visible;FONT-SIZE:xx-small">
+	<tbody><tr>
+		<td class="tdimage">
+			<div style="display:block;visibility:visible;FONT-SIZE:xx-small">
+			<!--Issue 3900: changed by Shakil oncontexmenu event added in the <a> tag for privacy and security policy-->
+				<nobr>
+					CQAdmin R4.0.0.1112 &nbsp; (<a href="Admin/Usermanual.pdf" onclick="JavaScript:openPolicy(&#39;/VericrestDev/Admin/Usermanual.pdf&#39;);return false;" style="FONT-SIZE:xx-small">User Manual</a>)&nbsp;
+					This web site is restricted to authorized personnel only. </nobr><nobr><a href="Admin/help/security.html" onclick="JavaScript:openPolicy(&#39;/VericrestDev/Admin/help/security.html&#39;);return false;" style="FONT-SIZE:xx-small">
+					Please read our policies on Privacy &amp; Security. </a></nobr>
+					 
+			</div>
+		</td>
+		<td align="right">
+			<a href="http://www.cvelocity.com/" target="_blank" style="TEXT-DECORATION: none">
+				<img id="pageFooter_imgCQLogo" src="./version_all_guidelines-400_files/CVlogo.jpg" style="border-width:0px;"></a>
+		</td>
+	</tr>
+</tbody></table>
+<script language="javascript">
+	
+	function openPolicy(url) {
+		var w = 480, h = 340;
+		if (document.all || document.layers) {
+			w = screen.availWidth;
+			h = screen.availHeight;
+		}
+
+		var popW = 600, popH = 350;
+		var leftPos = (w-popW)/2, topPos = (h-popH)/2;
+	
+		policyWin = window.open(url,'cq_policy','width=' + popW + ',height=' + popH + ',top=' + topPos + ',left=' + leftPos + ',toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');
+		policyWin.focus();
+	}
+	function OpenUserManual()
+     {
+        //Need to implement the Correspondent Manual.pdf
+        var strURL = '~\UserManual.pdf'
+        var w = 480, h = 340;
+		if (document.all || document.layers) {
+			w = screen.availWidth;
+			h = screen.availHeight;
+		}
+
+		var popW = 600, popH = 350;
+		var leftPos = (w-popW)/2, topPos = (h-popH)/2;
+        policyWin = window.open(strURL,'UserManual','width=' + popW + ',height=' + popH + ',top=' + topPos + ',left=' + leftPos + ',toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');
+		policyWin.focus();
+        
+     }
+</script>
+
+	
+
+</body></html>
