@@ -1,3 +1,4 @@
+require "browser_loader"
 require "admin_module/version"
 require 'admin_module/config_helper'
 require "admin_module/cli"
