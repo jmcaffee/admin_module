@@ -19,7 +19,16 @@ describe 'LoginPage' do
       config.ams_version = "4.0.0"
     end
 
-    allow_any_instance_of(AdminModule::Pages::LoginPage400).to receive(:get_dynamic_url).and_return(HtmlSpec.url_for("login400.aspx.html"))
+    base_url = ENV['AM_LIVE_BASE_URL_400']
+    login_url = "login400.aspx.html"
+
+    unless base_url.nil? || base_url.empty?
+      HtmlSpec.always_use_server = true
+      login_url = File.join(base_url, "user/login.aspx")
+    else
+      HtmlSpec.always_use_server = false
+    end
+    allow_any_instance_of(AdminModule::Pages::LoginPage400).to receive(:get_dynamic_url).and_return(HtmlSpec.url_for(login_url))
   end
 
   context "logging in" do
