@@ -9,8 +9,6 @@ group :development do
   gem 'pry-stack_explorer'
 end
 
-gem "browser_loader", :git => "git://github.com/jmcaffee/browser_loader.git"
-
 # Specify your gem's dependencies in admin_module.gemspec
 gemspec
 

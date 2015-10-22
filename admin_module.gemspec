@@ -31,5 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "page-object"
   spec.add_runtime_dependency "thor"
   spec.add_runtime_dependency "ktutils"
-  #spec.add_runtime_dependency "browser_loader"
+  spec.add_runtime_dependency "browser_loader"
 end
