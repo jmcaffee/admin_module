@@ -13,8 +13,9 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/jmcaffee/admin_module"
   spec.license       = "MIT"
 
+  spec.bindir        = 'exe'
   spec.files         = `git ls-files`.split($/)
-  spec.executables   = spec.files.grep(%r{^exec/}) { |f| File.basename(f) }
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
