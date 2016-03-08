@@ -134,6 +134,7 @@ describe 'gdl command' do
 
     expect( output ).to include "gdl help [COMMAND]"
     expect( output ).to include "gdl deploy <srcdir> <comments>"
+    expect( output ).to include "gdl download <guideline> <to_path>"
     expect( output ).to include "gdl version <comments>"
     expect( output ).to include "e, [--environment=dev]"
   end

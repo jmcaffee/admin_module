@@ -66,6 +66,28 @@ module AdminModule
 
         client.logout
       end
+
+      desc "download <guideline> <to_path>",
+        "Download guideline XML to destination path (includes filename)"
+      long_desc <<-LD
+        Download a guideline's XML and save it to a specified path and filename.
+
+        With -e <env>, sets the environment to work with.
+      LD
+      def download(guideline, to_path)
+        gdl = client.guideline
+
+        #gdls = [options[:target]] unless options[:target].nil?
+        #gdls = AdminModule.configuration.xmlmaps.values.uniq if options[:target].nil?
+        #if gdls.empty?
+        #  say "aborting version. no guidelines configured", :red
+        #  return
+        #end
+
+        #gdl.version(gdls, comments)
+
+        client.logout
+      end
     end # Gdl
   end
 end # AdminModule
