@@ -113,6 +113,32 @@ describe AdminModule::Guideline do
       end
     end
 
+    context "#download" do
+      it "downloads the last version of specified guideline" do
+        srcdir = data_dir('build')
+
+        AdminModule.configure do |config|
+          config.xmlmaps['test1'] = 'Z-TEMP'
+          config.xmlmaps['test2'] = 'Z-TEMP'
+          config.default_comment = default_comment
+        end
+
+        expect(page_factory.guidelines_page)
+          .to receive(:open_guideline)
+          .with('Z-TEMP')
+          .and_return(page_factory.guidelines_page)
+
+        file_to_download = Pathname(srcdir) + 'test1.xml'
+
+        expect(page_factory.guidelines_page)
+          .to receive(:download)
+          .with(file_to_download.expand_path)
+
+        gdl = AdminModule::Guideline.new(page_factory)
+        gdl.download("Z-TEMP", file_to_download)
+      end
+    end
+
     context "#version" do
       context "with comment" do
         it "versions guidelines" do

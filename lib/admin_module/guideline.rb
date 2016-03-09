@@ -35,6 +35,14 @@ module AdminModule
         .upload(xmlfile.expand_path, comments_or_default(comments))
     end
 
+    def download gdlname, xmlfile
+      xmlfile = Pathname(xmlfile)
+
+      page = guidelines_page
+        .open_guideline(gdlname)
+        .download(xmlfile.expand_path)
+    end
+
     def version gdls, comments = nil
       gdls = Array(gdls)
       page = guidelines_page

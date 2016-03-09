@@ -54,6 +54,7 @@ module AdminModule::Pages
     def self.browser
       if ! open_browser?
         BrowserLoader::Factory.browser_timeout = AdminModule.configuration.browser_timeout
+        BrowserLoader::Factory.download_dir = AdminModule.configuration.download_dir unless AdminModule.configuration.download_dir.empty?
         @@browser = BrowserLoader::Factory.build
 
         at_exit do

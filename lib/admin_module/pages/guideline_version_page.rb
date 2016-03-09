@@ -122,17 +122,21 @@ EOS
       return
     end
 
+    version_row = latest_version
+
+    # We have to account for HTML encodings when comparing comments.
+    unless version_row.to_s.include?(CGI.escapeHTML(comments))
+      add_error("Version upload not completed. Comment not found.")
+    end
+  end
+
+  def latest_version
     doc = Nokogiri::HTML(@browser.html)
     # The specific version notes TD element:
     #version_notes_row_1 = doc.css("#dgrVersions > tbody > tr:nth-child(2) > td:nth-child(13)")
 
     # The entire 1st version row (TR) element:
     version_row = doc.css("#dgrVersions > tbody > tr:nth-child(2)")
-
-    # We have to account for HTML encodings when comparing comments.
-    unless version_row.to_s.include?(CGI.escapeHTML(comments))
-      add_error("Version upload not completed. Comment not found.")
-    end
   end
 end # class GuidelineVersionPage
 

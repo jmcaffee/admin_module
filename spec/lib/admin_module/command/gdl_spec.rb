@@ -77,6 +77,34 @@ describe 'gdl command' do
     end
   end
 
+  context "gdl download" do
+    it "downloads a single guideline" do
+      build_dir = data_dir('build')
+      gdl_to_download = 'Z-TEMP'
+      download_path = Pathname(build_dir) + 'Z-TEMP.xml'
+
+      expect(client)
+        .to receive(:user=)
+        .with('user')
+
+      expect(client)
+        .to receive(:password=)
+        .with('pass')
+
+      expect(client)
+        .to receive(:guideline)
+
+      expect(guideline_mock)
+        .to receive(:download)
+        .with(gdl_to_download, download_path.to_s)
+
+      expect(client)
+        .to receive(:logout)
+
+      run_with_args %W(gdl download -e dev Z-TEMP #{download_path}), client
+    end
+  end
+
   context "gdl version" do
     it "versions multiple guidelines" do
       expect(client)

@@ -129,6 +129,9 @@ module AdminModule
     # Browser timeout in seconds. Default: 360 (6 mins).
     attr_accessor :browser_timeout
 
+    # Browser download directory. Default: none
+    attr_accessor :download_dir
+
 
     def initialize
       reset
@@ -163,6 +166,8 @@ module AdminModule
       @ams_version = "4.4.0"
 
       @browser_timeout = 360
+
+      @download_dir = ""
     end
 
     ##

@@ -77,14 +77,7 @@ module AdminModule
       def download(guideline, to_path)
         gdl = client.guideline
 
-        #gdls = [options[:target]] unless options[:target].nil?
-        #gdls = AdminModule.configuration.xmlmaps.values.uniq if options[:target].nil?
-        #if gdls.empty?
-        #  say "aborting version. no guidelines configured", :red
-        #  return
-        #end
-
-        #gdl.version(gdls, comments)
+        gdl.download(guideline, to_path)
 
         client.logout
       end
